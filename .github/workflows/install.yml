@@ -140,14 +140,6 @@ jobs:
           OUTPUT: CHANGES.md
           GITHUB_REPO: ${{ github.repository }}
 
-    # 对1fc78f双保险处理：仅删除多余空行
-      - name: Remove extra newlines
-        id: set_body
-        run: |
-          # 删除连续3个以上的空行（保留最多两个连续空行）
-          content=$(perl -0777 -pe 's/\n\n\n+/\n\n/g' CHANGES.md)
-          echo "release_body=$content" >> $GITHUB_OUTPUT
-
   release:
     if: (needs.meta.outputs.is_tag_push == 'true') || (github.event_name == 'workflow_dispatch' && needs.meta.outputs.is_dev_version == 'true')
     needs: [meta, install, changelog]
