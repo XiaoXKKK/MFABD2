@@ -183,3 +183,11 @@ jobs:
           prerelease: ${{ needs.meta.outputs.is_dev_version == 'true' }}
         env:  # 添加环境变量以支持高限额API调用
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger MirrorChyanUploading
+        if: ${{ github.repository_owner == 'sunyink' }}
+        run: |
+          gh workflow run --repo $GITHUB_REPOSITORY mirrorchyan
+          gh workflow run --repo $GITHUB_REPOSITORY mirrorchyan_release_note
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
