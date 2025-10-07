@@ -185,9 +185,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Trigger MirrorChyanUploading
-        if: ${{ github.repository_owner == 'sunyink' }}
+        if: github.repository_owner == 'sunyink' && ((github.base_ref == 'refs/heads/main' && needs.meta.outputs.is_tag_push == 'true') || (github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && needs.meta.outputs.is_dev_version == 'true'))
         run: |
-          gh workflow run --repo $GITHUB_REPOSITORY mirrorchyan
-          gh workflow run --repo $GITHUB_REPOSITORY mirrorchyan_release_note
+          echo "安全触发镜像服务: 分支=${{ github.base_ref || github.ref }}"
+          gh workflow run mirrorchyan
+          gh workflow run mirrorchyan_release_note
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
