@@ -110,7 +110,7 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Event_EnterNormalBattle"
+      "Event_NormalBattle_Start"
     ],
     "post_delay": 8000,
     "focus": "EM.从主页面进入活动",
@@ -131,6 +131,22 @@
     ],
     "doc": "识别左下抽抽乐-点击活动"
   },
+  "Event_NormalBattle_Start": {
+    "recognition": "OCR",
+    "next": [
+      "Event_EnterNormalBattle"
+    ],
+    "roi": [
+      69,
+      365,
+      1179,
+      324
+    ],
+    "expected": [
+      "普通战斗"
+    ],
+    "doc": "判定在开始界面"
+  },
   "Event_EnterNormalBattle": {
     "recognition": "OCR",
     "action": "Click",
@@ -139,7 +155,8 @@
       "Event_EnterNormalBattle"
     ],
     "on_error": [
-      "Event_NormalBattleBack2"
+      "Event_LeaveEvent2",
+      "Even_BackMapPage"
     ],
     "post_delay": 3000,
     "focus": "EM.活动.选难度",
@@ -178,17 +195,19 @@
     "expected": [
       "快速战斗"
     ],
-    "doc": "快速战斗"
+    "doc": "识别并点击子菜单快速战斗"
   },
   "Event_NoHaveAP": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Event_NormalBattleBack2"
+      "Event_NormalBattleIsOver",
+      "Event_NormalBattle_End"
     ],
     "interrupt": [
       "Event_LeaveInterrupt"
     ],
+    "pre_delay": 500,
     "focus": "EM.活动.AP不足",
     "roi": [
       545,
@@ -222,7 +241,8 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Event_TouchNormalBattle"
+      "Event_NormalBattleMAX_cor",
+      "Event_NormalBattleMAX"
     ],
     "post_delay": 1000,
     "focus": "EM.活动.快速战斗MAX",
@@ -243,12 +263,40 @@
     ],
     "doc": "快速战斗MAX"
   },
+  "Event_NormalBattleMAX_cor": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Event_TouchNormalBattle"
+    ],
+    "roi": [
+      775,
+      423,
+      52,
+      44
+    ],
+    "method": 4,
+    "count": 150,
+    "lower": [
+      255,
+      255,
+      255
+    ],
+    "upper": [
+      255,
+      255,
+      255
+    ]
+  },
   "Event_TouchNormalBattle": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Event_NormalBattleBack2",
-      "Event_NormalBattleBack"
+      "Event_NormalBattleIsOver",
+      "Event_NormalBattleBack",
+      "Event_TouchNormalBattle"
+    ],
+    "interrupt": [
+      "Event_LeaveInterrupt"
     ],
     "post_delay": 8000,
     "roi": [
@@ -260,14 +308,14 @@
     "expected": [
       "战斗"
     ],
-    "doc": "点击战斗"
+    "doc": "弹出菜单，点击战斗"
   },
   "Event_NormalBattleBack": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Event_NormalBattleBack",
-      "Event_NormalBattleBack2"
+      "Event_NormalBattleIsOver",
+      "Event_NormalBattleBack"
     ],
     "post_delay": 1000,
     "focus": "EM.活动.战斗结算",
@@ -288,10 +336,14 @@
     ],
     "doc": "奖励返回"
   },
-  "Event_NormalBattleBack2": {
+  "Event_NormalBattleIsOver": {
+    "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Event_Explore"
+      "Event_NormalBattle_End"
+    ],
+    "interrupt": [
+      "Event_LeaveInterrupt"
     ],
     "on_error": [
       "Event_LeaveEvent"
@@ -299,10 +351,13 @@
     "post_delay": 1000,
     "focus": "EM.活动.战斗结算(无对象)",
     "roi": [
-      518,
-      544,
-      691,
-      166
+      626,
+      235,
+      189,
+      54
+    ],
+    "expected": [
+      "在战斗中获胜"
     ],
     "target": [
       40,
@@ -310,7 +365,39 @@
       0,
       0
     ],
-    "doc": "快速战斗-返回"
+    "doc": "判定，处于一般/挑战 战斗页面，用于流程结束位置判定。动作，空白处点击"
+  },
+  "Event_NormalBattle_End": {
+    "recognition": "OCR",
+    "next": [
+      "Event_MiniGame_Start"
+    ],
+    "roi": [
+      69,
+      365,
+      1179,
+      324
+    ],
+    "expected": [
+      "普通战斗"
+    ],
+    "doc": "判定在开始界面"
+  },
+  "Event_MiniGame_Start": {
+    "recognition": "OCR",
+    "next": [
+      "Event_MiniGame_End"
+    ],
+    "roi": [
+      69,
+      365,
+      1179,
+      324
+    ],
+    "expected": [
+      "普通战斗"
+    ],
+    "doc": "判定在开始界面.连接Event_Explore"
   },
   "Event_Explore": {
     "recognition": "OCR",
@@ -391,7 +478,10 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Event_LeaveEvent"
+      "Event_MiniGame_End"
+    ],
+    "interrupt": [
+      "Event_LeaveInterrupt"
     ],
     "post_delay": 8000,
     "focus": "EM.活动.小游戏模块结束",
@@ -411,6 +501,22 @@
       0
     ],
     "doc": "战场探索-返回"
+  },
+  "Event_MiniGame_End": {
+    "recognition": "OCR",
+    "next": [
+      "Even_MamonoFollowUp_Start"
+    ],
+    "roi": [
+      69,
+      365,
+      1179,
+      324
+    ],
+    "expected": [
+      "普通战斗"
+    ],
+    "doc": "判定在开始界面.连接Event_Explore"
   },
   "Event_LeaveEventDub": {
     "recognition": "OCR",
@@ -471,7 +577,7 @@
   "Event_LeaveInterrupt": {
     "recognition": "TemplateMatch",
     "action": "Click",
-    "post_delay": 2000,
+    "post_delay": 3000,
     "focus": "G=1.页面非预期，点击返回按钮",
     "roi": [
       1,
@@ -515,6 +621,10 @@
   "Even_BackMapPage": {
     "recognition": "OCR",
     "action": "Click",
+    "next": [
+      "Event_AtMainPage_AllEnd",
+      "Even_BackMapPage"
+    ],
     "focus": "EM.活动.回到主页面",
     "roi": [
       98,
@@ -532,5 +642,337 @@
       0
     ],
     "doc": "识别左下抽抽乐-返回地图页"
+  },
+  "Even_MamonoFollowUp_Start": {
+    "recognition": "OCR",
+    "next": [
+      "Even_MamonoFollowUp_End"
+    ],
+    "roi": [
+      69,
+      365,
+      1179,
+      324
+    ],
+    "expected": [
+      "普通"
+    ]
+  },
+  "Even_MamonoFollowUp_GotoEvMenu": {
+    "recognition": "OCR",
+    "next": [
+      "Even_MamonoFollowUp_InMamono"
+    ],
+    "interrupt": [
+      "Event_LeaveInterrupt"
+    ],
+    "roi": [
+      69,
+      365,
+      1179,
+      324
+    ],
+    "expected": [
+      "普通战斗"
+    ],
+    "doc": "废弃"
+  },
+  "Even_MamonoFollowUp_InMamono": {
+    "recognition": "OCR",
+    "action": "Click",
+    "next": [
+      "Even_MamonoFollowUp_QuickBattle_color",
+      "Even_MamonoFollowUp_lvck",
+      "Even_MamonoFollowUp_InMamono"
+    ],
+    "interrupt": [
+      "Even_MamonoFollowUp_lvdown"
+    ],
+    "post_delay": 5000,
+    "post_wait_freezes": 3000,
+    "roi": [
+      452,
+      379,
+      797,
+      331
+    ],
+    "expected": [
+      "魔兽追踪者"
+    ]
+  },
+  "Even_MamonoFollowUp_lvck": {
+    "recognition": "OCR",
+    "next": [
+      "Even_MamonoFollowUp_lv1NoMet",
+      "Even_MamonoFollowUp_MmnHpNoCk_ocr"
+    ],
+    "post_delay": 3000,
+    "post_wait_freezes": 3000,
+    "roi": [
+      858,
+      82,
+      142,
+      67
+    ],
+    "expected": [
+      "Lv.1",
+      "LV.1",
+      "lv?1"
+    ]
+  },
+  "Even_MamonoFollowUp_lv1NoMet": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Even_MamonoFollowUp_onSubMain"
+    ],
+    "focus": "EMMF.未与魔兽战斗过，流程即将结束",
+    "roi": [
+      987,
+      134,
+      10,
+      32
+    ],
+    "method": 4,
+    "count": 10,
+    "lower": [
+      153,
+      22,
+      22
+    ],
+    "upper": [
+      153,
+      22,
+      22
+    ]
+  },
+  "Even_MamonoFollowUp_lvdown": {
+    "recognition": "ColorMatch",
+    "action": "Click",
+    "focus": "EM.EM.等级下调",
+    "roi": [
+      833,
+      91,
+      40,
+      43
+    ],
+    "method": 4,
+    "count": 15,
+    "lower": [
+      221,
+      218,
+      209
+    ],
+    "upper": [
+      221,
+      218,
+      209
+    ],
+    "target": [
+      851,
+      113,
+      0,
+      0
+    ]
+  },
+  "Even_MamonoFollowUp_MmnHpNoCk_ocr": {
+    "recognition": "OCR",
+    "next": [
+      "Even_MamonoFollowUp_MmnNoHpCk_color"
+    ],
+    "focus": "EM.EM.魔兽血量0-字核通过",
+    "roi": [
+      711,
+      130,
+      34,
+      43
+    ],
+    "expected": [
+      "0"
+    ]
+  },
+  "Even_MamonoFollowUp_MmnNoHpCk_color": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Even_MamonoFollowUp_MmnHaveHpCk_color"
+    ],
+    "interrupt": [
+      "Even_MamonoFollowUp_MmnHpUp"
+    ],
+    "inverse": true,
+    "focus": "EM.EM.魔兽血量0-色核通过",
+    "roi": [
+      711,
+      130,
+      34,
+      43
+    ],
+    "method": 4,
+    "count": 10,
+    "lower": [
+      153,
+      22,
+      22
+    ],
+    "upper": [
+      153,
+      22,
+      22
+    ]
+  },
+  "Even_MamonoFollowUp_MmnHpUp": {
+    "action": "Click",
+    "post_delay": 1000,
+    "focus": "EM.EM.等级上调",
+    "target": [
+      974,
+      114,
+      0,
+      0
+    ]
+  },
+  "Even_MamonoFollowUp_MmnHaveHpCk_color": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Even_MamonoFollowUp_QuickBattle_color"
+    ],
+    "timeout": 8000,
+    "on_error": [
+      "Even_MamonoFollowUp_onSubMain"
+    ],
+    "focus": "此lv血量不为空",
+    "roi": [
+      711,
+      130,
+      34,
+      43
+    ],
+    "method": 4,
+    "count": 10,
+    "lower": [
+      153,
+      22,
+      22
+    ],
+    "upper": [
+      153,
+      22,
+      22
+    ]
+  },
+  "Even_MamonoFollowUp_QuickBattle_color": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Even_MamonoFollowUp_QuickBattle_ocr"
+    ],
+    "on_error": [
+      "Event_LeaveEvent"
+    ],
+    "focus": "EM.MF.快速战斗可用-色核通过",
+    "roi": [
+      842,
+      625,
+      109,
+      49
+    ],
+    "method": 4,
+    "count": 50,
+    "lower": [
+      221,
+      218,
+      209
+    ],
+    "upper": [
+      221,
+      218,
+      209
+    ]
+  },
+  "Even_MamonoFollowUp_QuickBattle_ocr": {
+    "recognition": "OCR",
+    "action": "Click",
+    "next": [
+      "Even_MamonoFollowUp_QuickBattle_ck",
+      "Even_MamonoFollowUp_QuickBattle_ocr"
+    ],
+    "post_delay": 2000,
+    "focus": "EM.MF.快速战斗可用-字核通过",
+    "roi": [
+      820,
+      621,
+      141,
+      62
+    ],
+    "expected": [
+      "快速战斗"
+    ]
+  },
+  "Even_MamonoFollowUp_QuickBattle_ck": {
+    "recognition": "OCR",
+    "action": "Click",
+    "next": [
+      "Even_MamonoFollowUp_onSubMain",
+      "Even_MamonoFollowUp_QuickBattle_ck"
+    ],
+    "post_delay": 2000,
+    "roi": [
+      691,
+      547,
+      83,
+      33
+    ],
+    "expected": [
+      "确认"
+    ],
+    "doc": "快速战斗按钮后的弹出菜单,需要点击确认"
+  },
+  "Even_MamonoFollowUp_onSubMain": {
+    "recognition": "OCR",
+    "next": [
+      "Even_MamonoFollowUp_End"
+    ],
+    "interrupt": [
+      "Event_LeaveInterrupt"
+    ],
+    "roi": [
+      702,
+      158,
+      151,
+      41
+    ],
+    "expected": [
+      "阶段最高"
+    ],
+    "doc": "结束，判定处于子菜单"
+  },
+  "Even_MamonoFollowUp_End": {
+    "recognition": "OCR",
+    "next": [
+      "Event_LeaveEvent2"
+    ],
+    "roi": [
+      69,
+      365,
+      1179,
+      324
+    ],
+    "expected": [
+      "普通"
+    ],
+    "doc": "0"
+  },
+  "Event_AtMainPage_AllEnd": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "focus": "返回主页，项目流程可以结束",
+    "roi": [
+      1122,
+      646,
+      40,
+      38
+    ],
+    "template": [
+      "pin.png"
+    ],
+    "doc": "找到图钉-判别主页"
   }
 }
