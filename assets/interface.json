@@ -71,10 +71,11 @@
 			"name": "活动图扫荡",
 			"entry": "Event_HomePage",
 			"option": [
-				"活动图小游戏扫荡",
-				"活动图快速战斗难度"
+				"活动图快速战斗难度",
+				"魔兽补刀",
+				"活动图小游戏扫荡"
 			],
-			"doc": "**活动图扫荡：**版本活动通过第15关后，解锁此等级快速战斗。用每日免费AP打Max。\n\n若未打完所选难度15关，不会报错停止，但没有效果。\n\n支持选择难度。"
+			"doc": "**活动图扫荡：**主页面的右侧的版本活动。\n\n**快速战斗难度：**版本活动通过第15关后，解锁此等级快速战斗。用每日免费AP打Max。\n\n若未打完所选难度15关，不会报错停止，但没有效果。\n\n支持选择难度。\n\n**魔兽补刀:**在打过魔兽后每日快速战斗一次,拿取参与奖。\n\n小游戏扫荡：长期未复刻，保持关闭即可。"
 		},
 		{
 			"name": "领取日常奖励",
@@ -740,26 +741,22 @@
 			"cases": [
 				{
 					"name": "No",
-					"pipeline_override": {
-						"Event_NormalBattleBack": {
-							"next": [
-								"Event_LeaveEventDub"
-							]
-						},
-						"Event_NormalBattleBack2": {
-							"next": [
-								"Event_LeaveEventDub"
-							]
-						}
-					}
+					"pipeline_override": {}
 				},
 				{
 					"name": "Yes",
-					"pipeline_override": {}
+					"pipeline_override": {
+						"Event_MiniGame_Start": {
+							"next": [
+								"Event_Explore"
+							]
+						}
+					}
 				}
 			]
 		},
 		"活动图快速战斗难度": {
+			"doc": "先手动通过最后一关（第15关），解锁快速战斗；\n\n选择相应难度选项，可实现快速战斗打完免费AP。\n\n误选会没有效果，浪费时间。\n\nTip:一共两个难度，分别有首通奖励~",
 			"cases": [
 				{
 					"name": "普通",
@@ -777,6 +774,25 @@
 						"Event_EnterNormalBattle": {
 							"expected": [
 								"挑战"
+							]
+						}
+					}
+				}
+			]
+		},
+		"魔兽补刀": {
+			"doc": "1.‘补刀’：如果某级魔兽讨伐失利，次日可继承残血再快速战斗一次。\n\n2.补刀失败只拿参与奖，不影响讨伐进度；次日循环拿奖励。\n\n3.补刀成功，则需要手动打一次下一级魔兽，失利了再来补刀。",
+			"cases": [
+				{
+					"name": "No",
+					"pipeline_override": {},
+				},
+				{
+					"name": "Yes",
+					"pipeline_override": {
+						"Even_MamonoFollowUp_Start": {
+							"next": [
+								"Even_MamonoFollowUp_InMamono"
 							]
 						}
 					}
@@ -892,18 +908,10 @@
 				{
 					"name": "Yes",
 					"pipeline_override": {
-						"Gacha_FindFreeGacha": {
+						"Gacha_PvAnimeIsOver": {
 							"next": [
 								"Gacha_PaidDiamond_CustomField",
-								"Gacha_TouchGacha",
-								"Gacha_FindFreeGacha"
-							]
-						},
-						"Gacha_GachaResultBack": {
-							"next": [
-								"Gacha_PaidDiamond_CustomField",
-								"Gacha_GachaPage",
-								"Gacha_GachaResultBack"
+								"Gacha_TouchFreeGacha"
 							]
 						}
 					}
@@ -938,7 +946,7 @@
 				"xxx4"
 			],
 			"pipeline_override": {
-				"Gacha_PaidDiamond_90LotFind_Tp1": {
+				"Gacha_PaidDiamond_CustomField": {
 					"expected": [
 						"{目标池1}",
 						"{目标池2}",
@@ -952,7 +960,7 @@
 	"name": "MFABD2",
 	"custom_title": "MFABD2 | 棕色尘埃2自动化助手(sunyink/MFABD2)v2.0.4 | 游戏版本：20251001 (Starlight Child)",
 	"url": "https://github.com/sunyink/MFABD2",
-    "mirrorchyan_rid": "MFABD2",
-    "mirrorchyan_multiplatform": false,
+	"mirrorchyan_rid": "MFABD2",
+	"mirrorchyan_multiplatform": false,
 	"version": "v2.0.4"
 }
