@@ -198,7 +198,7 @@
       "GetReward_DailyReward"
     ],
     "post_delay": 1000,
-    "focus": "GM.餐馆结算",
+    "focus": "GM.餐馆结算-主界面",
     "roi": [
       85,
       228,
@@ -325,10 +325,10 @@
       "GetReward_Busin_BackPVEPage"
     ],
     "roi": [
-      88,
-      185,
-      85,
-      96
+      71,
+      176,
+      276,
+      116
     ],
     "expected": [
       "常客"
@@ -619,7 +619,7 @@
   },
   "GetReward_ClickOnce": {
     "action": "Click",
-    "focus": "GM.流程结束~",
+    "focus": "GB.餐馆结算结束~中继调用",
     "target": [
       60,
       360,
