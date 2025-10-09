@@ -892,11 +892,10 @@
 				{
 					"name": "Yes",
 					"pipeline_override": {
-						"Gacha_FindFreeGacha": {
+						"Gacha_PvAnimeIsOver": {
 							"next": [
 								"Gacha_PaidDiamond_CustomField",
-								"Gacha_TouchFreeGacha",
-								"Gacha_FindFreeGacha"
+								"Gacha_TouchFreeGacha"
 							]
 						}
 					}
@@ -931,7 +930,7 @@
 				"xxx4"
 			],
 			"pipeline_override": {
-				"Gacha_PaidDiamond_90LotFind_Tp1": {
+				"Gacha_PaidDiamond_CustomField": {
 					"expected": [
 						"{目标池1}",
 						"{目标池2}",

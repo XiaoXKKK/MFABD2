@@ -237,7 +237,7 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Gacha_TouchFreeGacha",
+      "Gacha_PvAnimeIsOver",
       "Gacha_FindFreeGacha"
     ],
     "on_error": [
@@ -252,6 +252,7 @@
     "template": [
       "FreeGacha.png"
     ],
+    "post_wait_freezes": 2000,
     "threshold": 0.9,
     "target_offset": [
       -50,
@@ -259,7 +260,27 @@
       0,
       0
     ],
-    "doc": "寻找免费抽卡"
+    "doc": "点击,存在免费抽的卡池,每日首次进入卡池pv动画开始"
+  },
+  "Gacha_PvAnimeIsOver": {
+    "recognition": "OCR",
+    "expected": [
+      "兑换"
+    ],
+    "next": [
+      "Gacha_TouchFreeGacha"
+    ],
+    "focus": "GA.卡池动画结束(调试用)",
+    "on_error": [
+      "Gacha_Slip"
+    ],
+    "roi": [
+      953,
+      381,
+      239,
+      147
+    ],
+    "doc": "卡池动画结束后,卡片呈现按钮,识别"
   },
   "Gacha_PaidDiamond_Start": {
     "next": [
@@ -277,15 +298,15 @@
       "Gacha_TouchFreeGacha"
     ],
     "roi": [
-      624,
-      554,
-      188,
-      107
+      358,
+      135,
+      839,
+      540
     ],
+    "focus": "GB.90.**[高危-付费抽]**付费抽卡池匹配成功",
     "expected": [
-      "1日限1次"
+      "付费抽目标卡池"
     ],
-    "focus": "GB.90.**[高危-付费抽]**日限付费找到",
     "doc": "输入卡池名称.原expected只做占位符，无用"
   },
   "Gacha_PaidDiamond_90LotFind_Tp1": {
@@ -294,22 +315,19 @@
       "Gacha_PaidDiamond_90LotFind_Tp2"
     ],
     "on_error": [
-      "Gacha_Slip",
-      "Gacha_TouchFreeGacha"
+      "Gacha_TouchFreeGacha",
+      "Gacha_Slip"
     ],
     "roi": [
-      358,
-      135,
-      839,
-      540
+      624,
+      554,
+      188,
+      107
     ],
-    "focus": {
-      "succeeded": "GB.90.**[高危-付费抽]**付费抽卡池匹配成功",
-      "failed": "GB.90.付费抽卡池未匹配到"
-    },
     "expected": [
-      "付费抽目标卡池"
-    ]
+      "1日限1次"
+    ],
+    "focus": "GB.90.**[高危-付费抽]**日限付费找到"
   },
   "Gacha_PaidDiamond_90LotFind_Tp2": {
     "recognition": "OCR",
@@ -318,8 +336,8 @@
     ],
     "focus": "GB.90.**[高危-付费抽]**tp2/3-费用90已确认",
     "on_error": [
-      "Gacha_Slip",
-      "Gacha_TouchFreeGacha"
+      "Gacha_TouchFreeGacha",
+      "Gacha_Slip"
     ],
     "roi": [
       624,
@@ -339,8 +357,8 @@
       "Gacha_TouchFreeGachaConfirmMenu"
     ],
     "on_error": [
-      "Gacha_Slip",
-      "Gacha_TouchFreeGacha"
+      "Gacha_TouchFreeGacha",
+      "Gacha_Slip"
     ],
     "post_delay": 1000,
     "roi": [
@@ -400,7 +418,7 @@
     "expected": [
       "免费1次"
     ],
-    "doc": "点击右下抽卡"
+    "doc": "免费抽流程开始:点击右下免费1抽"
   },
   "Gacha_TouchFreeGachaConfirmMenu": {
     "recognition": "OCR",
@@ -418,7 +436,7 @@
       "确认抽抽乐"
     ],
     "focus": "GA-弹出式菜单已确认(调试用)",
-    "doc": "抽卡菜单弹出,已确认"
+    "doc": "抽卡确认通用流程:抽卡菜单弹出,已确认"
   },
   "Gacha_TouchFreeGachaBuy": {
     "recognition": "OCR",
