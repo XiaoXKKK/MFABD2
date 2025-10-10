@@ -225,7 +225,7 @@
     "doc": "点击右下抽卡"
   },
   "Activities_GetRoll_AutoOff": {
-    "recognition": "TemplateMatch",
+    "recognition": "ColorMatch",
     "action": "Click",
     "next": [
       "Activities_GetRoll_AutoOn",
@@ -233,10 +233,20 @@
     ],
     "post_delay": 1500,
     "roi": [
-      945,
-      497,
-      224,
-      81
+      1059,
+      517,
+      104,
+      47
+    ],
+    "upper": [
+      104,
+      103,
+      101
+    ],
+    "lower": [
+      104,
+      103,
+      101
     ],
     "template": [
       "ActiveRollOffGe.png"
@@ -249,16 +259,26 @@
     ]
   },
   "Activities_GetRoll_AutoOn": {
-    "recognition": "TemplateMatch",
+    "recognition": "ColorMatch",
     "next": [
       "Activities_Index"
     ],
     "post_delay": 15000,
     "roi": [
-      945,
-      497,
-      224,
-      81
+      1059,
+      517,
+      104,
+      47
+    ],
+    "upper": [
+      223,
+      195,
+      120
+    ],
+    "lower": [
+      223,
+      195,
+      120
     ],
     "template": [
       "ActiveRollOnGe.png"

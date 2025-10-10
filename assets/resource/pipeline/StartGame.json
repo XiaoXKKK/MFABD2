@@ -49,13 +49,16 @@
     "pre_wait_freezes": 3000,
     "focus": "SM.main",
     "roi": [
-      798,
-      262,
-      137,
-      65
+      791,
+      102,
+      371,
+      332
     ],
     "expected": [
-      "尘埃"
+      "尘埃",
+      "BROWN",
+      "無職生",
+      "異世界"
     ]
   },
   "StartGame_Update": {

@@ -294,8 +294,8 @@
       "Gacha_PaidDiamond_90LotFind_Tp1"
     ],
     "on_error": [
-      "Gacha_Slip",
-      "Gacha_TouchFreeGacha"
+      "Gacha_TouchFreeGacha",
+      "Gacha_Slip"
     ],
     "roi": [
       358,
