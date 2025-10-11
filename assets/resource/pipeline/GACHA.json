@@ -291,10 +291,11 @@
   "Gacha_PaidDiamond_CustomField": {
     "recognition": "OCR",
     "next": [
-      "Gacha_PaidDiamond_90LotFind_Tp1"
+      "Gacha_PaidDiamond_90LotFind_Tp1",
+      "Gacha_TouchFreeGacha"
     ],
+    "timeout": 8000,
     "on_error": [
-      "Gacha_TouchFreeGacha",
       "Gacha_Slip"
     ],
     "roi": [
@@ -312,10 +313,11 @@
   "Gacha_PaidDiamond_90LotFind_Tp1": {
     "recognition": "OCR",
     "next": [
-      "Gacha_PaidDiamond_90LotFind_Tp2"
+      "Gacha_PaidDiamond_90LotFind_Tp2",
+      "Gacha_TouchFreeGacha"
     ],
+    "tinmeout": 8000,
     "on_error": [
-      "Gacha_TouchFreeGacha",
       "Gacha_Slip"
     ],
     "roi": [
@@ -327,16 +329,18 @@
     "expected": [
       "1日限1次"
     ],
+    "timeout": 8000,
     "focus": "GB.90.**[高危-付费抽]**日限付费找到"
   },
   "Gacha_PaidDiamond_90LotFind_Tp2": {
     "recognition": "OCR",
     "next": [
-      "Gacha_PaidDiamond_90LotFind_Tp3"
+      "Gacha_PaidDiamond_90LotFind_Tp3",
+      "Gacha_TouchFreeGacha"
     ],
     "focus": "GB.90.**[高危-付费抽]**tp2/3-费用90已确认",
+    "timeout": 8000,
     "on_error": [
-      "Gacha_TouchFreeGacha",
       "Gacha_Slip"
     ],
     "roi": [
@@ -354,10 +358,11 @@
     "action": "Click",
     "focus": "GB.90.**[高危-付费抽]**tp3/3-付费抽类型可确认",
     "next": [
-      "Gacha_TouchFreeGachaConfirmMenu"
+      "Gacha_TouchFreeGachaConfirmMenu",
+      "Gacha_TouchFreeGacha"
     ],
+    "timeout": 8000,
     "on_error": [
-      "Gacha_TouchFreeGacha",
       "Gacha_Slip"
     ],
     "post_delay": 1000,
