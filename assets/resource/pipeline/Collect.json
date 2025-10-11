@@ -905,6 +905,7 @@
     "template": [
       "IcoHand.png"
     ],
+    "threshold": 0.95,
     "green_mask": true
   },
   "Collect_FindTeleporCircle": {
@@ -921,7 +922,8 @@
     "template": [
       "TpCircle.png",
       "TpCircle2.png",
-      "TpCircle3.png"
+      "TpCircle3.png",
+      "TpCircle4.png"
     ],
     "doc": "场景地图内传送阵选择"
   },
