@@ -24,7 +24,8 @@
 			"entry": "Battle_StartGame_HomePage",
 			"option": [
 				"狩猎场-章节图策略",
-				"冒险航线-双倍图策略",
+				"冒险航线-双倍策略",
+				"冒险航线-资源策略",
 				"战斗次数分配",
 				"冒险航线-圣石洞穴属性"
 			],
@@ -445,7 +446,7 @@
 						"Battle_CollectMapHangXian1": {
 							"next": [
 								"Battle_CollectMapHangXianDoubleCk1"
-							],
+							]
 						},
 						"Battle_CollectMapHangXianDoubleCk1": {
 							"template": [
