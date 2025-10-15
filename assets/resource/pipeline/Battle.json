@@ -117,8 +117,7 @@
     "next": [
       "Battle_CollectMapShouLie"
     ],
-    "post_delay": 1000,
-    "pre_wait_freezes": 3000,
+    "pre_wait_freezes": 1500,
     "focus": "BM.快速狩猎地图,默认位置",
     "roi": [
       1029,
@@ -147,8 +146,7 @@
       "Battle_QuickBattleButton"
     ],
     "timeout": 5000,
-    "post_delay": 1500,
-    "pre_wait_freezes": 3000,
+    "pre_wait_freezes": 1500,
     "roi": [
       549,
       338,
@@ -188,31 +186,39 @@
     "doc": "B-1.狩猎场次数选择，点击MAX"
   },
   "Battle_CollectMapHangXian1": {
-    "recognition": "OCR",
     "action": "Click",
+    "recognition": "ColorMatch",
+    "roi": [
+      180,
+      13,
+      284,
+      75
+    ],
+    "lower": [
+      130,
+      130,
+      122
+    ],
+    "upper": [
+      221,
+      218,
+      209
+    ],
+    "method": 4,
+    "count": 100,
     "next": [
       "Battle_CollectMapHangXianDoubleCk1",
       "Battle_CollectMapHangXianDoubleCk1No"
     ],
-    "timeout": 3000,
-    "post_delay": 3000,
-    "focus": "BM.航线-首选",
-    "roi": [
-      460,
-      542,
-      115,
-      56
-    ],
-    "expected": [
-      "史莱姆王国"
-    ],
+    "post_delay": 2000,
+    "focus": "BM.航线-首选（异常！）",
     "target": [
-      510,
-      535,
+      341,
+      558,
       0,
       0
     ],
-    "doc": "A-2.选择冒险航线，首选"
+    "doc": "A-2.interface，默认为金币优先，已留空|色核逻辑，浮窗菜单底色使左上字体变色，以此反向判定菜单是否存在，反向才能调用中断！"
   },
   "Battle_CollectMapHangXianDoubleCk1": {
     "recognition": "TemplateMatch",
@@ -262,42 +268,38 @@
   },
   "Battle_CollectMapHangXian2": {
     "action": "Click",
+    "recognition": "ColorMatch",
+    "roi": [
+      180,
+      13,
+      284,
+      75
+    ],
+    "lower": [
+      130,
+      130,
+      122
+    ],
+    "upper": [
+      221,
+      218,
+      209
+    ],
+    "method": 4,
+    "count": 100,
     "next": [
       "Battle_CollectMapHangXianDoubleCk2",
-      "Battle_CollectMapHangXianDoubleCk2No"
-    ],
-    "focus": "BM.航线-备选",
-    "target": [
-      343,
-      560,
-      0,
-      0
-    ],
-    "doc": "A-2.选择冒险航线，次选"
-    ---
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "Battle_CollectMapHangXianDoubleCk2",
-      "Battle_CollectMapHangXianDoubleCk2No""Battle_CollectMapHangXian1"
+      "Battle_CollectMapHangXianDoubleCk2No",
+      "Battle_CollectMapHangXian2"
     ],
     "post_delay": 2000,
     "focus": "BM.航线-备选",
-    "roi": [
-      2,
-      -5,
-      0,
-      0
-    ],
-    "expected": [
-      "史莱姆"
-    ],
-    "target_offset": [
+    "target": [
       510,
-      535,
+      531,
       0,
       0
-    ],
+    ]
   },
   "Battle_CollectMapHangXianDoubleCk2": {
     "recognition": "TemplateMatch",
@@ -344,6 +346,39 @@
       "DoubleNoGold.png"
     ],
     "threshold": 0.8
+  },
+  "Battle_CollectMapHangXianDoubleCk2No_ToCentral": {
+    "action": "Click",
+    "next": [
+      "Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK",
+      "Battle_CollectMapHangXianDoubleCk2No_ToCentral"
+    ],
+    "post_delay": 1000,
+    "focus": "BM.快速狩猎-狩猎地图返回默认位置",
+    "target": [
+      140,
+      120,
+      0,
+      0
+    ],
+    "doc": "目的是不用中断、在主流程里把地图复位，配个其他中断使用。T1"
+  },
+  "Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK": {
+    "next": [
+      "Battle_CollectMapShouLieR2"
+    ],
+    "roi": [
+      549,
+      338,
+      171,
+      87
+    ],
+    "expected": [
+      "野猪洞穴"
+    ],
+    "recognition": "OCR",
+    "focus": "BM.快速狩猎-狩猎地图返回默认位置ck",
+    "doc": "目的是不用中断、在主流程里把地图复位，配个其他中断使用。T2，默认接狩猎R2"
   },
   "Battle_CollectMapShouLieR2": {
     "recognition": "OCR",
@@ -530,7 +565,8 @@
     "action": "Click",
     "next": [
       "Battle_FastBattleReward",
-      "Battle_NoAP"
+      "Battle_NoAP",
+      "Battle_FastBattleStart"
     ],
     "timeout": 8000,
     "on_error": [
