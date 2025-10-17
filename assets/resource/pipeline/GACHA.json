@@ -239,10 +239,8 @@
     "action": "Click",
     "next": [
       "Gacha_PvAnimeIsOver",
+      "Gacha_SkipPV",
       "Gacha_FindFreeGacha"
-    ],
-    "interrupt": [
-      "Gacha_SkipPV"
     ],
     "on_error": [
       "Gacha_Slip"
@@ -273,6 +271,21 @@
       334,
       19,
       28
+    ],
+    "recognition": "OCR",
+    "inverse": true,
+    "expected": [
+      "兑换"
+    ],
+    "next": [
+      "Gacha_FindFreeGacha"
+    ],
+    "focus": "GA.卡池动画跳过",
+    "roi": [
+      953,
+      381,
+      239,
+      147
     ],
     "post_delay": 800
   },
@@ -425,7 +438,7 @@
     "on_error": [
       "Gacha_Slip"
     ],
-    "post_delay": 2500,
+    "post_delay": 1500,
     "focus": "GA.免费抽 (^_−)☆",
     "roi": [
       393,
