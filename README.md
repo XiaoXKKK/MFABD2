@@ -64,7 +64,7 @@
 ## 获取&部署
 
 ### ◆稳定版部署
-+ 进入 **[MFABD2-Resource]发行版页** : [github.com/sunyink/MFABD2-Resource](https://github.com/sunyink/MFABD2-Resource/releases)，下载对应平台压缩包，解压即用。
++ 进入 **[MFABD2-Resource]发行版页** : [github.com/sunyink/MFABD2](https://github.com/sunyink/MFABD2/releases)，下载对应平台压缩包，解压即用。
 
 + `v2.1.0`之后，UI内可以直接获得更新信息。
 
