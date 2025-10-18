@@ -495,7 +495,8 @@
     "action": "Click",
     "next": [
       "Gacha_5XResuNew",
-      "Gacha_5X"
+      "Gacha_5X",
+      "Gacha_GachaResultBack"
     ],
     "focus": "GA.5☆角色！(✧◡✧)",
     "roi": [
@@ -555,7 +556,7 @@
       366,
       361
     ],
-    "count": 5000,
+    "count": 1000,
     "lower": [
       [
         254,

@@ -810,9 +810,6 @@
     "template": [
       "TpCircleMap.png"
     ],
-    "expected": [
-      ""
-    ],
     "doc": "详细地图内传送阵选择"
   },
   "Collect_ClickBackOnSecureMap": {
