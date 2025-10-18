@@ -1,0 +1,19 @@
+{
+    "Global_OnceHomeButton": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            1132,
+            4,
+            122,
+            77
+        ],
+        "green_mask": true,
+        "template": [
+            "MainHomeIceGE.png",
+            "MainHomeRIceGE.png"
+        ],
+        "action": "Click",
+        "post_delay": 2000,
+        "focus": "G.点击一次主页面图标"
+    }
+}
