@@ -130,7 +130,7 @@
 > 
 - 人物技能请按图中设置
 
- > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/Fast/ReadMe/IT.png"  width="600px"/>
+ > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/Fast/ReadMe/IT.jpg"  width="600px"/>
  > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/Fast/ReadMe/3.png"  width="400px"/>
 
 ## 功能一览
