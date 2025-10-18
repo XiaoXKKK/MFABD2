@@ -1,0 +1,42 @@
+name: QQ Notification Sender
+
+on: [push]
+
+jobs:
+  send-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract commit info
+        id: commit-info
+        run: |
+          # 完整处理多行提交消息
+          COMMIT_MSG=$(echo "${{ github.event.head_commit.message }}" | sed ':a;N;$!ba;s/\n/ | /g')
+          
+          # 提取提交信息第一行作为摘要
+          SUBJECT=$(echo "$COMMIT_MSG" | cut -d'|' -f1 | sed 's/^ //')
+          
+          # 提取剩余部分作为描述
+          BODY=$(echo "$COMMIT_MSG" | cut -d'|' -f2- | sed 's/^ //')
+          
+          # 格式化时间戳
+          TIME=$(date -d "${{ github.event.head_commit.timestamp }}" +"%Y-%m-%d %H:%M:%S")
+          
+          # 设置输出变量
+          echo "subject=${SUBJECT}" >> $GITHUB_OUTPUT
+          echo "body=${BODY}" >> $GITHUB_OUTPUT
+          echo "time=${TIME}" >> $GITHUB_OUTPUT
+      
+      - name: Send Notification
+        uses: Y2Nk4/qmsg-action@master
+        with:
+          qq: ${{ secrets.QMSG_NOTIFY_QQ }}
+          groups: ${{ secrets.QMSG_NOTIFY_GROUPS }}
+          key: ${{ secrets.QMSG_KEY }}
+          message: |
+            📌 [${{ github.repository }}] 提交完成
+            👤 提交者: ${{ github.actor }}
+            🌿 分支: ${{ github.ref_name }}
+            🆔 提交哈希: ${{ github.sha }}
+            ⏱️ 提交时间: ${{ steps.commit-info.outputs.time }}
+            📝 摘要: ${{ steps.commit-info.outputs.subject }}
+            📖 描述: ${{ steps.commit-info.outputs.body }}
