@@ -38,6 +38,7 @@
     "recognition": "TemplateMatch",
     "next": [
       "GetReward_EnterUnion",
+      "GetReward_EnterUnion_img",
       "GetReward_HomePageHub",
       "GetReward_HomePageHub1"
     ],
@@ -101,11 +102,13 @@
   },
   "GetReward_EnterUnion": {
     "recognition": "OCR",
+    "action": "Click",
     "next": [
-      "GetReward_UnionGUI"
+      "GetReward_UnionGUI",
+      "GetReward_EnterUnion"
     ],
     "post_delay": 1000,
-    "focus": "GM.公会签到",
+    "focus": "GM.公会签到(OCR)",
     "roi": [
       256,
       84,
@@ -115,22 +118,43 @@
     "expected": [
       "公会"
     ],
-    "doc": "点击工会"
+    "doc": "主菜单，点击工会"
+  },
+  "GetReward_EnterUnion_img": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "next": [
+      "GetReward_UnionGUI",
+      "GetReward_EnterUnion_img"
+    ],
+    "post_delay": 1000,
+    "focus": "GM.公会签到(IMG)",
+    "roi": [
+      256,
+      84,
+      100,
+      111
+    ],
+    "template": [
+      "MainBotmUnionGE.png"
+    ],
+    "green_mask": true,
+    "doc": "主菜单，点击工会|图按照剪影模式做"
   },
   "GetReward_UnionGUI": {
-    "action": "Click",
+    "recognition": "OCR",
     "next": [
       "GetReward_UnionBack"
     ],
     "post_delay": 3000,
     "roi": [
-      622,
-      300,
-      34,
-      32
+      180,
+      13,
+      135,
+      61
     ],
-    "template": [
-      "UnionReward.png"
+    "expected": [
+      "公会"
     ],
     "target": [
       305,
@@ -168,7 +192,11 @@
     "action": "Click",
     "next": [
       "GetReward_BusinReward",
+      "GetReward_BusinReward_img",
       "GetReward_UnionBack2"
+    ],
+    "interrupt": [
+      "Global_OnceHomeButton"
     ],
     "post_delay": 3000,
     "roi": [
@@ -192,13 +220,15 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_GetBusinReward"
+      "GetReward_GetBusinHaveNotReward",
+      "GetReward_GetBusinReward",
+      "GetReward_BusinReward"
     ],
     "on_error": [
       "GetReward_DailyReward"
     ],
     "post_delay": 1000,
-    "focus": "GM.餐馆结算-主界面",
+    "focus": "GM.餐馆结算(COR)-主界面",
     "roi": [
       85,
       228,
@@ -210,10 +240,35 @@
     ],
     "doc": "识别点击餐馆"
   },
+  "GetReward_BusinReward_img": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "next": [
+      "GetReward_GetBusinHaveNotReward",
+      "GetReward_GetBusinReward",
+      "GetReward_BusinReward_img"
+    ],
+    "on_error": [
+      "GetReward_DailyReward"
+    ],
+    "post_delay": 1000,
+    "focus": "GM.餐馆结算(IMG)-主界面",
+    "roi": [
+      85,
+      228,
+      98,
+      34
+    ],
+    "template": [
+      "MainBotmBusinGE.png"
+    ],
+    "doc": "识别点击餐馆图像"
+  },
   "GetReward_GetBusinReward": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
+      "GetReward_GetBusinReward",
       "GetReward_GetBusinRewardBack"
     ],
     "post_delay": 2000,
@@ -228,10 +283,39 @@
     ],
     "doc": "点击结算"
   },
+  "GetReward_GetBusinHaveNotReward": {
+    "recognition": "ColorMatch",
+    "roi": [
+      551,
+      478,
+      163,
+      126
+    ],
+    "method": 4,
+    "count": 1000,
+    "lower": [
+      [
+        84,
+        84,
+        82
+      ]
+    ],
+    "upper": [
+      [
+        84,
+        84,
+        82
+      ]
+    ],
+    "next": [
+      "GetReward_Busin_InBusin"
+    ]
+  },
   "GetReward_GetBusinRewardBack": {
     "action": "Click",
     "next": [
-      "GetReward_Busin_In"
+      "GetReward_Busin_In",
+      "GetReward_Busin_In_img"
     ],
     "interrupt": [
       "GetReward_ClickOnce"
@@ -254,13 +338,35 @@
     ],
     "doc": "点击领取全部返回"
   },
+  "GetReward_Busin_In_img": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "next": [
+      "GetReward_Busin_InBusin",
+      "GetReward_Busin_In_img"
+    ],
+    "post_delay": 1000,
+    "focus": "GM.餐馆常客属性石img",
+    "roi": [
+      85,
+      228,
+      98,
+      34
+    ],
+    "template": [
+      "MainBotmBusinGE.png"
+    ],
+    "doc": "流程：进入餐馆。领取每日常客水晶。"
+  },
   "GetReward_Busin_In": {
     "recognition": "OCR",
     "action": "Click",
+    "post_wait_freezes": 800,
     "next": [
-      "GetReward_Busin_InBusin"
+      "GetReward_Busin_InBusin",
+      "GetReward_Busin_In"
     ],
-    "focus": "GM.餐馆常客属性石",
+    "focus": "GM.餐馆常客属性石ocr",
     "roi": [
       72,
       179,
@@ -277,7 +383,8 @@
     "action": "Click",
     "next": [
       "GetReward_Busin_GiftGet",
-      "GetReward_Busin_NoGift"
+      "GetReward_Busin_NoGift",
+      "GetReward_Busin_InBusin"
     ],
     "post_delay": 8000,
     "roi": [
@@ -293,13 +400,14 @@
   },
   "GetReward_Busin_GiftGet": {
     "recognition": "TemplateMatch",
-    "focus": "GBM.圣石发现",
     "action": "Click",
     "next": [
       "GetReward_Busin_GiftGet",
+      "GetReward_Busin_Quick_BackPVEPage_Str",
       "GetReward_Busin_BackPVEPage"
     ],
     "post_delay": 3000,
+    "focus": "GBM.圣石发现",
     "roi": [
       71,
       176,
@@ -320,10 +428,11 @@
   },
   "GetReward_Busin_NoGift": {
     "recognition": "OCR",
-    "focus": "GBM.无圣石情况",
     "next": [
+      "GetReward_Busin_Quick_BackPVEPage_Str",
       "GetReward_Busin_BackPVEPage"
     ],
+    "focus": "GBM.无圣石情况",
     "roi": [
       71,
       176,
@@ -428,7 +537,8 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_GetDailyReward"
+      "GetReward_GetDailyReward",
+      "GetReward_DailyReward"
     ],
     "post_delay": 1000,
     "focus": "GM.‘任务’奖励领取",
@@ -450,12 +560,9 @@
     "doc": "识别点击任务"
   },
   "GetReward_GetDailyReward": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
+    "recognition": "OCR",
     "next": [
-      "GetReward_GetDailyRewardBack"
-    ],
-    "on_error": [
+      "GetReward_GetDailyReward_cor",
       "GetReward_TabWeeklyReward"
     ],
     "post_delay": 3000,
@@ -465,17 +572,52 @@
       138,
       38
     ],
-    "template": [
-      "dailyreward.png"
+    "expected": [
+      "全部获得"
     ],
-    "threshold": 0.99,
     "doc": "点击领取全部"
+  },
+  "GetReward_GetDailyReward_cor": {
+    "recognition": "ColorMatch",
+    "action": "Click",
+    "next": [
+      "GetReward_GetDailyRewardBack",
+      "GetReward_TabWeeklyReward",
+      "GetReward_GetDailyReward_cor"
+    ],
+    "timeout": 3000,
+    "on_error": [
+      "GetReward_BackHomePage2"
+    ],
+    "post_delay": 1000,
+    "roi": [
+      1022,
+      640,
+      138,
+      38
+    ],
+    "count": 200,
+    "lower": [
+      222,
+      218,
+      210
+    ],
+    "upper": [
+      222,
+      218,
+      210
+    ]
   },
   "GetReward_GetDailyRewardBack": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_TabWeeklyReward"
+      "GetReward_TabWeeklyReward",
+      "GetReward_GetDailyRewardBack"
+    ],
+    "timeout": 3000,
+    "on_error": [
+      "GetReward_BackHomePage2"
     ],
     "post_delay": 3000,
     "roi": [
@@ -490,23 +632,27 @@
     "doc": "点击领取全部返回"
   },
   "GetReward_TabWeeklyReward": {
-    "recognition": "OCR",
+    "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
       "GetReward_GetWeeklyReward"
     ],
     "roi": [
-      180,
-      154,
-      149,
-      44
+      189,
+      146,
+      169,
+      73
     ],
-    "expected": [
-      "每周任务"
-    ]
+    "template": [
+      "MailAtMainRedGe.png",
+      "GaChaEquRDGE.png",
+      "ActiveGe.png",
+      "ActivePeerGe.png"
+    ],
+    "green_mask": true
   },
   "GetReward_GetWeeklyReward": {
-    "recognition": "TemplateMatch",
+    "recognition": "OCR",
     "action": "Click",
     "next": [
       "GetReward_GetWeeklyRewardBack",
@@ -519,10 +665,10 @@
       138,
       38
     ],
-    "template": [
-      "dailyreward.png"
-    ],
     "threshold": 0.99,
+    "expected": [
+      "全部获得"
+    ],
     "doc": "点击领取全部"
   },
   "GetReward_GetWeeklyRewardBack": {
@@ -628,30 +774,99 @@
     ]
   },
   "GetReward_Busin_BackPVEPage": {
-    "recognition": "OCR",
+    "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
       "GetReward_Busin_BackHomePage2",
       "GetReward_Busin_BackPVEPage"
     ],
-    "focus": "PM.开始离开GetReward卡带",
+    "post_delay": 2000,
+    "focus": "PM.开始离开GetReward卡带-传统",
     "roi": [
-      91,
-      633,
-      197,
-      81
+      1132,
+      4,
+      122,
+      77
+    ],
+    "template": [
+      "MainHomeIceGE.png"
+    ],
+    "green_mask": true
+  },
+  "GetReward_Busin_Quick_BackPVEPage_Str": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "next": [
+      "GetReward_Busin_Quick_BackPVEPage_Menu",
+      "GetReward_Busin_Quick_BackPVEPage_Str"
     ],
     "post_delay": 2000,
-    "expected": [
-      "员工"
+    "focus": "GBM.快速卡带离开餐馆",
+    "roi": [
+      74,
+      81,
+      285,
+      197
     ],
+    "template": [
+      "BusinQuickIcoGE.png"
+    ],
+    "green_mask": true
+  },
+  "GetReward_Busin_Quick_BackPVEPage_Menu": {
+    "recognition": "OCR",
+    "action": "Click",
+    "next": [
+      "GetReward_Busin_Quick_BackPVEPage_Menu_Cor",
+      "GetReward_Busin_Quick_BackPVEPage_Menu"
+    ],
+    "focus": "GBM.快速卡带离开餐馆-菜单模式",
+    "roi": [
+      185,
+      530,
+      173,
+      51
+    ],
+    "expected": [
+      "剧情游戏卡"
+    ]
+  },
+  "GetReward_Busin_Quick_BackPVEPage_Menu_Cor": {
+    "recognition": "ColorMatch",
+    "next": [
+      "GetReward_Busin_Quick_BackPVEPage_Pvemap"
+    ],
+    "focus": "GBM.菜单模式-色核通过",
+    "roi": [
+      185,
+      530,
+      173,
+      51
+    ],
+    "count": 200,
+    "lower": [
+      203,
+      203,
+      202
+    ],
+    "upper": [
+      255,
+      255,
+      255
+    ]
+  },
+  "GetReward_Busin_Quick_BackPVEPage_Pvemap": {
+    "action": "Click",
+    "next": [
+      "GetReward_Busin_BackHomePage"
+    ],
+    "post_delay": 2000,
     "target": [
-      1186,
-      46,
+      266,
+      626,
       0,
       0
-    ],
-    "doc": "找到图钉-点击返回主页"
+    ]
   },
   "GetReward_Busin_BackHomePage2": {
     "recognition": "OCR",
@@ -681,7 +896,8 @@
     "recognition": "OCR",
     "action": "Swipe",
     "next": [
-      "GetReward_Busin_TouchPVEBook"
+      "GetReward_Busin_TouchPVEBook",
+      "GetReward_Busin_PVEBookSwipe"
     ],
     "roi": [
       118,
