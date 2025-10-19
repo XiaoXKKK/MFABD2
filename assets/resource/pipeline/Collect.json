@@ -89,20 +89,27 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
+      "Collect_PerPetTask",
       "Collect_StartGameType2"
     ],
     "post_delay": 5000,
-    "focus": "CM.宠物派遣",
+    "focus": "CM.宠物派遣(调试中...错误请回报)",
     "roi": [
-      345,
-      124,
-      617,
-      401
+      234,
+      217,
+      714,
+      412
     ],
+    "target_offset": [
+      -3,
+      -4,
+      6,
+      6
+    ],
+    "threshold": 0.85,
     "template": [
-      "PetMidGe.png"
+      "tanhaoGE.png"
     ],
-    "threshold": 0.95,
     "green_mask": true,
     "doc": "宠物派遣"
   },
@@ -643,7 +650,7 @@
   "Collect_OperationsMain_ToAreaMap": {
     "recognition": "OCR",
     "next": [
-      "Collect_TargetMap1"
+      "Collect_TargetMap1-1"
     ],
     "interrupt": [
       "Collect_MapLift"
@@ -674,7 +681,23 @@
     ],
     "doc": "宠物派遣"
   },
-  "Collect_TargetMap1": {
+  "Collect_TargetMap1-1": {
+    "recognition": "TemplateMatch",
+    "inverse": true,
+    "roi": [
+      270,
+      317,
+      68,
+      54
+    ],
+    "template": [
+      "TpMapLeft.png"
+    ],
+    "green_mask": true,
+    "next": "Collect_TargetMap1-2",
+    "doc": "详细地图内左图标，目的移动到最左"
+  },
+  "Collect_TargetMap1-2": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
@@ -694,7 +717,8 @@
       "达普雷镇",
       "雷瓦汀基地",
       "拉勒凯镇",
-      "罗戴夫镇"
+      "罗戴夫镇",
+      "安全"
     ],
     "doc": "详细地图确定位置"
   },
@@ -715,6 +739,8 @@
     "expected": [
       "战斗I",
       "战斗 I",
+      "战斗\\s*[1IⅠ!！](?!I)(?!Ⅰ)(?!！)(?!!)",
+      "战斗[1IⅠ](?!I)(?!Ⅰ)",
       "封锁矿山",
       "加尔顿山前段",
       "洞穴神殿",
@@ -741,6 +767,8 @@
       "战斗Ⅱ",
       "战斗 II",
       "战斗 Ⅱ",
+      "战斗\\s*([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])",
+      "战斗([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])",
       "禁地矿山",
       "加尔顿山后段",
       "隐藏神殿",
@@ -768,7 +796,8 @@
       "达雷普旅馆",
       "雷瓦汀基地救护站",
       "拉勒凯旅馆",
-      "罗戴夫旅馆"
+      "罗戴夫旅馆",
+      "安全"
     ],
     "target": [
       120,
@@ -829,7 +858,8 @@
       "达普雷镇",
       "雷瓦汀基地",
       "拉勒凯镇",
-      "罗戴夫镇"
+      "罗戴夫镇",
+      "安全"
     ],
     "target": [
       120,
@@ -970,7 +1000,7 @@
       "TpMapRight.png"
     ],
     "green_mask": true,
-    "doc": "详细地图内右图标，目的右移动1格"
+    "doc": "详细地图内右图标，目的右移动1格[缺陷，此步骤缺乏验证方法]"
   },
   "Collect_FinBackMapPage": {
     "recognition": "TemplateMatch",
@@ -1273,8 +1303,8 @@
     "order_by": "Horizontal",
     "green_mask": true,
     "target_offset": [
-      -40,
-      30,
+      -35,
+      25,
       0,
       0
     ]
@@ -1402,7 +1432,8 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_QuickCart_FastIcons"
+      "Collect_QuickCart_FastIcons",
+      "Collect_QuickCart_HomePageHub2"
     ],
     "post_delay": 2000,
     "focus": "G=1.页面非预期，点击返回按钮",
