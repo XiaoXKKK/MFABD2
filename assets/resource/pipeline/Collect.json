@@ -738,15 +738,15 @@
       47
     ],
     "expected": [
-      "战斗I",
-      "战斗 I",
-      "战斗\\s*[1IⅠ!！](?!I)(?!Ⅰ)(?!！)(?!!)",
-      "战斗[1IⅠ](?!I)(?!Ⅰ)",
       "封锁矿山",
       "加尔顿山前段",
       "洞穴神殿",
       "贫民区",
-      "剑之神殿左侧回廊"
+      "剑之神殿左侧回廊",
+      "战斗I",
+      "战斗 I",
+      "战斗\\s*[1IⅠ!！](?!I)(?!Ⅰ)(?!！)(?!!)",
+      "战斗[1IⅠ](?!I)(?!Ⅰ)"
     ],
     "doc": "详细地图确定位置2"
   },
@@ -756,7 +756,8 @@
       "Collect_TargetMapEnd"
     ],
     "interrupt": [
-      "Collect_ClickTeleporCircleMap"
+      "Collect_ClickTeleporCircleMap",
+      "Collect_TargetMap_Special_Right"
     ],
     "roi": [
       408,
@@ -765,17 +766,17 @@
       47
     ],
     "expected": [
+      "禁地矿山",
+      "加尔顿山后段",
+      "隐藏神殿",
+      "盗贼据点",
+      "剑之神殿右侧回廊",
       "战斗II",
       "战斗Ⅱ",
       "战斗 II",
       "战斗 Ⅱ",
       "战斗\\s*([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])",
-      "战斗([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])",
-      "禁地矿山",
-      "加尔顿山后段",
-      "隐藏神殿",
-      "盗贼据点",
-      "剑之神殿右侧回廊"
+      "战斗([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])"
     ],
     "doc": "详细地图确定位置3"
   },
@@ -796,19 +797,24 @@
       47
     ],
     "expected": [
-      "剑之神殿中央回廊"
+      "达雷普旅馆",
+      "雷瓦汀基地救护站",
+      "拉勒凯旅馆",
+      "罗戴夫旅馆",
+      "安全"
     ],
     "target": [
-      888,
+      120,
       35,
       0,
       0
-    ]
+    ],
+    "doc": "分歧点，快速卡带pipeline_override了此处next，去了C_QuickCart_TargetMapEnd"
   },
   "Collect_TargetMap_Special_Right": {
     "recognition": "OCR",
     "action": "Click",
-    "focus": "CB.卡带内流程进入END环节",
+    "focus": "CBB.特殊地图，处理",
     "roi": [
       408,
       622,
@@ -816,18 +822,14 @@
       47
     ],
     "expected": [
-      "达雷普旅馆",
-      "雷瓦汀基地救护站",
-      "拉勒凯旅馆",
-      "罗戴夫旅馆",
-      "封印指定室",
-      "安全"
+      "剑之神殿中央回廊",
+      "封印指定室"
     ],
     "target": [
       977,
       342,
-      8,
-      7
+      2,
+      2
     ]
   },
   "Collect_OperationsMain_PVEChapterIden2#": {
@@ -899,6 +901,7 @@
     "next": [
       "Collect_Skill2"
     ],
+    "focus": "CB.吸取技能组施放",
     "post_delay": 5000,
     "roi": [
       1108,
