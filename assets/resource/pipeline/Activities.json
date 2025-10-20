@@ -142,9 +142,10 @@
     "recognition": "OCR",
     "next": [
       "Activities_FindActive",
+      "Activities_GetAllRe",
       "Activities_Slip"
     ],
-    "focus": "AA.进入活动",
+    "focus": "AA.进入活动页",
     "roi": [
       108,
       110,
@@ -396,6 +397,7 @@
       "Activities_Slip"
     ],
     "post_delay": 2000,
+    "post_wait_freezes": 2000,
     "focus": "GA.发现活动-bingo V.02509",
     "roi": [
       533,

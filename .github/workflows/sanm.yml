@@ -66,4 +66,4 @@ jobs:
             📝 摘要: ${{ steps.commit-info.outputs.subject }}
             📖 描述: ${{ steps.commit-info.outputs.body }}
             🔗 查看提交: https://github.com/${{ github.repository }}/commit/${{ inputs.commit_sha }}
-            🔨 构建详情: ${{ inputs.build_url }}
+            🔨 构建下载地址: ${{ inputs.build_url }}
