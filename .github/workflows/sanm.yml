@@ -29,14 +29,18 @@ jobs:
       - name: Extract commit info 
         id: commit-info
         run: |
-          # 处理多行提交消息（从输入参数获取）
-          COMMIT_MSG=$(echo "${{ inputs.commit_message }}" | sed ':a;N;$!ba;s/\n/ | /g')
+          # 使用更兼容的方法处理提交信息
+          COMMIT_MSG="${{ inputs.commit_message }}"
           
-          # 提取提交信息第一行作为摘要
-          SUBJECT=$(echo "$COMMIT_MSG" | cut -d'|' -f1 | sed 's/^ //')
+          # 提取第一行作为摘要
+          SUBJECT=$(echo "$COMMIT_MSG" | head -n 1)
           
-          # 提取剩余部分作为描述
-          BODY=$(echo "$COMMIT_MSG" | cut -d'|' -f2- | sed 's/^ //')
+          # 提取剩余行作为描述
+          if [ $(echo "$COMMIT_MSG" | wc -l) -gt 1 ]; then
+            BODY=$(echo "$COMMIT_MSG" | tail -n +2 | sed ':a;N;$!ba;s/\n/ | /g')
+          else
+            BODY=""
+          fi
           
           # 格式化时间戳
           TIME=$(date -d "${{ inputs.commit_timestamp }}" +"%Y-%m-%d %H:%M:%S")
