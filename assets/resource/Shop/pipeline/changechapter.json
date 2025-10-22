@@ -1,0 +1,426 @@
+{
+    "MerchantOnetoTwo":{
+        "recognition": "TemplateMatch",
+        "template": "OneAthome.png",
+        "threshold":0.985,
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "next":[
+            "MerchantClicktwo"
+        ]
+    },
+
+    "MerchantClicktwo":{
+        "recognition": "TemplateMatch",
+        "template": "two.png",
+        "action": "Click",
+        "roi" : [25,589,1231,84],
+        "post_delay": 10000,
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClicktwo"
+        ]
+    },
+
+    "MerchantTwotoThree":{
+        "recognition": "TemplateMatch",
+        "template": "TwoAthome.png",
+        "threshold":0.94,
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "next":[
+            "MerchantClickthree"
+        ]
+    },
+
+    "MerchantClickthree":{
+        "recognition": "TemplateMatch",
+        "template": "three.png",
+        "action": "Click",
+        "roi" : [25,589,1231,84],
+        "post_delay": 10000,
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickthree"
+        ]
+    },
+
+    "MerchantThreetofour":{
+        "recognition": "TemplateMatch",
+        "template": "ThreeAthome.png",
+        "threshold":0.96,
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "next":[
+            "MerchantClickfour"
+        ]
+    },
+
+    "MerchantClickfour":{
+        "recognition": "TemplateMatch",
+        "template": "four.png",
+        "action": "Click",
+        "roi" : [25,589,1231,84],
+        "post_delay": 10000,
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickfour"
+        ]
+    },
+
+    "Merchantfourtofive":{
+        "recognition": "TemplateMatch",
+        "template": "FourAthome.png",
+        "threshold":0.985,
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "next":[
+            "MerchantClickfive"
+        ]
+    },
+
+    "MerchantClickfive":{
+        "recognition": "TemplateMatch",
+        "template": "five.png",
+        "action": "Click",
+        "roi" : [25,589,1231,84],
+        "post_delay": 10000,
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickfive"
+        ]
+    },
+
+    "Merchantfivetosix":{
+        "recognition": "TemplateMatch",
+        "template": "FiveAthome.png",
+        "threshold":0.935,
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "next":[
+            "MerchantClicksix"
+        ]
+    },
+
+    "MerchantClicksix":{
+        "recognition": "TemplateMatch",
+        "template": "six.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClicksix"
+        ]
+    },
+
+    "Merchantsixtoseven":{
+        "recognition": "TemplateMatch",
+        "template": "SixAthome.png",
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "threshold":0.9,
+        "next":[
+            "MerchantClickseven"
+        ]
+    },
+
+    "MerchantClickseven":{
+        "recognition": "TemplateMatch",
+        "template": "seven.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickseven"
+        ]
+    },
+
+    "Merchantseventoeight":{
+        "recognition": "TemplateMatch",
+        "template": "SevenAthome.png",
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "threshold":0.9,
+        "next":[
+            "MerchantClickeight"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "MerchantClickeight":{
+        "recognition": "TemplateMatch",
+        "template": "eight.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickeight"
+        ]
+    },
+
+    "Merchanteighttoten":{
+        "recognition": "TemplateMatch",
+        "template": "EightAthome.png",
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "threshold":0.985,
+        "next":[
+            "MerchantClickten"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "MerchantClickten":{
+        "recognition": "TemplateMatch",
+        "template": "ten.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickten"
+        ]
+    },
+
+    "Merchanttentoeleven":{
+        "recognition": "TemplateMatch",
+        "template": "TenAthome.png",
+        "action": "DoNothing",
+        "threshold":0.95,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantClickeleven"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "MerchantClickeleven":{
+        "recognition": "TemplateMatch",
+        "template": "eleven.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickeleven"
+        ]
+    },
+
+    "Merchanteleventotwelve":{
+        "recognition": "TemplateMatch",
+        "template": "ElevenAthome.png",
+        "roi" : [25,589,1231,84],
+        "threshold":0.9,
+        "action": "DoNothing",
+        "next":[
+            "MerchantClicktwelve"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "MerchantClicktwelve":{
+        "recognition": "TemplateMatch",
+        "template": "twelve.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClicktwelve"
+        ]
+    },
+
+    "MerchanttwelvetoThirteen":{
+        "recognition": "TemplateMatch",
+        "template": "TwelveAthome.png",
+        "threshold":0.95,
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "next":[
+            "MerchantClickthirteen"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "MerchantClickthirteen":{
+        "recognition": "TemplateMatch",
+        "template": "thirteen.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickthirteen"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "Merchantthirteentofourteen":{
+        "recognition": "TemplateMatch",
+        "template": "ThirteenAthome.png",
+        "roi" : [25,589,1231,84],
+        "threshold":0.9,
+        "action": "DoNothing",
+        "next":[
+            "MerchantClickfourteen"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "MerchantClickfourteen":{
+        "recognition": "TemplateMatch",
+        "template": "fourteen.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickfourteen"
+        ]
+    },
+
+    "Merchantfourteentofifteen":{
+        "recognition": "TemplateMatch",
+        "template": "FourteenAthome.png",
+        "roi" : [25,589,1231,84],
+        "threshold":0.9,
+        "action": "DoNothing",
+        "next":[
+            "MerchantClickfifteen"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "MerchantClickfifteen":{
+        "recognition": "TemplateMatch",
+        "template": "fifteen.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickfifteen"
+        ]
+    },
+
+    "Merchantfifteentosixteen":{
+        "recognition": "TemplateMatch",
+        "template": "FifteenAthome.png",
+        "roi" : [25,589,1231,84],
+        "threshold":0.9,
+        "action": "DoNothing",
+        "next":[
+            "MerchantClicksixteen"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+
+    "MerchantClicksixteen":{
+        "recognition": "TemplateMatch",
+        "template": "sixteen.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClicksixteen"
+        ]
+    },
+
+    "Merchantsixteentoseventeen":{
+        "recognition": "TemplateMatch",
+        "template": "SixteenAthome.png",
+        "roi" : [25,589,1231,84],
+        "action": "DoNothing",
+        "threshold":0.95,
+        "next":[
+            "MerchantClickseventeen"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "MerchantClickseventeen":{
+        "recognition": "TemplateMatch",
+        "template": "seventeen.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickseventeen"
+        ]
+    },
+    
+    "Merchantseventeentoeighteen":{
+        "recognition": "TemplateMatch",
+        "template": "SeventeenAthome.png",
+        "action": "DoNothing",
+        "roi" : [25,589,1231,84],
+        "threshold":0.95,
+        "next":[
+            "MerchantClickeighteen"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+    "MerchantClickeighteen":{
+        "recognition": "TemplateMatch",
+        "template": "eighteen.png",
+        "action": "Click",
+        "post_delay": 10000,
+        "roi" : [25,589,1231,84],
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap",
+            "MerchantClickeighteen"
+        ]
+    },
+
+    "test":{
+        "recognition": "TemplateMatch",
+        "template": "OneAthome.png",
+        "action": "DoNothing",
+        "threshold":0.95,
+        "roi" : [25,589,1231,84]
+    }
+}

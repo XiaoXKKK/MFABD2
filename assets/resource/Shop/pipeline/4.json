@@ -1,0 +1,125 @@
+{
+    "Chapter4Shop":{
+        "recognition": "OCR",
+        "expected" : "凯洛杂货商老板",
+        "roi" : [335,49,222,130],
+        "next":[
+            "MerchantBuy4.1",
+            "MerchantBuy4.2",
+            "MerchantBuy4.3",
+            "MerchantBuy4.4",
+            "MerchantExitDiscountShop4"
+        ]
+    },
+
+    "MerchantExitDialog4":{
+        "pre_delay": 1000,
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "post_delay": 1000,
+        "roi": [74,0,130,139],
+        "next":[
+            "MerchantExitDialog4",
+            "Merchantswitch"
+        ]
+    },
+
+    "MerchantCountMax4":{
+        "recognition": "OCR",
+        "expected":"MAX",
+        "action": "Click",
+        "roi" : [512,436,164,135],
+        "next":"MerchantClickBuy4"
+    },
+
+    "MerchantClickBuy4":{
+        "pre_delay": 500,
+        "recognition": "TemplateMatch",
+        "template": "BuyButton.png",
+        "action": "Click",
+        "roi" : [783,441,276,139],
+        "post_delay": 6000,
+        "next":[
+            "MerchantClickBuy4",
+            "MerchantBuy4.1",
+            "MerchantBuy4.2",
+            "MerchantBuy4.3",
+            "MerchantBuy4.4",
+            "MerchantExitDiscountShop4"
+        ]
+    },
+
+    "MerchantExitDiscountShop4":{
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "roi": [74,0,130,139],
+        "post_delay": 700,
+        "next":[
+            "MerchantConfirmExit4",
+            "MerchantExitDiscountShop4"
+        ]
+    },
+
+    "MerchantConfirmExit4":{
+        "recognition": "OCR",
+        "expected":"关闭商店",
+        "action": "Click",
+        "next":"MerchantExitDialog4",
+        "roi" : [667,422,80,31]
+    },
+
+    "MerchantBuy4.1":{
+        "recognition": "TemplateMatch",
+        "template": "Milk.png",
+        "threshold":0.9,
+        "roi" : [553,279,99,98],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax4",
+            "MerchantBuy4.1"
+        ]
+    },
+
+    "MerchantBuy4.2":{
+        "recognition": "TemplateMatch",
+        "template": "CoffeeBean.png",
+        "threshold":0.9,
+        "roi" : [280,184,111,104],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax4",
+            "MerchantBuy4.2"
+        ]
+    },
+
+    "MerchantBuy4.3":{
+        "recognition": "TemplateMatch",
+        "template": "Salmon.png",
+        "threshold":0.9,
+        "roi" : [555,185,96,104],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax4",
+            "MerchantBuy4.3"
+        ]
+    },
+
+    "MerchantBuy4.4":{
+        "recognition": "TemplateMatch",
+        "template": "Vanilla.png",
+        "threshold":0.9,
+        "roi" : [286,367,102,99],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax4",
+            "MerchantBuy4.4"
+        ]
+    }
+
+}

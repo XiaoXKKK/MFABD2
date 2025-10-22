@@ -1,0 +1,293 @@
+{
+    "MerchantStart":{
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next":[
+            "MerchantMagic",
+            "MerchantOpenmap"
+        ]
+    },
+
+    "MerchantOpenmap":{
+        "recognition": "TemplateMatch",
+        "template": "MagicCircleSkill.png",
+        "roi" : [1155,453,63,66],
+        "action": "Click",
+        "target": [148,116,45,49],
+        "post_delay": 700,
+        "next":[
+            "MerchantmapSafe",
+            "MerchantmapDanger",
+            "MerchantOpenmap"
+        ]
+    },
+
+    "MerchantmapSafe":{
+        "recognition": "OCR",
+        "expected":"安全",
+        "action": "DoNothing",
+        "roi" : [178,15,71,56],
+        "next":[
+            "MerchantExitMap"
+        ]
+    },
+
+    "MerchantExitMap":{
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "roi" : [106,4,67,83],
+        "post_delay": 200,
+        "next":[
+            "MerchantOpenplacelist",
+            "MerchantExitMap"
+        ]
+    },
+
+    "MerchantmapDanger":{
+        "recognition": "OCR",
+        "expected":"战斗",
+        "roi" : [178,15,71,56],
+        "action": "DoNothing",
+        "next":[
+            "Merchantmaptomagic"
+        ]
+    },
+
+    "Merchantmaptomagic":{
+        "recognition": "TemplateMatch",
+        "template": "MagicCircle-main.png",
+        "action": "Click",
+        "roi" : [231,120,396,420],
+        "post_delay": 500,
+        "next":[
+            "MerchantWaittomagic",
+            "MerchantMoreclicktomagic",
+            "Merchantmaptomagic"
+        ]
+    },
+
+    "MerchantWaittomagic":{
+        "recognition": "TemplateMatch",
+        "template": "SignsinMotion.png",
+        "roi" : [599,606,78,75],
+        "action": "DoNothing",
+        "next":[
+            "MerchantMagic",
+            "MerchantWaittomagic"
+        ]
+    },
+
+    "MerchantMoreclicktomagic":{
+        "recognition": "OCR",
+        "expected":"魔法阵",
+        "roi" : [216,100,406,448],
+        "action": "Click",
+        "next":[
+            "MerchantWaittomagic",
+            "MerchantMoreclicktomagic"
+        ]
+    },
+
+
+    "MerchantMagic":{
+        "recognition": "TemplateMatch",
+        "template": "Interactive Button.png",
+        "action": "Click",
+        "threshold":0.9,
+        "post_delay": 200,
+        "roi" : [842,525,79,81],
+        "next":[
+            "MerchantmagicSafeplace",
+            "MerchantmagicDangerpalce",
+            "MerchantMagic"
+    ]
+    },
+
+    "MerchantmagicDangerpalce":{
+        "recognition": "TemplateMatch",
+        "template": "Magicswitchmap.png",
+        "roi" : [259,296,80,100],
+        "action": "Click",
+        "next":[
+            "MerchantmagicDangerpalce",
+            "MerchantBacktoSafe"
+        ]
+    },
+
+    "MerchantBacktoSafe":{
+        "recognition": "TemplateMatch",
+        "template": "MainMagicCircle.png",
+        "action": "Click",
+        "roi" : [376,91,557,512],
+        "post_delay": 500,
+        "next":[
+            "MerchantOpenplacelist",
+            "MerchantBacktoSafe"
+        ]
+    },
+
+    "MerchantmagicSafeplace":{
+        "recognition": "OCR",
+        "expected":"安全",
+        "action": "DoNothing",
+        "roi" : [431,596,184,85],
+        "next":"MerchantExitMagic"
+    },
+
+    "MerchantExitMagic":{
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "roi" : [58,4,87,77],
+        "post_delay": 200,
+        "next":[
+            "MerchantOpenplacelist",
+            "MerchantExitMagic"
+        ]
+    },
+
+    "MerchantOpenplacelist":{
+        "recognition": "TemplateMatch",
+        "template": "PlaceList.png",
+        "action": "Click",
+        "roi" : [203,63,58,51],
+        "post_delay":200,
+        "next":[
+            "MerchantGotoshop",
+            "MerchantOpenplacelist"
+        ]
+    },
+
+    "MerchantGotoshop":{
+        "recognition": "TemplateMatch",
+        "template": "Shop.png",
+        "roi" : [251,53,71,277],
+        "action": "Click",
+        "post_delay": 200,
+        "next":[
+            "MerchantWaittoshop",
+            "MerchantGotoshop"
+        ]
+    },
+
+    "MerchantWaittoshop":{
+        "recognition": "TemplateMatch",
+        "template": "SignsinMotion.png",
+        "roi" : [599,606,78,75],
+        "action": "DoNothing",
+        "next":[
+            "MerchantStartshop",
+            "MerchantWaittoshop"
+        ]
+    },
+
+    "MerchantStartshop":{
+        "recognition": "TemplateMatch",
+        "template": "ShopInteraction.png",
+        "action": "Click",
+        "roi" : [844,526,72,79],
+        "post_delay": 1500,
+        "next":[
+            "MerchantBargain",
+            "MerchantStartshop"
+        ]
+    },
+
+
+    "MerchantBargain":{
+        "recognition":"TemplateMatch",
+        "template":"SibyllaAvatar.png",
+        "threshold":0.93,
+        "action":"Click",
+        "roi" : [80,83,238,183],
+        "post_delay": 1500,
+        "next":[
+            "MerchantConfirmBargain",
+            "MerchantBargain",
+            "MerchantStartshop"
+        ]
+    },
+
+    "MerchantConfirmBargain":{
+        "recognition": "OCR",
+        "expected": "砍价",
+        "action": "Click",
+        "post_delay":8000,
+        "roi" : [659,434,113,29],
+        "next":[
+            "Chapter1Shop",
+            "Chapter2Shop",
+            "Chapter3Shop",
+            "Chapter4Shop",
+            "Chapter5Shop",
+            "Chapter6Shop",
+            "Chapter7Shop",
+            "Chapter8Shop",
+            "Chapter10Shop",
+            "Chapter11Shop",
+            "Chapter12Shop",
+            "Chapter13Shop",
+            "Chapter14Shop",
+            "Chapter15Shop",
+            "Chapter16Shop",
+            "Chapter17Shop",
+            "Chapter18Shop",
+            "MerchantBargain",
+            "MerchantConfirmBargain",
+            "MerchantStartshop"
+        ]  
+    },
+
+   
+    "Merchantswitch":{
+        "recognition": "TemplateMatch",
+        "template": "switchmapbottom.png",
+        "action": "Click",
+        "roi" : [519,617,80,71],
+        "post_delay": 1000,
+        "next":[
+            "Merchantwaitswitchmenu",
+            "Merchantswitch"
+        ]
+    },
+
+        "Merchantwaitswitchmenu":{
+        "recognition": "OCR",
+        "expected":"剧情游戏卡",
+        "action": "DoNothing",
+        "roi" : [36,530,845,65],
+        "next":[
+            "MerchantOnetoTwo",
+            "MerchantTwotoThree",
+            "MerchantThreetofour",
+            "Merchantfourtofive",
+            "Merchantfivetosix",
+            "Merchantsixtoseven",
+            "Merchantseventoeight",
+            "Merchanteighttoten",
+            "Merchanttentoeleven",
+            "Merchanteleventotwelve",
+            "MerchanttwelvetoThirteen",
+            "Merchantthirteentofourteen",
+            "Merchantfourteentofifteen",
+            "Merchantfifteentosixteen",
+            "Merchantsixteentoseventeen",
+            "Merchantseventeentoeighteen",
+            "Merchantswitch"
+        ],
+        "interrupt":[
+            "MErchantswipeswitch"
+        ]
+    },
+
+    "MErchantswipeswitch":{
+        "recognition": "OCR",
+        "action": "Swipe",
+        "expected":"剧情游戏卡",
+        "begin": [898,616,28,40],
+        "end":[338,624,22,23],
+        "roi" : [71,511,678,78],
+        "post_delay": 1000
+    }
+}

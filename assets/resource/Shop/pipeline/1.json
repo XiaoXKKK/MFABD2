@@ -1,0 +1,112 @@
+{
+    "Chapter1Shop":{
+        "recognition": "OCR",
+        "expected" : "无聊收集狂大叔",
+        "roi" : [335,49,222,130],
+        "next":[
+            "MerchantBuy1.1",
+            "MerchantBuy1.2",
+            "MerchantBuy1.3",
+            "MerchantExitDiscountShop1"
+        ]
+    },
+
+    "MerchantExitDialog1":{
+        "pre_delay": 1000,
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "roi": [74,0,130,139],
+        "post_delay": 1000,
+        "next":[
+            "MerchantExitDialog1",
+            "Merchantswitch"
+        ]
+    },
+
+    "MerchantCountMax1":{
+        "recognition": "OCR",
+        "expected":"MAX",
+        "action": "Click",
+        "roi" : [512,436,164,135],
+        "next":"MerchantClickBuy1"
+    },
+
+    "MerchantClickBuy1":{
+        "pre_delay": 500,
+        "recognition": "TemplateMatch",
+        "template": "BuyButton.png",
+        "action": "Click",
+        "roi" : [783,441,276,139],
+        "post_delay": 6000,
+        "next":[
+            "MerchantClickBuy1",
+            "MerchantBuy1.1",
+            "MerchantBuy1.2",
+            "MerchantBuy1.3",
+            "MerchantExitDiscountShop1"
+        ]
+    },
+
+    "MerchantExitDiscountShop1":{
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "roi": [74,0,130,139],
+        "post_delay": 700,
+        "next":[
+            "MerchantConfirmExit1",
+            "MerchantExitDiscountShop1"
+        ]
+    },
+
+    "MerchantConfirmExit1":{
+        "recognition": "OCR",
+        "expected":"关闭商店",
+        "action": "Click",
+        "next":"MerchantExitDialog1",
+        "roi" : [667,422,80,31]
+    },
+
+    "MerchantBuy1.1":{
+        "recognition": "TemplateMatch",
+        "template": "Mushroom.png",
+        "threshold":0.9,
+        "roi" : [280,184,111,104],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax1",
+            "MerchantBuy1.1"
+        ]
+    },
+
+    "MerchantBuy1.2":{
+        "recognition": "TemplateMatch",
+        "template": "Carrot.png",
+        "threshold":0.9,
+        "roi" : [555,185,96,104],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax1",
+            "MerchantBuy1.2"
+        ]
+    },
+
+    "MerchantBuy1.3":{
+        "recognition": "TemplateMatch",
+        "template": "SweetChiliSauce.png",
+        "threshold":0.9,
+        "roi" : [553,279,99,98],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax1",
+            "MerchantBuy1.3"
+        ]
+    }
+
+
+
+}

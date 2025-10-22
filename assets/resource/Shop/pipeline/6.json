@@ -1,0 +1,124 @@
+{
+    "Chapter6Shop":{
+        "recognition": "OCR",
+        "expected" : "仓库管理石怪",
+        "roi" : [335,49,222,130],
+        "next":[
+            "MerchantBuy6.1",
+            "MerchantBuy6.2",
+            "MerchantBuy6.3",
+            "MerchantBuy6.4",
+            "MerchantExitDiscountShop6"
+        ]
+    },
+
+    "MerchantExitDialog6":{
+        "pre_delay": 1000,
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "post_delay": 1000,
+        "roi": [74,0,130,139],
+        "next":[
+            "MerchantExitDialog6",
+            "Merchantswitch"
+        ]
+    },
+
+    "MerchantCountMax6":{
+        "recognition": "OCR",
+        "expected":"MAX",
+        "action": "Click",
+        "roi" : [512,436,164,135],
+        "next":"MerchantClickBuy6"
+    },
+
+    "MerchantClickBuy6":{
+        "pre_delay": 500,
+        "recognition": "TemplateMatch",
+        "template": "BuyButton.png",
+        "action": "Click",
+        "roi" : [783,441,276,139],
+        "post_delay": 6000,
+        "next":[
+            "MerchantClickBuy6",
+            "MerchantBuy6.1",
+            "MerchantBuy6.2",
+            "MerchantBuy6.3",
+            "MerchantBuy6.4",
+            "MerchantExitDiscountShop6"
+        ]
+    },
+
+    "MerchantExitDiscountShop6":{
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "roi": [74,0,130,139],
+        "post_delay": 700,
+        "next":[
+            "MerchantConfirmExit6",
+            "MerchantExitDiscountShop6"
+        ]
+    },
+
+    "MerchantConfirmExit6":{
+        "recognition": "OCR",
+        "expected":"关闭商店",
+        "action": "Click",
+        "next":"MerchantExitDialog6",
+        "roi" : [667,422,80,31]
+    },
+
+    "MerchantBuy6.1":{
+        "recognition": "TemplateMatch",
+        "template": "BellPepper.png",
+        "threshold":0.9,
+        "roi" : [819,183,93,106],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax6",
+            "MerchantBuy6.1"
+        ]
+    },
+
+    "MerchantBuy6.2":{
+        "recognition": "TemplateMatch",
+        "template": "Onion.png",
+        "threshold":0.9,
+        "roi" : [280,184,111,104],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax6",
+            "MerchantBuy6.2"
+        ]
+    },
+
+    "MerchantBuy6.3":{
+        "recognition": "TemplateMatch",
+        "template": "Cheese.png",
+        "threshold":0.9,
+        "roi" : [277,280,112,98],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax6",
+            "MerchantBuy6.3"
+        ]
+    },
+
+    "MerchantBuy6.4":{
+        "recognition": "TemplateMatch",
+        "template": "Egg.png",
+        "threshold":0.9,
+        "roi" : [817,278,99,98],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax6",
+            "MerchantBuy6.4"
+        ]
+    }
+}

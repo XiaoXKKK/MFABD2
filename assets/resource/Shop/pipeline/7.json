@@ -1,0 +1,139 @@
+{
+   "Chapter7Shop":{
+        "recognition": "OCR",
+        "expected" : "拉勒凯包袱商",
+        "roi" : [335,49,222,130],
+        "next":[
+            "MerchantBuy7.1",
+            "MerchantBuy7.2",
+            "MerchantBuy7.3",
+            "MerchantBuy7.4",
+            "MerchantBuy7.5",
+            "MerchantExitDiscountShop7"
+        ]
+    },
+
+    "MerchantExitDialog7":{
+        "pre_delay": 1000,
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "roi": [74,0,130,139],
+        "post_delay": 1000,
+        "next":[
+            "MerchantExitDialog7",
+            "Merchantswitch"
+        ]
+    },
+
+    "MerchantCountMax7":{
+        "recognition": "OCR",
+        "expected":"MAX",
+        "action": "Click",
+        "roi" : [512,436,164,135],
+        "next":"MerchantClickBuy7"
+    },
+
+    "MerchantClickBuy7":{
+        "pre_delay": 500,
+        "recognition": "TemplateMatch",
+        "template": "BuyButton.png",
+        "action": "Click",
+        "roi" : [783,441,276,139],
+        "post_delay": 6000,
+        "next":[
+            "MerchantClickBuy7",
+            "MerchantBuy7.1",
+            "MerchantBuy7.2",
+            "MerchantBuy7.3",
+            "MerchantBuy7.4",
+            "MerchantBuy7.5",
+            "MerchantExitDiscountShop7"
+        ]
+    },
+
+    "MerchantExitDiscountShop7":{
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "roi": [74,0,130,139],
+        "post_delay": 700,
+        "next":[
+            "MerchantConfirmExit7",
+            "MerchantExitDiscountShop7"
+        ]
+    },
+
+    "MerchantConfirmExit7":{
+        "recognition": "OCR",
+        "expected":"关闭商店",
+        "action": "Click",
+        "next":"MerchantExitDialog7",
+        "roi" : [667,422,80,31]
+    },
+
+    "MerchantBuy7.1":{
+        "recognition": "TemplateMatch",
+        "template": "Salmon.png",
+        "threshold":0.9,
+        "roi" : [280,184,111,104],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax7",
+            "MerchantBuy7.1"
+        ]
+    },
+
+    "MerchantBuy7.2":{
+        "recognition": "TemplateMatch",
+        "template": "Tomato.png",
+        "threshold":0.9,
+        "roi" : [819,183,93,106],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax7",
+            "MerchantBuy7.2"
+        ]
+    },
+
+    "MerchantBuy7.3":{
+        "recognition": "TemplateMatch",
+        "template": "Mustard.png",
+        "threshold":0.9,
+        "roi" : [277,280,112,98],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax7",
+            "MerchantBuy7.3"
+        ]
+    },
+
+    "MerchantBuy7.4":{
+        "recognition": "TemplateMatch",
+        "template": "Cheese.png",
+        "threshold":0.9,
+        "roi" : [286,367,102,99],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax7",
+            "MerchantBuy7.4"
+        ]
+    },
+
+    "MerchantBuy7.5":{
+        "recognition": "TemplateMatch",
+        "template": "Radish leaf.png",
+        "threshold":0.9,
+        "roi" : [546,367,107,97],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax7",
+            "MerchantBuy7.5"
+        ]
+    }
+}

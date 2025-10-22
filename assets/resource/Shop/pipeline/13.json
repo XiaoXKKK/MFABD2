@@ -1,0 +1,140 @@
+{
+    
+   "Chapter13Shop":{
+        "recognition": "OCR",
+        "expected" : "华特波尔商店主人",
+        "roi" : [335,49,222,130],
+        "next":[
+            "MerchantBuy13.1",
+            "MerchantBuy13.2",
+            "MerchantBuy13.3",
+            "MerchantBuy13.4",
+            "MerchantBuy13.5",
+            "MerchantExitDiscountShop13"
+        ]
+    },
+
+    "MerchantExitDialog13":{
+        "pre_delay": 1000,
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "post_delay": 1000,
+        "roi": [74,0,130,139],
+        "next":[
+            "MerchantExitDialog13",
+            "Merchantswitch"
+        ]
+    },
+
+    "MerchantCountMax13":{
+        "recognition": "OCR",
+        "expected":"MAX",
+        "action": "Click",
+        "roi" : [512,436,164,135],
+        "next":"MerchantClickBuy13"
+    },
+
+    "MerchantClickBuy13":{
+        "pre_delay": 500,
+        "recognition": "TemplateMatch",
+        "template": "BuyButton.png",
+        "action": "Click",
+        "roi" : [783,441,276,139],
+        "post_delay": 6000,
+        "next":[
+            "MerchantClickBuy13",
+            "MerchantBuy13.1",
+            "MerchantBuy13.2",
+            "MerchantBuy13.3",
+            "MerchantBuy13.4",
+            "MerchantBuy13.5",
+            "MerchantExitDiscountShop13"
+        ]
+    },
+
+    "MerchantExitDiscountShop13":{
+        "recognition": "TemplateMatch",
+        "template": "ExitArrow.png",
+        "action": "Click",
+        "roi": [74,0,130,139],
+        "post_delay": 700,
+        "next":[
+            "MerchantConfirmExit13",
+            "MerchantExitDiscountShop13"
+        ]
+    },
+
+    "MerchantConfirmExit13":{
+        "recognition": "OCR",
+        "expected":"关闭商店",
+        "action": "Click",
+        "next":"MerchantExitDialog13",
+        "roi" : [667,422,80,31]
+    },
+
+    "MerchantBuy13.1":{
+        "recognition": "TemplateMatch",
+        "template": "Apple.png",
+        "threshold":0.9,
+        "roi" : [280,184,111,104],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax13",
+            "MerchantBuy13.1"
+        ]
+    },
+
+    "MerchantBuy13.2":{
+        "recognition": "TemplateMatch",
+        "template": "Grape.png",
+        "threshold":0.9,
+        "roi" : [555,185,96,104],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax13",
+            "MerchantBuy13.2"
+        ]
+    },
+
+    "MerchantBuy13.3":{
+        "recognition": "TemplateMatch",
+        "template": "Honey.png",
+        "threshold":0.9,
+        "roi" : [277,280,112,98],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax13",
+            "MerchantBuy13.3"
+        ]
+    },
+
+    "MerchantBuy13.4":{
+        "recognition": "TemplateMatch",
+        "template": "Sugar.png",
+        "threshold":0.9,
+        "roi" : [553,279,99,98],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax13",
+            "MerchantBuy13.4"
+        ]
+    },
+
+    "MerchantBuy13.5":{
+        "recognition": "TemplateMatch",
+        "template": "Butter.png",
+        "threshold":0.9,
+        "roi" : [285,456,100,98],
+        "action": "Click",
+        "post_delay": 1000,
+        "next":[
+            "MerchantCountMax13",
+            "MerchantBuy13.5"
+        ]
+    }
+}
