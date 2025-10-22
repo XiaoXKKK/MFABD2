@@ -703,7 +703,6 @@
       "Collect_TargetMap2"
     ],
     "interrupt": [
-      "Collect_TeleporNotFind",
       "Collect_ClickTeleporCircleMap",
       "Collect_ClickBackOnSecureMap"
     ],
