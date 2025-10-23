@@ -128,20 +128,14 @@
     "timeout": 50000,
     "post_delay": 60000,
     "roi": [
-      884,
-      189,
-      142,
-      77
+      127,
+      89,
+      951,
+      333
     ],
     "expected": [
       "Update",
       "更新"
-    ],
-    "target": [
-      954,
-      224,
-      0,
-      0
     ]
   },
   "StartGame_UpdateEngShopnothink": {
@@ -168,10 +162,10 @@
     "timeout": 50000,
     "post_wait_freezes": 1000,
     "roi": [
-      869,
-      183,
-      178,
-      92
+      127,
+      89,
+      951,
+      333
     ],
     "expected": [
       "Play",
@@ -313,12 +307,12 @@
     "next": [
       "StartGame_PayFaild",
       "StartGame_TouchStart",
-      "StartGame_MapPage",
       "StartGame_PVPSet",
       "StartGame_Special",
-      "StartGame_BackMapPage",
       "StartGame_NewChar",
-      "StartGame_DaliyBanner"
+      "StartGame_DaliyBanner",
+      "StartGame_MapPage",
+      "StartGame_BackMapPage"
     ],
     "pre_delay": 5000,
     "post_delay": 20000,
