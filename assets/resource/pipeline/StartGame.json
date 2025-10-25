@@ -2,10 +2,10 @@
   "StartGame_Start": {
     "action": "StartApp",
     "next": [
-      "StartGame_Logo",
       "StartGame_LinkError",
       "StartGame_Error_API",
       "StartGame_Error_AM",
+      "StartGame_Logo",
       "StartGame_LoadingPage"
     ],
     "post_delay": 8000,
@@ -16,10 +16,10 @@
   "StartGame_Logo": {
     "recognition": "OCR",
     "next": [
-      "StartGame_Logo",
+      "StartGame_PayFaild",
       "StartGame_LoadingPage",
       "StartGame_TouchStart",
-      "StartGame_PayFaild"
+      "StartGame_Logo"
     ],
     "post_delay": 10000,
     "focus": "NEO",
@@ -36,14 +36,14 @@
   "StartGame_LoadingPage": {
     "recognition": "OCR",
     "next": [
-      "StartGame_Loading",
       "StartGame_Update",
       "StartGame_UpdateDate",
       "StartGame_PayFaild",
-      "StartGame_TouchStart",
       "StartGame_LoadingPage",
       "StartGame_Error_API",
-      "StartGame_Error_AM"
+      "StartGame_Error_AM",
+      "StartGame_TouchStart",
+      "StartGame_Loading"
     ],
     "post_delay": 10000,
     "pre_wait_freezes": 3000,
@@ -242,13 +242,13 @@
   "StartGame_Loading": {
     "recognition": "OCR",
     "next": [
-      "StartGame_Loading",
       "StartGame_Update",
       "StartGame_UpdateDate",
       "StartGame_PayFaild",
+      "StartGame_Linkdwon",
       "StartGame_TouchStart",
       "StartGame_LoadingPage",
-      "StartGame_Linkdwon"
+      "StartGame_Loading"
     ],
     "post_delay": 15000,
     "focus": "SM.ORC游戏启动中",
@@ -292,10 +292,10 @@
     ],
     "post_delay": 3000,
     "roi": [
-      572,
+      573,
       385,
       135,
-      58
+      136
     ],
     "expected": [
       "确认"

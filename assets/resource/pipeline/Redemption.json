@@ -14,7 +14,7 @@
       "Redemption_HomePageHub",
       "Redemption_HomePageHub1"
     ],
-    "post_delay": 2000,
+    "post_delay": 3000,
     "focus": "G=0.页面预期内，普通启动。M.箱庭地图run已确认",
     "roi": [
       1047,
@@ -42,7 +42,7 @@
       "Redemption_HomePageHub",
       "Redemption_HomePageHub1"
     ],
-    "post_delay": 2000,
+    "post_delay": 3000,
     "focus": "G=0.页面预期内，普通启动。BM.箱庭地图pin已确认",
     "roi": [
       1108,
@@ -294,7 +294,7 @@
     "focus": "REB.[ERROR]发现已存在的开局，退出流程"
   },
   "Redemption_Evil_Redemption_SelLv9": {
-    "recognition": "ColorMatch",
+    "recognition": "OCR",
     "action": "Click",
     "next": [
       "Redemption_Evil_Redemption_DetPassLv",
@@ -305,27 +305,13 @@
     ],
     "post_delay": 3000,
     "roi": [
-      187,
-      651,
-      58,
-      42
+      181,
+      640,
+      157,
+      73
     ],
-    "method": 4,
-    "lower": [
-      94,
-      96,
-      98
-    ],
-    "upper": [
-      94,
-      96,
-      98
-    ],
-    "target": [
-      238,
-      683,
-      0,
-      0
+    "expected": [
+      "[Ll][vV]\\D?\\d+"
     ]
   },
   "Redemption_Evil_Redemption_DetPassLv": {
