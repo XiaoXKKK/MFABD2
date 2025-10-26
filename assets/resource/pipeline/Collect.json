@@ -9,11 +9,10 @@
   "Collect_HomePageHub": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_PerPetTask",
-      "Collect_PVEChapterIden2#"
+      "Collect_QuickCart_QC1Sort"
     ],
     "interrupt": [
-      "Collect_HomePageSwipeInitialize_BackHomePage"
+      "Collect_QuickCart_FastIcons"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内，箱庭确认",
@@ -38,11 +37,10 @@
   "Collect_HomePageHub1": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_PerPetTask",
-      "Collect_PVEChapterIden2#"
+      "Collect_QuickCart_QC1Sort"
     ],
     "interrupt": [
-      "Collect_HomePageSwipeInitialize_BackHomePage"
+      "Collect_QuickCart_FastIcons"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内。BM.箱庭地图pin已确认",
@@ -116,10 +114,10 @@
   "Collect_StartGameType2": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_PVEChapterIden2#"
+      "Collect_QuickCart_QC1Sort"
     ],
     "interrupt": [
-      "Collect_HomePageSwipeInitialize_BackHomePage"
+      "Collect_QuickCart_FastIcons"
     ],
     "post_delay": 2000,
     "focus": "CM.StartGameType2",
@@ -756,7 +754,7 @@
   "Collect_TargetMap3": {
     "recognition": "OCR",
     "next": [
-      "Collect_TargetMapEnd"
+      "Collect_QuickCart_TargetMapEnd"
     ],
     "interrupt": [
       "Collect_TeleporNotFind",
@@ -842,7 +840,7 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_TargetMapEnd_End",
+      "Collect_QuickCart_TargetMapEnd_End",
       "Collect_ClickTeleporCircleMap",
       "Collect_TeleporNotFind"
     ],

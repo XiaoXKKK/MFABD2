@@ -150,101 +150,19 @@
 		"采集方案": {
 			"cases": [
 				{
-					"name": "固定:木&金-章节9+7+8",
-					"pipeline_override": {}
-				},
-				{
-					"name": "固定:低练度-章节2",
-					"pipeline_override": {
-						"Collect_ChapterSelection1": {
-							"next": [
-								"Collect_ChapterSelectionEnd"
-							],
-							"template": [
-								"pve2b.png"
-							]
-						}
-					}
-				},
-				{
 					"name": "快速:剧情卡-剧情卡-剧情卡",
 					"pipeline_override": {
-						"Collect_HomePageHub": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_HomePageHub1": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_StartGameType2": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_TargetMap3": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd"
-							]
-						},
 						"Collect_QuickCart_QC2": {
 							"index": 1
 						},
 						"Collect_QuickCart_QC3": {
 							"index": 2
-						},
-						"Collect_TeleporNotFind": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd_End",
-								"Collect_ClickTeleporCircleMap",
-								"Collect_TeleporNotFind"
-							]
 						}
 					}
 				},
 				{
 					"name": "快速:剧情卡-剧情卡-角色卡",
 					"pipeline_override": {
-						"Collect_HomePageHub": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_HomePageHub1": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_StartGameType2": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_TargetMap3": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd"
-							]
-						},
 						"Collect_QuickCart_QC2": {
 							"index": 1
 						},
@@ -252,48 +170,12 @@
 							"expected": [
 								"角色游戏卡"
 							]
-						},
-						"Collect_TeleporNotFind": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd_End",
-								"Collect_ClickTeleporCircleMap",
-								"Collect_TeleporNotFind"
-							]
 						}
 					}
 				},
 				{
 					"name": "快速:剧情卡-角色卡-角色卡",
 					"pipeline_override": {
-						"Collect_HomePageHub": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_HomePageHub1": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_StartGameType2": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_TargetMap3": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd"
-							]
-						},
 						"Collect_QuickCart_QC2Sort": {
 							"expected": [
 								"角色游戏卡"
@@ -306,48 +188,12 @@
 							"expected": [
 								"角色游戏卡"
 							]
-						},
-						"Collect_TeleporNotFind": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd_End",
-								"Collect_ClickTeleporCircleMap",
-								"Collect_TeleporNotFind"
-							]
 						}
 					}
 				},
 				{
 					"name": "快速:角色卡-角色卡-角色卡",
 					"pipeline_override": {
-						"Collect_HomePageHub": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_HomePageHub1": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_StartGameType2": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_TargetMap3": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd"
-							]
-						},
 						"Collect_QuickCart_QC1Sort": {
 							"expected": [
 								"角色游戏卡"
@@ -368,12 +214,99 @@
 						},
 						"Collect_QuickCart_QC3": {
 							"index": 2
+						}
+					}
+				},
+				{
+					"name": "固定:木&金-章节9+7+8",
+					"pipeline_override": {
+						"Collect_HomePageHub": {
+							"next": [
+								"Collect_PerPetTask",
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_HomePageHub1": {
+							"next": [
+								"Collect_PerPetTask",
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_StartGameType2": {
+							"next": [
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_TargetMap3": {
+							"next": [
+								"Collect_TargetMapEnd"
+							]
 						},
 						"Collect_TeleporNotFind": {
 							"next": [
-								"Collect_QuickCart_TargetMapEnd_End",
+								"Collect_TargetMapEnd_End",
 								"Collect_ClickTeleporCircleMap",
 								"Collect_TeleporNotFind"
+							]
+						}
+					}
+				},
+				{
+					"name": "固定:低练度-章节2",
+					"pipeline_override": {
+						"Collect_HomePageHub": {
+							"next": [
+								"Collect_PerPetTask",
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_HomePageHub1": {
+							"next": [
+								"Collect_PerPetTask",
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_StartGameType2": {
+							"next": [
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_TargetMap3": {
+							"next": [
+								"Collect_TargetMapEnd"
+							]
+						},
+						"Collect_TeleporNotFind": {
+							"next": [
+								"Collect_TargetMapEnd_End",
+								"Collect_ClickTeleporCircleMap",
+								"Collect_TeleporNotFind"
+							]
+						},
+						"Collect_ChapterSelection1": {
+							"next": [
+								"Collect_ChapterSelectionEnd"
+							],
+							"template": [
+								"pve2b.png"
 							]
 						}
 					}
