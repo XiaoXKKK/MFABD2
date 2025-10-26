@@ -137,7 +137,8 @@
       111
     ],
     "template": [
-      "MainBotmUnionGE.png"
+      "MainBotmUnionGE.png",
+      "MainBotmUnionAcGE.png"
     ],
     "green_mask": true,
     "doc": "主菜单，点击工会|图按照剪影模式做"
