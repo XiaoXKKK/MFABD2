@@ -133,7 +133,8 @@
     "recognition": "OCR",
     "action": "Swipe",
     "next": [
-      "PVP_PVPBook"
+      "PVP_PVPBook",
+      "PVP_HomePageSwipe"
     ],
     "pre_delay": 1000,
     "focus": "PM.卡带界面垂直复位(一次性)",
@@ -691,7 +692,8 @@
     "recognition": "OCR",
     "action": "Swipe",
     "next": [
-      "PVP_TouchPVEBook"
+      "PVP_TouchPVEBook",
+      "PVP_PVEBookSwipe"
     ],
     "roi": [
       118,
