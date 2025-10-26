@@ -1257,7 +1257,6 @@
       "Collect_Skill1_4_Nothing",
       "Collect_Skill1_4"
     ],
-    "post_delay": 1500,
     "focus": "CSB.无技能被设置，栏位1-3",
     "roi": [
       966,
@@ -1276,7 +1275,6 @@
       "Collect_Skill1_5_Nothing",
       "Collect_Skill1_5"
     ],
-    "post_delay": 1500,
     "focus": "CSB.无技能被设置，栏位1-4",
     "roi": [
       1054,
@@ -1294,7 +1292,6 @@
     "next": [
       "Collect_Skill1_1"
     ],
-    "post_delay": 1500,
     "focus": "CSB.无技能被设置，栏位1-5",
     "roi": [
       1139,
@@ -2070,7 +2067,7 @@
     "next": [
       "Collect_ForceTeleporCircleClick1"
     ],
-    "post_delay": 5000,
+    "post_delay": 3000,
     "focus": "CB.技能传送门.进入流程",
     "roi": [
       1122,
@@ -2086,16 +2083,114 @@
   "Collect_ForceTeleporCircleClick1": {
     "action": "Click",
     "next": [
-      "Collect_ForceTeleporCircleClick2"
+      "Collect_Skill_Tap3_clr",
+      "Collect_ForceTeleporCircleClick1"
     ],
-    "post_delay": 500,
+    "post_delay": 800,
     "target": [
-      1080,
+      1200,
       665,
       0,
       0
     ],
-    "doc": "点击Pin2快捷技能栏"
+    "doc": "点击Pin3快捷技能栏"
+  },
+  "Collect_Skill_Tap3_clr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_Skill3_1_Nothing",
+      "Collect_Skill3_1",
+      "Collect_Skill3_1_Unable"
+    ],
+    "focus": "CSB.技能页3-色核通过",
+    "roi": [
+      1181,
+      641,
+      46,
+      48
+    ],
+    "count": 200,
+    "lower": [
+      192,
+      141,
+      23
+    ],
+    "upper": [
+      223,
+      194,
+      129
+    ],
+    "doc": "技能页3"
+  },
+  "Collect_Skill3_1_Nothing": {
+    "recognition": "TemplateMatch",
+    "next": [
+      "Collect_Skill3_1_Unable"
+    ],
+    "focus": "CSB.无技能被设置，栏位3-1",
+    "roi": [
+      963,
+      607,
+      80,
+      85
+    ],
+    "template": [
+      "Skill-Nothing.png"
+    ]
+  },
+  "Collect_Skill3_1": {
+    "recognition": "TemplateMatch",
+    "next": [
+      "Collect_Skill3_1_perClr",
+      "Collect_Skill2_1~5_Unable"
+    ],
+    "focus": "CSB.技能'吸取'已配置，栏位1-1",
+    "timeout": 5000,
+    "on_error": [],
+    "roi": [
+      963,
+      607,
+      80,
+      85
+    ],
+    "template": [
+      "Skill3-1.png"
+    ]
+  },
+  "Collect_Skill3_1_perClr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_ForceTeleporCircleClick2.1",
+      "Collect_ForceTeleporCircleClick2.14"
+    ],
+    "interrupt": [
+      "Collect_ForceTeleporCircleClick2.05"
+    ],
+    "post_delay": 1500,
+    "action": "Click",
+    "focus": "CSB.施放'吸取'技能,栏位2-1",
+    "roi": [
+      963,
+      607,
+      80,
+      85
+    ],
+    "count": 480,
+    "lower": [
+      178,
+      178,
+      177
+    ],
+    "upper": [
+      255,
+      255,
+      255
+    ],
+    "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+  },
+  "Collect_Skill3_1_Unable": {
+    "focus": "CSB.[WRM]'传送'技能,运作错误",
+    "next": []
   },
   "Collect_ForceTeleporCircleClick2": {
     "action": "Click",
@@ -2113,7 +2208,7 @@
       0,
       0
     ],
-    "doc": "点击Pin2快捷技能栏中的传送技能"
+    "doc": "[废弃]点击Pin2快捷技能栏中的传送技能"
   },
   "Collect_ForceTeleporCircleClick2.05": {
     "action": "Click",
