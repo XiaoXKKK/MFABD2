@@ -33,5 +33,32 @@
         ],
         "green_mask": true,
         "doc": "其他页面，返回按钮(一次性)"
-    }
+    },
+    "Global_QuickCart_MenuReset": {
+        "recognition": "TemplateMatch",
+        "action": "Click",
+        "next": [
+            "Global_QuickCart_MenuReset_Ocr",
+            "Global_QuickCart_MenuReset"
+        ],
+        "post_delay": 1000,
+        "focus": "GO.调出快速卡带",
+        "template": [
+            "QuickCartGeadai.png"
+        ],
+        "green_mask": true
+    },
+    "Global_QuickCart_MenuReset_Ocr": {
+        "recognition": "OCR",
+        "focus": "GO.快速卡带调出成功",
+        "roi": [
+            32,
+            506,
+            306,
+            125
+        ],
+        "expected": [
+            "最近"
+        ]
+    },
 }
