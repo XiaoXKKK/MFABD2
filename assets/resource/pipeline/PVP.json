@@ -169,6 +169,9 @@
       "PVP_PVPMes2",
       "PVP_PVPStart"
     ],
+    "interrupt": [
+      "PVP_PerOperationsMain_Error"
+    ],
     "post_delay": 8500,
     "focus": "PM.PVP卡带",
     "roi": [
@@ -548,10 +551,10 @@
     "post_delay": 3000,
     "focus": "PM.PVP.PVP战斗进行中...",
     "roi": [
-      49,
+      50,
       576,
-      124,
-      68
+      203,
+      69
     ],
     "expected": [
       "正在进行"
@@ -751,5 +754,35 @@
       "pin.png"
     ],
     "doc": "识别右下图钉-章节主页"
+  },
+  "PVP_PerOperationsMain_Error": {
+    "recognition": "OCR",
+    "roi": [
+      480,
+      139,
+      322,
+      429
+    ],
+    "expected": [
+      "没有赛季奖励",
+      "error"
+    ],
+    "next": [
+      "PVP_PerOperationsMain_Error_Processing"
+    ],
+    "focus": "PB.[WRN]游戏异常弹窗"
+  },
+  "PVP_PerOperationsMain_Error_Processing": {
+    "recognition": "OCR",
+    "action": "Click",
+    "roi": [
+      480,
+      139,
+      322,
+      429
+    ],
+    "expected": [
+      "确认"
+    ]
   }
 }

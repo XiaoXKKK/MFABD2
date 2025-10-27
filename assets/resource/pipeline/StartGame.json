@@ -314,6 +314,9 @@
       "StartGame_MapPage",
       "StartGame_BackMapPage"
     ],
+    "interrupt": [
+      "PVP_PerOperationsMain_Error"
+    ],
     "pre_delay": 5000,
     "post_delay": 20000,
     "post_wait_freezes": 2000,
