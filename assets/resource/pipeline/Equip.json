@@ -864,6 +864,7 @@
       213
     ],
     "template": "EquMj24GE.png",
+    "threshold": 0.9,
     "next": [
       "Equip_Exclude24MJEqu_filter"
     ],
