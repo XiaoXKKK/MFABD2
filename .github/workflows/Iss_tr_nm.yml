@@ -1,0 +1,315 @@
+name: Issue Summary Notification
+
+on:
+  schedule:
+    # UTC 时间对应北京时间 +8
+    - cron: '0 1 * * *'  # 北京时间 09:00
+    - cron: '0 6 * * *'  # 北京时间 14:00  
+    - cron: '0 10 * * *' # 北京时间 18:00
+  workflow_dispatch:
+    inputs:
+      test_mode:
+        description: '测试模式：汇总当天0点至今的活动'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  issue-summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Repository
+        uses: actions/checkout@v4
+      
+      - name: Calculate Time Windows
+        id: time_calc
+        run: |
+          # 获取当前时间
+          CURRENT_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "current_time=$CURRENT_TIME" >> $GITHUB_OUTPUT
+          
+          # 如果是手动触发的测试模式
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ inputs.test_mode }}" == "true" ]; then
+            # 当天0点 UTC
+            START_TIME=$(date -u -d "00:00:00" +"%Y-%m-%dT%H:%M:%SZ")
+            TIME_LABEL="今天汇总"
+          else
+            # 根据定时任务确定时间窗口
+            CURRENT_HOUR=$(date -u +"%H")
+            case $CURRENT_HOUR in
+              "01")  # 对应北京时间 09:00
+                START_TIME=$(date -u -d "18:00:00 yesterday" +"%Y-%m-%dT%H:%M:%SZ")
+                TIME_LABEL="昨夜汇总"
+                ;;
+              "06")  # 对应北京时间 14:00
+                START_TIME=$(date -u -d "01:00:00" +"%Y-%m-%dT%H:%M:%SZ")
+                TIME_LABEL="上午汇总"
+                ;;
+              "10")  # 对应北京时间 18:00
+                START_TIME=$(date -u -d "06:00:00" +"%Y-%m-%dT%H:%M:%SZ")
+                TIME_LABEL="下午汇总"
+                ;;
+              *)
+                # 默认情况，用于手动触发非测试模式
+                START_TIME=$(date -u -d "6 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
+                TIME_LABEL="近期汇总"
+                ;;
+            esac
+          fi
+          
+          echo "start_time=$START_TIME" >> $GITHUB_OUTPUT
+          echo "time_label=$TIME_LABEL" >> $GITHUB_OUTPUT
+          echo "Time window: $START_TIME to $CURRENT_TIME"
+          echo "Label: $TIME_LABEL"
+      
+      - name: Fetch Issue Activities
+        id: fetch_activities
+        env:
+          START_TIME: ${{ steps.time_calc.outputs.start_time }}
+          END_TIME: ${{ steps.time_calc.outputs.current_time }}
+          REPO: ${{ github.repository }}
+        run: |
+          # 安装 jq 用于 JSON 处理
+          sudo apt-get update && sudo apt-get install -y jq
+          
+          echo "开始获取 GitHub Issue 活动数据..."
+          echo "时间范围: $START_TIME 到 $END_TIME"
+          echo "仓库: $REPO"
+          
+          # 提取仓库所有者和小鼠
+          REPO_OWNER=$(echo "$REPO" | cut -d'/' -f1)
+          REPO_NAME=$(echo "$REPO" | cut -d'/' -f2)
+          
+          # 获取时间范围内的 issue 评论
+          COMMENTS_JSON=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$REPO/issues/comments?since=$START_TIME&sort=created&direction=desc" | \
+            jq -c '.[] | select(.created_at >= "'$START_TIME'" and .created_at <= "'$END_TIME'")')
+          
+          # 获取时间范围内的 issue 事件（标签变更、分配等）
+          EVENTS_JSON=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$REPO/issues/events?since=$START_TIME" | \
+            jq -c '.[] | select(.created_at >= "'$START_TIME'" and .created_at <= "'$END_TIME'")')
+          
+          # 处理评论数据
+          COMMENT_COUNT=0
+          COMMENTS_ARRAY="["
+          
+          if [ -n "$COMMENTS_JSON" ]; then
+            while IFS= read -r comment; do
+              if [ -n "$comment" ]; then
+                ISSUE_NUMBER=$(echo "$comment" | jq -r '.issue_url | split("/") | last')
+                ISSUE_TITLE=$(curl -s -H "Authorization: token $GH_TOKEN" \
+                  -H "Accept: application/vnd.github.v3+json" \
+                  "$(echo "$comment" | jq -r '.issue_url')" | jq -r '.title')
+                AUTHOR=$(echo "$comment" | jq -r '.user.login')
+                BODY=$(echo "$comment" | jq -r '.body' | sed 's/"/\\"/g')
+                PREVIEW=$(echo "$BODY" | cut -c 1-15)
+                
+                if [ $COMMENT_COUNT -gt 0 ]; then
+                  COMMENTS_ARRAY="$COMMENTS_ARRAY,"
+                fi
+                
+                COMMENTS_ARRAY="$COMMENTS_ARRAY{\"number\": $ISSUE_NUMBER, \"title\": \"$ISSUE_TITLE\", \"author\": \"$AUTHOR\", \"preview\": \"$PREVIEW\"}"
+                COMMENT_COUNT=$((COMMENT_COUNT + 1))
+              fi
+            done <<< "$COMMENTS_JSON"
+          fi
+          
+          COMMENTS_ARRAY="$COMMENTS_ARRAY]"
+          
+          # 处理事件数据（标签变更、分配等）
+          LABEL_COUNT=0
+          LABELS_ARRAY="["
+          ASSIGN_COUNT=0
+          ASSIGNMENTS_ARRAY="["
+          
+          if [ -n "$EVENTS_JSON" ]; then
+            while IFS= read -r event; do
+              if [ -n "$event" ]; then
+                EVENT_TYPE=$(echo "$event" | jq -r '.event')
+                ISSUE_NUMBER=$(echo "$event" | jq -r '.issue.number')
+                ISSUE_TITLE=$(echo "$event" | jq -r '.issue.title')
+                
+                case "$EVENT_TYPE" in
+                  "labeled")
+                    LABEL_NAME=$(echo "$event" | jq -r '.label.name')
+                    if [ $LABEL_COUNT -gt 0 ]; then
+                      LABELS_ARRAY="$LABELS_ARRAY,"
+                    fi
+                    LABELS_ARRAY="$LABELS_ARRAY{\"number\": $ISSUE_NUMBER, \"title\": \"$ISSUE_TITLE\", \"change\": \"添加了$LABEL_NAME标签\"}"
+                    LABEL_COUNT=$((LABEL_COUNT + 1))
+                    ;;
+                  "unlabeled")
+                    LABEL_NAME=$(echo "$event" | jq -r '.label.name')
+                    if [ $LABEL_COUNT -gt 0 ]; then
+                      LABELS_ARRAY="$LABELS_ARRAY,"
+                    fi
+                    LABELS_ARRAY="$LABELS_ARRAY{\"number\": $ISSUE_NUMBER, \"title\": \"$ISSUE_TITLE\", \"change\": \"移除了$LABEL_NAME标签\"}"
+                    LABEL_COUNT=$((LABEL_COUNT + 1))
+                    ;;
+                  "assigned")
+                    ASSIGNEE=$(echo "$event" | jq -r '.assignee.login')
+                    if [ $ASSIGN_COUNT -gt 0 ]; then
+                      ASSIGNMENTS_ARRAY="$ASSIGNMENTS_ARRAY,"
+                    fi
+                    ASSIGNMENTS_ARRAY="$ASSIGNMENTS_ARRAY{\"number\": $ISSUE_NUMBER, \"title\": \"$ISSUE_TITLE\", \"assignee\": \"$ASSIGNEE\"}"
+                    ASSIGN_COUNT=$((ASSIGN_COUNT + 1))
+                    ;;
+                esac
+              fi
+            done <<< "$EVENTS_JSON"
+          fi
+          
+          LABELS_ARRAY="$LABELS_ARRAY]"
+          ASSIGNMENTS_ARRAY="$ASSIGNMENTS_ARRAY]"
+          
+          # 生成汇总数据 JSON
+          cat > summary_data.json << EOF
+          {
+            "comments": $COMMENTS_ARRAY,
+            "labels": $LABELS_ARRAY,
+            "assignments": $ASSIGNMENTS_ARRAY
+          }
+          EOF
+          
+          TOTAL_COUNT=$((COMMENT_COUNT + LABEL_COUNT + ASSIGN_COUNT))
+          
+          echo "comment_count=$COMMENT_COUNT" >> $GITHUB_OUTPUT
+          echo "label_count=$LABEL_COUNT" >> $GITHUB_OUTPUT  
+          echo "assign_count=$ASSIGN_COUNT" >> $GITHUB_OUTPUT
+          echo "total_count=$TOTAL_COUNT" >> $GITHUB_OUTPUT
+          
+          echo "数据获取完成:"
+          echo "评论: $COMMENT_COUNT, 标签变更: $LABEL_COUNT, 分配: $ASSIGN_COUNT"
+          cat summary_data.json 
+
+      - name: Generate Summary Message
+        id: generate_message
+        env:
+          TIME_LABEL: ${{ steps.time_calc.outputs.time_label }}
+          COMMENT_COUNT: ${{ steps.fetch_activities.outputs.comment_count }}
+          LABEL_COUNT: ${{ steps.fetch_activities.outputs.label_count }}
+          ASSIGN_COUNT: ${{ steps.fetch_activities.outputs.assign_count }}
+          TOTAL_COUNT: ${{ steps.fetch_activities.outputs.total_count }}
+        run: |
+          # 读取汇总数据
+          SUMMARY_DATA=$(cat summary_data.json)
+          
+          # 构建消息内容
+          MESSAGE="📊 [${{ github.repository }}] Issue动态 ($TIME_LABEL)"
+          
+          # 处理评论
+          if [ $COMMENT_COUNT -gt 0 ]; then
+            MESSAGE="$MESSAGE"$'\n'"💬 新评论 ($COMMENT_COUNT)"
+            
+            if [ $COMMENT_COUNT -eq 1 ]; then
+              COMMENT=$(echo "$SUMMARY_DATA" | jq -r '.comments[0]')
+              NUMBER=$(echo "$COMMENT" | jq -r '.number')
+              TITLE=$(echo "$COMMENT" | jq -r '.title')
+              AUTHOR=$(echo "$COMMENT" | jq -r '.author')
+              PREVIEW=$(echo "$COMMENT" | jq -r '.preview' | cut -c 1-15)
+              MESSAGE="$MESSAGE"$'\n'"  - [#$NUMBER] $TITLE：$AUTHOR：$PREVIEW..."
+            elif [ $COMMENT_COUNT -le 3 ]; then
+              for i in $(seq 0 $((COMMENT_COUNT-1))); do
+                COMMENT=$(echo "$SUMMARY_DATA" | jq -r ".comments[$i]")
+                NUMBER=$(echo "$COMMENT" | jq -r '.number')
+                TITLE=$(echo "$COMMENT" | jq -r '.title')
+                AUTHOR=$(echo "$COMMENT" | jq -r '.author')
+                PREVIEW=$(echo "$COMMENT" | jq -r '.preview' | cut -c 1-15)
+                MESSAGE="$MESSAGE"$'\n'"  - [#$NUMBER] $TITLE：$AUTHOR：$PREVIEW..."
+              done
+            else
+              for i in $(seq 0 2); do
+                COMMENT=$(echo "$SUMMARY_DATA" | jq -r ".comments[$i]")
+                NUMBER=$(echo "$COMMENT" | jq -r '.number')
+                TITLE=$(echo "$COMMENT" | jq -r '.title')
+                AUTHOR=$(echo "$COMMENT" | jq -r '.author')
+                PREVIEW=$(echo "$COMMENT" | jq -r '.preview' | cut -c 1-15)
+                MESSAGE="$MESSAGE"$'\n'"  - [#$NUMBER] $TITLE：$AUTHOR：$PREVIEW..."
+              done
+              MESSAGE="$MESSAGE"$'\n'"  ...等$((COMMENT_COUNT-3))条评论"
+            fi
+          fi
+          
+          # 处理标签变更
+          if [ $LABEL_COUNT -gt 0 ]; then
+            MESSAGE="$MESSAGE"$'\n'"🏷️ 标签变更 ($LABEL_COUNT)"
+            
+            if [ $LABEL_COUNT -eq 1 ]; then
+              LABEL=$(echo "$SUMMARY_DATA" | jq -r '.labels[0]')
+              NUMBER=$(echo "$LABEL" | jq -r '.number')
+              TITLE=$(echo "$LABEL" | jq -r '.title')
+              CHANGE=$(echo "$LABEL" | jq -r '.change')
+              MESSAGE="$MESSAGE"$'\n'"  - [#$NUMBER] $TITLE：$CHANGE"
+            elif [ $LABEL_COUNT -le 3 ]; then
+              for i in $(seq 0 $((LABEL_COUNT-1))); do
+                LABEL=$(echo "$SUMMARY_DATA" | jq -r ".labels[$i]")
+                NUMBER=$(echo "$LABEL" | jq -r '.number')
+                TITLE=$(echo "$LABEL" | jq -r '.title')
+                CHANGE=$(echo "$LABEL" | jq -r '.change')
+                MESSAGE="$MESSAGE"$'\n'"  - [#$NUMBER] $TITLE：$CHANGE"
+              done
+            else
+              for i in $(seq 0 2); do
+                LABEL=$(echo "$SUMMARY_DATA" | jq -r ".labels[$i]")
+                NUMBER=$(echo "$LABEL" | jq -r '.number')
+                TITLE=$(echo "$LABEL" | jq -r '.title')
+                CHANGE=$(echo "$LABEL" | jq -r '.change')
+                MESSAGE="$MESSAGE"$'\n'"  - [#$NUMBER] $TITLE：$CHANGE"
+              done
+              MESSAGE="$MESSAGE"$'\n'"  ...等$((LABEL_COUNT-3))条标签变更"
+            fi
+          fi
+          
+          # 处理分配事件
+          if [ $ASSIGN_COUNT -gt 0 ]; then
+            MESSAGE="$MESSAGE"$'\n'"👤 分配变更 ($ASSIGN_COUNT)"
+            
+            if [ $ASSIGN_COUNT -eq 1 ]; then
+              ASSIGN=$(echo "$SUMMARY_DATA" | jq -r '.assignments[0]')
+              NUMBER=$(echo "$ASSIGN" | jq -r '.number')
+              TITLE=$(echo "$ASSIGN" | jq -r '.title')
+              ASSIGNEE=$(echo "$ASSIGN" | jq -r '.assignee')
+              MESSAGE="$MESSAGE"$'\n'"  - [#$NUMBER] $TITLE：分配给 $ASSIGNEE"
+            elif [ $ASSIGN_COUNT -le 3 ]; then
+              for i in $(seq 0 $((ASSIGN_COUNT-1))); do
+                ASSIGN=$(echo "$SUMMARY_DATA" | jq -r ".assignments[$i]")
+                NUMBER=$(echo "$ASSIGN" | jq -r '.number')
+                TITLE=$(echo "$ASSIGN" | jq -r '.title')
+                ASSIGNEE=$(echo "$ASSIGN" | jq -r '.assignee')
+                MESSAGE="$MESSAGE"$'\n'"  - [#$NUMBER] $TITLE：分配给 $ASSIGNEE"
+              done
+            else
+              for i in $(seq 0 2); do
+                ASSIGN=$(echo "$SUMMARY_DATA" | jq -r ".assignments[$i]")
+                NUMBER=$(echo "$ASSIGN" | jq -r '.number')
+                TITLE=$(echo "$ASSIGN" | jq -r '.title')
+                ASSIGNEE=$(echo "$ASSIGN" | jq -r '.assignee')
+                MESSAGE="$MESSAGE"$'\n'"  - [#$NUMBER] $TITLE：分配给 $ASSIGNEE"
+              done
+              MESSAGE="$MESSAGE"$'\n'"  ...等$((ASSIGN_COUNT-3))条分配变更"
+            fi
+          fi
+          
+          # 如果没有活动
+          if [ $TOTAL_COUNT -eq 0 ]; then
+            MESSAGE="$MESSAGE"$'\n'"📭 本时段无新活动"
+          fi
+          
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "$MESSAGE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+                
+      - name: Send QQ Notification
+        if: steps.fetch_activities.outputs.total_count != '0'
+        uses: Y2Nk4/qmsg-action@master
+        with:
+          qq: ${{ secrets.QMSG_NOTIFY_QQ }}
+          groups: ${{ secrets.QMSG_NOTIFY_GROUPS }}
+          key: ${{ secrets.QMSG_KEY }}
+          message: ${{ steps.generate_message.outputs.message }}      

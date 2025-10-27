@@ -731,7 +731,6 @@
     "template": [
       "filterC17.png"
     ],
-    "count": 12,
     "target": [
       840,
       320,
@@ -904,7 +903,6 @@
   "Equip_FindRefining": {
     "action": "Click",
     "next": [
-      "Equip_Exclude24MJEqu",
       "Equip_Refining",
       "Equip_FindRefining"
     ],
@@ -917,26 +915,14 @@
     ],
     "doc": "点击第一个装备"
   },
-  "Equip_Exclude24MJEqu": {
-    "recognition": "TemplateMatch",
-    "roi": [
-      759,
-      342,
-      266,
-      213
-    ],
-    "template": "EquMj24GE.png",
-    "next": [
-      "Equip_Exclude24MJEqu_filter"
-    ],
-    "focus": "EM.[WRN]首选装备可能是魔兽装备"
-  },
-  "Equip_Exclude24MJEqu_filter": {
+  "Equip_Overdrive_RefLvMax_filter": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Equip_Exclude24MJEqu_OCR",
-      "Equip_Exclude24MJEqu_filter"
+      "Equip_Overdrive_RefLvMax_Second_Clr1",
+      "Equip_Overdrive_RefLvMax_Second_Clr2",
+      "Equip_Overdrive_RefLvMax_OCR",
+      "Equip_Overdrive_RefLvMax_filter"
     ],
     "post_delay": 2000,
     "focus": "EM.[WRN]开始筛选排除",
@@ -951,7 +937,108 @@
     ],
     "doc": "点击左上筛选"
   },
-  "Equip_Exclude24MJEqu_OCR": {
+  "Equip_Overdrive_RefLvMax_Second_Clr1": {
+    "recognition": "ColorMatch",
+    "roi": [
+      243,
+      294,
+      135,
+      66
+    ],
+    "count": 500,
+    "lower": [
+      19,
+      41,
+      63
+    ],
+    "upper": [
+      249,
+      255,
+      255
+    ],
+    "next": [
+      "Equip_Overdrive_RefLvMax_Second_Force<17"
+    ],
+    "focus": "EBO.神人发现( • ̀ω•́ )✧",
+    "doc": "看看专武是不是已经点过了?"
+  },
+  "Equip_Overdrive_RefLvMax_Second_Clr2": {
+    "recognition": "ColorMatch",
+    "roi": [
+      497,
+      296,
+      127,
+      57
+    ],
+    "count": 500,
+    "lower": [
+      19,
+      41,
+      63
+    ],
+    "upper": [
+      249,
+      255,
+      255
+    ],
+    "next": [
+      "Equip_Overdrive_RefLvMax_Second_Force<17"
+    ],
+    "focus": "EBO.神人发现( • ̀ω•́ )✧",
+    "doc": "看看制作是不是已经点过了?"
+  },
+  "Equip_Overdrive_RefLvMax_Second_Force<17": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "next": [
+      "Equip_Overdrive_RefLvMax_Second_<C17Clr",
+      "Equip_Overdrive_RefLvMax_Second_Force<17"
+    ],
+    "post_delay": 1500,
+    "roi": [
+      802,
+      285,
+      82,
+      75
+    ],
+    "template": [
+      "filterC17.png"
+    ],
+    "target": [
+      840,
+      320,
+      0,
+      0
+    ]
+  },
+  "Equip_Overdrive_RefLvMax_Second_<C17Clr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Equip_filterON"
+    ],
+    "roi": [
+      816,
+      308,
+      52,
+      26
+    ],
+    "count": 50,
+    "lower": [
+      [
+        102,
+        102,
+        122
+      ]
+    ],
+    "upper": [
+      [
+        160,
+        160,
+        160
+      ]
+    ]
+  },
+  "Equip_Overdrive_RefLvMax_OCR": {
     "recognition": "OCR",
     "expected": [
       "专\\S*",
@@ -966,12 +1053,12 @@
     ],
     "action": "Click",
     "next": [
-      "Equip_Exclude24MJEqu_Color",
-      "Equip_Exclude24MJEqu_OCR"
+      "Equip_Overdrive_RefLvMax_Color",
+      "Equip_Overdrive_RefLvMax_OCR"
     ],
     "focus": "EM.筛选排除-点击"
   },
-  "Equip_Exclude24MJEqu_Color": {
+  "Equip_Overdrive_RefLvMax_Color": {
     "recognition": "ColorMatch",
     "next": [
       "Equip_filterON"
@@ -1001,10 +1088,11 @@
     "action": "Click",
     "next": [
       "Equip_TouchRefining",
+      "Equip_Overdrive_RefLvMax",
       "Equip_Refining"
     ],
     "post_delay": 2000,
-    "focus": "EM.装备精炼.精炼",
+    "focus": "EM.进入精炼详情.精炼",
     "roi": [
       935,
       503,
@@ -1016,6 +1104,23 @@
     ],
     "doc": "点击精炼"
   },
+  "Equip_Overdrive_RefLvMax": {
+    "recognition": "OCR",
+    "roi": [
+      770,
+      574,
+      316,
+      146
+    ],
+    "expected": "达到最大强化级别",
+    "next": [
+      "Equip_Overdrive_RefLvMax_filter"
+    ],
+    "interrupt": [
+      "Global_BackPageHub_Once"
+    ],
+    "focus": "EBO.[WRN]所选装备无法继续精炼"
+  },
   "Equip_TouchRefining": {
     "recognition": "OCR",
     "action": "Click",
@@ -1024,7 +1129,7 @@
       "Equip_TouchRefining"
     ],
     "post_delay": 3000,
-    "focus": "EM.装备精炼.再确认精炼",
+    "focus": "EM.装备精炼.确认精炼",
     "roi": [
       961,
       644,

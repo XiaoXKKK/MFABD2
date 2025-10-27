@@ -1,0 +1,173 @@
+name: Issue Real-time Notification
+
+on:
+  issues:
+    types: [opened, closed, reopened, assigned, labeled, unlabeled]
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  issue-notification:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check Out Repository
+        uses: actions/checkout@v4
+      
+      - name: Prepare Issue Message
+        id: prepare_message
+        run: |
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          ISSUE_AUTHOR="${{ github.event.issue.user.login }}"
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+          ISSUE_STATE="${{ github.event.issue.state }}"
+          ISSUE_ACTION="${{ github.event.action }}"
+          
+          echo "处理事件: $ISSUE_ACTION (Issue #$ISSUE_NUMBER)"
+          
+          # 如果是 opened 事件，等待一段时间检查完整状态
+          if [ "$ISSUE_ACTION" == "opened" ]; then
+            echo "检测到新建 Issue，等待30秒检查完整状态..."
+            sleep 30
+            
+            # 调用 API 获取 Issue 的完整状态
+            echo "获取 Issue #$ISSUE_NUMBER 的完整状态..."
+            ISSUE_JSON=$(curl -s -H "Authorization: token $GH_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER")
+            
+            # 提取标签信息
+            LABELS=$(echo "$ISSUE_JSON" | jq -r '[.labels[].name] | join(", ")')
+            LABEL_COUNT=$(echo "$ISSUE_JSON" | jq -r '.labels | length')
+            
+            # 提取分配信息
+            ASSIGNEES=$(echo "$ISSUE_JSON" | jq -r '[.assignees[].login] | join(", ")')
+            ASSIGNEE_COUNT=$(echo "$ISSUE_JSON" | jq -r '.assignees | length')
+            
+            # 构建合并消息
+            ACTION_EMOJI="📝"
+            ACTION_TEXT="新建了 Issue"
+            TITLE="$ACTION_EMOJI [${{ github.repository }}] $ACTION_TEXT"
+            
+            CONTENT="标题: $ISSUE_TITLE"
+            CONTENT="$CONTENT | 作者: $ISSUE_AUTHOR"
+            CONTENT="$CONTENT | 编号: #$ISSUE_NUMBER"
+            CONTENT="$CONTENT | 状态: $ISSUE_STATE"
+            
+            # 添加标签信息（如果有）
+            if [ "$LABEL_COUNT" -gt 0 ]; then
+              if [ "$LABEL_COUNT" -eq 1 ]; then
+                CONTENT="$CONTENT | 标签: $LABELS"
+              else
+                CONTENT="$CONTENT | 标签: $LABELS ($LABEL_COUNT个)"
+              fi
+            fi
+            
+            # 添加分配信息（如果有）
+            if [ "$ASSIGNEE_COUNT" -gt 0 ]; then
+              if [ "$ASSIGNEE_COUNT" -eq 1 ]; then
+                CONTENT="$CONTENT | 分配给: $ASSIGNEES"
+              else
+                CONTENT="$CONTENT | 分配给: $ASSIGNEES ($ASSIGNEE_COUNT人)"
+              fi
+            fi
+            
+            echo "合并后的消息（包含$LABEL_COUNT个标签，$ASSIGNEE_COUNT个分配）"
+            
+          else
+            # 对于非 opened 事件，检查是否在新建后的短时间内
+            ISSUE_CREATED_AT="${{ github.event.issue.created_at }}"
+            CURRENT_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+            
+            # 计算时间差（秒）
+            CREATED_EPOCH=$(date -d "$ISSUE_CREATED_AT" +%s)
+            CURRENT_EPOCH=$(date -d "$CURRENT_TIME" +%s)
+            TIME_DIFF=$((CURRENT_EPOCH - CREATED_EPOCH))
+            
+            echo "Issue 创建于: $ISSUE_CREATED_AT"
+            echo "当前时间: $CURRENT_TIME"
+            echo "时间差: $TIME_DIFF 秒"
+            
+            # 如果 Issue 是2分钟内新建的，抑制单独的标签/分配事件
+            if [ "$TIME_DIFF" -lt 120 ]; then
+              echo "抑制短时间内的事件: $ISSUE_ACTION (Issue 刚创建)"
+              echo "skip_notification=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            
+            # 正常处理其他事件
+            case "$ISSUE_ACTION" in
+              "closed")
+                ACTION_EMOJI="✅"
+                ACTION_TEXT="关闭了 Issue"
+                ;;
+              "reopened")
+                ACTION_EMOJI="🔄"
+                ACTION_TEXT="重新打开了 Issue"
+                ;;
+              "assigned")
+                ACTION_EMOJI="👤"
+                ACTION_TEXT="分配了 Issue"
+                ASSIGNEE="${{ github.event.issue.assignee.login }}"
+                ;;
+              "labeled")
+                ACTION_EMOJI="🏷️"
+                ACTION_TEXT="添加了标签"
+                LABEL_NAME="${{ github.event.label.name }}"
+                ;;
+              "unlabeled")
+                ACTION_EMOJI="🏷️"
+                ACTION_TEXT="移除了标签"
+                LABEL_NAME="${{ github.event.label.name }}"
+                ;;
+              *)
+                ACTION_EMOJI="📌"
+                ACTION_TEXT="更新了 Issue"
+                ;;
+            esac
+            
+            TITLE="$ACTION_EMOJI [${{ github.repository }}] $ACTION_TEXT"
+            CONTENT="标题: $ISSUE_TITLE"
+            CONTENT="$CONTENT | 作者: $ISSUE_AUTHOR"
+            CONTENT="$CONTENT | 编号: #$ISSUE_NUMBER"
+            
+            case "$ISSUE_ACTION" in
+              "assigned")
+                CONTENT="$CONTENT | 分配给: $ASSIGNEE"
+                ;;
+              "labeled")
+                CONTENT="$CONTENT | 标签: $LABEL_NAME"
+                ;;
+              "unlabeled")
+                CONTENT="$CONTENT | 标签: $LABEL_NAME"
+                ;;
+              *)
+                CONTENT="$CONTENT | 状态: $ISSUE_STATE"
+                ;;
+            esac
+          fi
+          
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+          echo "content=$CONTENT" >> $GITHUB_OUTPUT
+          echo "skip_notification=false" >> $GITHUB_OUTPUT
+          
+          echo "生成的消息:"
+          echo "标题: $TITLE"
+          echo "内容: $CONTENT"
+      
+      - name: Send QQ Notification
+        if: steps.prepare_message.outputs.skip_notification != 'true'
+        uses: Y2Nk4/qmsg-action@master
+        with:
+          qq: ${{ secrets.QMSG_NOTIFY_QQ }}
+          groups: ${{ secrets.QMSG_NOTIFY_GROUPS }}
+          key: ${{ secrets.QMSG_KEY }}
+          message: |
+            ${{ steps.prepare_message.outputs.title }}
+            ${{ steps.prepare_message.outputs.content }}
+      
+      - name: Skip Notification Log
+        if: steps.prepare_message.outputs.skip_notification == 'true'
+        run: |
+          echo "跳过推送: ${{ github.event.action }} 事件被抑制"

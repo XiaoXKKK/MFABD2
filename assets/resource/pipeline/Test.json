@@ -27,7 +27,6 @@
     "action": "DoNothing",
     "doc": "本周任务未执行，现在开始执行"
   },
-
   "Skip_Weekly_Task": {
     "recognition": "Custom",
     "custom_recognition": "test_skip_weekly.TestSkipWeekly",
@@ -36,7 +35,174 @@
     "doc": "本周任务已执行，跳过"
   },
   "errer": {
-  	"focus": "超时"},
-  	"errer2": {
-  	"focus": "超时2"}
+    "focus": "超时"
+  },
+  "errer2": {
+    "focus": "超时2"
+  },
+  "test_yew_ocr": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "lower": [
+      228,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      206,
+      70
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -35,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "test_yew_ocr_Multiswip": {
+    "recognition": "ColorMatch",
+    "roi": [
+      1040,
+      659,
+      240,
+      19
+    ],
+    "lower": [
+      228,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      206,
+      70
+    ],
+    "count": 10,
+    "pre_delay": 1000,
+    "action": "MultiSwipe",
+    "swipes": [
+      {
+        "begin": [
+          1025,
+          640,
+          0,
+          0
+        ],
+        "end": [
+          117,
+          640,
+          0,
+          0
+        ],
+        "duration": 500
+      },
+      {
+        "starting": 520,
+        "begin": [
+          117,
+          640,
+          0,
+          0
+        ],
+        "end": [
+          120,
+          500,
+          0,
+          0
+        ],
+        "duration": 600
+      }
+    ]
+  },
+  "test_yew_ocr_swip": {
+    "recognition": "ColorMatch",
+    "roi": [
+      1040,
+      659,
+      240,
+      19
+    ],
+    "lower": [
+      228,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      206,
+      70
+    ],
+    "count": 10,
+    "pre_delay": 1000,
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      117,
+      640,
+      0,
+      0
+    ],
+    "duration": 500,
+    "end_hold": 1000
+  },
+  "test_yew_ocr_swip2": {
+    "recognition": "ColorMatch",
+    "roi": [
+      1040,
+      659,
+      240,
+      19
+    ],
+    "lower": [
+      228,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      206,
+      70
+    ],
+    "count": 10,
+    "pre_delay": 1000,
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      [
+        117,
+        640,
+        0,
+        0
+      ],
+      [
+        1200,
+        500,
+        0,
+        0
+      ]
+    ],
+    "duration": [
+      2200,
+      100
+    ]
+  }
 }
