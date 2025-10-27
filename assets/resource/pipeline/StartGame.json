@@ -39,11 +39,11 @@
       "StartGame_Update",
       "StartGame_UpdateDate",
       "StartGame_PayFaild",
-      "StartGame_LoadingPage",
       "StartGame_Error_API",
       "StartGame_Error_AM",
       "StartGame_TouchStart",
-      "StartGame_Loading"
+      "StartGame_Loading",
+      "StartGame_LoadingPage"
     ],
     "post_delay": 10000,
     "pre_wait_freezes": 3000,
