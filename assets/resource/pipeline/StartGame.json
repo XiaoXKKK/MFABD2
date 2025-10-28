@@ -39,11 +39,11 @@
       "StartGame_Update",
       "StartGame_UpdateDate",
       "StartGame_PayFaild",
-      "StartGame_LoadingPage",
       "StartGame_Error_API",
       "StartGame_Error_AM",
       "StartGame_TouchStart",
-      "StartGame_Loading"
+      "StartGame_Loading",
+      "StartGame_LoadingPage"
     ],
     "post_delay": 10000,
     "pre_wait_freezes": 3000,
@@ -313,6 +313,9 @@
       "StartGame_DaliyBanner",
       "StartGame_MapPage",
       "StartGame_BackMapPage"
+    ],
+    "interrupt": [
+      "PVP_PerOperationsMain_Error"
     ],
     "pre_delay": 5000,
     "post_delay": 20000,
