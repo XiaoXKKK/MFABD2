@@ -538,6 +538,7 @@
       "Collect_OperationsMain_ToAreaMap"
     ],
     "interrupt": [
+      "Collect_Special_EP6",
       "Collect_FindPickupCat",
       "Collect_FindTeleporCircle0.9",
       "Collect_FindTeleporCircle",
@@ -725,6 +726,7 @@
   "Collect_TargetMap2": {
     "recognition": "OCR",
     "next": [
+      "Collect_TargetMap2_Special_Right",
       "Collect_TargetMap3"
     ],
     "interrupt": [
@@ -754,6 +756,7 @@
   "Collect_TargetMap3": {
     "recognition": "OCR",
     "next": [
+      "Collect_MapRight_NoFind",
       "Collect_QuickCart_TargetMapEnd"
     ],
     "interrupt": [
@@ -781,6 +784,50 @@
       "战斗([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])"
     ],
     "doc": "详细地图确定位置3"
+  },
+  "Collect_TargetMap2_Special_Right": {
+    "doc": "[维护点C04]箱庭2图转3图时,特殊跳过的节点,因为若跳过图有传送阵图标,则不能依赖_MapRight_NoFind,最后还是得多写一组节点,与nofind不同,这里是定向识别,需要持续维护!",
+    "recognition": "OCR",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "施塔因之塔第8层",
+      "施塔因之塔宿舍"
+    ],
+    "action": "Click",
+    "target": [
+      977,
+      342,
+      2,
+      2
+    ],
+    "next": [
+      "Collect_TargetMap3",
+      "Collect_TargetMap2_Special_Right"
+    ]
+  },
+  "Collect_MapRight_NoFind": {
+    "recognition": "TemplateMatch",
+    "inverse": true,
+    "next": [
+      "Collect_QuickCart_HomePageHub2"
+    ],
+    "roi": [
+      838,
+      311,
+      418,
+      63
+    ],
+    "focus": "QBC.[INF]特殊地图.类EP6区域地图到底",
+    "template": [
+      "TpMapRight.png"
+    ],
+    "green_mask": true,
+    "doc": "EP6.特殊地图，最后一图是紧接战斗2的狩猎图,特征是无右侧箭头。处理，直接结束箱庭内流程"
   },
   "Collect_TargetMapEnd": {
     "recognition": "OCR",
@@ -887,6 +934,26 @@
       2,
       2
     ]
+  },
+  "Collect_Special_EP6": {
+    "recognition": "OCR",
+    "expected": "魔塔见习魔法师",
+    "focus": "CQB.[INF]检测到EP6,进行魔塔特殊操作",
+    "roi": [
+      481,
+      197,
+      310,
+      252
+    ],
+    "action": "Click",
+    "target": [
+      1271,
+      628,
+      0,
+      0
+    ],
+    "post_delay": 4000,
+    "doc": "EP6主城默认位置异常,需要点右下角传送阵物件"
   },
   "Collect_OperationsMain_PVEChapterIden2#": {
     "recognition": "TemplateMatch",
