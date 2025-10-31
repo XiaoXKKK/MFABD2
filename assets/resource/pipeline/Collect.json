@@ -541,7 +541,10 @@
       "Collect_Special_EP6",
       "Collect_FindPickupCat",
       "Collect_FindTeleporCircle0.9",
-      "Collect_FindTeleporCircle",
+      "Collect_FindTeleporCircle"
+    ],
+    "timeout": 8000,
+    "on_error": [
       "Collect_ForceTeleporCircle"
     ],
     "post_delay": 1000,
@@ -756,12 +759,16 @@
   "Collect_TargetMap3": {
     "recognition": "OCR",
     "next": [
-      "Collect_MapRight_NoFind",
-      "Collect_QuickCart_TargetMapEnd"
+      "Collect_QuickCart_TargetMapEnd",
+      "Collect_QuickCart_FastUI"
     ],
     "interrupt": [
       "Collect_TeleporNotFind",
       "Collect_ClickTeleporCircleMap"
+    ],
+    "timeout": 3000,
+    "on_error": [
+      "Collect_MapRight_NoFind"
     ],
     "focus": "确认区域地图tp3",
     "roi": [
@@ -885,11 +892,9 @@
   },
   "Collect_TeleporNotFind": {
     "recognition": "TemplateMatch",
-    "action": "Click",
     "next": [
-      "Collect_QuickCart_TargetMapEnd_End",
-      "Collect_ClickTeleporCircleMap",
-      "Collect_TeleporNotFind"
+      "Collect_TeleporNotFind_Right",
+      "Collect_TeleporNotFind_NORight"
     ],
     "inverse": true,
     "post_delay": 1000,
@@ -904,13 +909,58 @@
       "TpCircleMapGE.png"
     ],
     "green_mask": true,
+    "doc": "[维护点末端，前手interface的 采集方案 op]主线13的区域图的2#、5#均不是正常图，特征是没有传送阵。在此写一个原中断吸取的反向‘找不到’中断来应对.然后存在两种情况:存在右按钮,切1次图.不存在,这就是最后一图,如火片,操作切到卡带,来给中断外传递退出信号"
+  },
+  "Collect_TeleporNotFind_Right": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "next": [
+      "Collect_QuickCart_TargetMapEnd_End",
+      "Collect_ClickTeleporCircleMap",
+      "Collect_TeleporNotFind"
+    ],
+    "post_delay": 1000,
+    "focus": "CBB.[WRN]特殊换页-存在右换页-方案1",
+    "roi": [
+      943,
+      309,
+      67,
+      72
+    ],
+    "template": [
+      "TpMapRight.png"
+    ],
+    "green_mask": true,
     "target": [
       977,
       342,
       2,
       2
     ],
-    "doc": "[维护点末端，前手interface的 采集方案 op]主线13的区域图的2#、5#均不是正常图，特征是没有传送阵。在此写一个原中断吸取的反向‘找不到’中断来应对，动作为右切一图"
+    "doc": "方案1:识别到存在右侧按键,点一下.next:1.若是旅馆安全图,异常消除,退出中断/2.有传送阵,点进去(非安全),尝试吸取【？，万一是狩猎场呢，逻辑又漏洞！】/3.还是没传送标,前位循环"
+  },
+  "Collect_TeleporNotFind_NORight": {
+    "recognition": "TemplateMatch",
+    "next": [
+      "Global_QuickCart_MenuReset"
+    ],
+    "interrupt": [
+      "Global_BackPageHub_Once"
+    ],
+    "post_delay": 1000,
+    "focus": "CBB.[WRN]特殊换页-不存在右换页-方案2",
+    "roi": [
+      943,
+      309,
+      67,
+      72
+    ],
+    "inverse": true,
+    "template": [
+      "TpMapRight.png"
+    ],
+    "green_mask": true,
+    "doc": "方案2:识别到右侧按键不存在,这是卡带中最后一图,如火片.操作,切到快速卡带界面,传递退出信号"
   },
   "Collect_TargetMap_Special_Right": {
     "recognition": "OCR",
@@ -1030,6 +1080,7 @@
     "interrupt": [
       "Collect_FindTeleporCircle"
     ],
+    "timeout": 3000,
     "roi": [
       128,
       13,
@@ -1080,6 +1131,7 @@
       91,
       90
     ],
+    "post_delay": 500,
     "template": [
       "IcoHand.png"
     ],

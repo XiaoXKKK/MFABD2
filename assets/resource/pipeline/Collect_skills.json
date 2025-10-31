@@ -1051,7 +1051,10 @@
         ],
         "interrupt": [
             "Collect_FindTeleporCircle0.9",
-            "Collect_FindTeleporCircle",
+            "Collect_FindTeleporCircle"
+        ],
+        "timeout": 8000,
+        "on_error": [
             "Collect_ForceTeleporCircle"
         ],
         "post_delay": 4000,
