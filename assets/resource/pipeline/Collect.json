@@ -1188,7 +1188,7 @@
     "doc": "0.9是否过高待评，图案两侧边缘有黑色纹路，另外有场景没有纹路（每日派遣），区别待深入考证"
   },
   "Collect_FindTeleporCircle": {
-    "recognition": "TemplateMatch",
+    "recognition": "FeatureMatch",
     "action": "Click",
     "post_delay": 5000,
     "focus": "CB.箱庭地图内找到传送阵-物件",
@@ -1199,6 +1199,9 @@
       0
     ],
     "template": [
+      "TpCircle0.9.png",
+      "TpCircle0.92.png",
+      "TpCircle0.93.png",
       "TpCircle.png",
       "TpCircle2.png",
       "TpCircle3.png",
