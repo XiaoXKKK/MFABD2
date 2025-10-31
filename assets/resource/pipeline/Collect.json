@@ -749,6 +749,7 @@
       "洞穴神殿",
       "贫民区",
       "剑之神殿左侧回廊",
+      "童话镇旅馆",
       "战斗I",
       "战斗 I",
       "战斗\\s*[1IⅠ!！](?!I)(?!Ⅰ)(?!！)(?!!)",
@@ -759,6 +760,7 @@
   "Collect_TargetMap3": {
     "recognition": "OCR",
     "next": [
+      "Collect_TargetMap4",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI"
     ],
@@ -783,12 +785,40 @@
       "隐藏神殿",
       "盗贼据点",
       "剑之神殿右侧回廊",
+      "童话镇旅馆",
       "战斗II",
       "战斗Ⅱ",
       "战斗 II",
       "战斗 Ⅱ",
       "战斗\\s*([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])",
       "战斗([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])"
+    ],
+    "doc": "详细地图确定位置3"
+  },
+  "Collect_TargetMap4": {
+    "recognition": "OCR",
+    "next": [
+      "Collect_QuickCart_TargetMapEnd",
+      "Collect_QuickCart_FastUI"
+    ],
+    "interrupt": [
+      "Collect_TeleporNotFind",
+      "Collect_ClickTeleporCircleMap"
+    ],
+    "timeout": 3000,
+    "on_error": [
+      "Collect_MapRight_NoFind"
+    ],
+    "focus": "确认区域地图tp4",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "商场1楼",
+      "妖怪镇"
     ],
     "doc": "详细地图确定位置3"
   },
@@ -1075,7 +1105,8 @@
   "Collect_OperationsMain_OperationsEnd": {
     "recognition": "OCR",
     "next": [
-      "Collect_MapRight"
+      "Collect_MapRight",
+      "Collect_OperationsEnd_NORight"
     ],
     "interrupt": [
       "Collect_FindTeleporCircle"
@@ -1091,6 +1122,23 @@
       "移动魔法阵"
     ],
     "doc": "找到图钉 ，进入区域地图"
+  },
+  "Collect_OperationsEnd_NORight": {
+    "recognition": "TemplateMatch",
+    "post_delay": 1000,
+    "focus": "CBB.[WRN]中继特殊结束-不存在右换页",
+    "roi": [
+      267,
+      298,
+      743,
+      84
+    ],
+    "threshold": 0.85,
+    "template": [
+      "MapOlayLeftButt.png"
+    ],
+    "green_mask": true,
+    "doc": "防止识别不到右键/且能误识别FindTeleporCircle的离谱情况."
   },
   "Collect_MapRight": {
     "recognition": "TemplateMatch",
@@ -1159,6 +1207,7 @@
       "TpCircleS1.png",
       "TpCircleS2.png"
     ],
+    "threshold": 0.8,
     "doc": "场景地图内传送阵选择"
   },
   "Collect_ForceTeleporCircle": {
