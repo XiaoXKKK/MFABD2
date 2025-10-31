@@ -759,6 +759,7 @@
   "Collect_TargetMap3": {
     "recognition": "OCR",
     "next": [
+      "Collect_TargetMap4",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI"
     ],
@@ -789,6 +790,32 @@
       "战斗 Ⅱ",
       "战斗\\s*([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])",
       "战斗([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])"
+    ],
+    "doc": "详细地图确定位置3"
+  },
+  "Collect_TargetMap4": {
+    "recognition": "OCR",
+    "next": [
+      "Collect_QuickCart_TargetMapEnd",
+      "Collect_QuickCart_FastUI"
+    ],
+    "interrupt": [
+      "Collect_TeleporNotFind",
+      "Collect_ClickTeleporCircleMap"
+    ],
+    "timeout": 3000,
+    "on_error": [
+      "Collect_MapRight_NoFind"
+    ],
+    "focus": "确认区域地图tp4",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "商场1楼"
     ],
     "doc": "详细地图确定位置3"
   },
