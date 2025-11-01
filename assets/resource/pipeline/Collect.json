@@ -687,6 +687,7 @@
   "Collect_TargetMap1-1": {
     "recognition": "TemplateMatch",
     "next": [
+      "Collect_TargetMap1_Special_PerRight",
       "Collect_TargetMap1-2"
     ],
     "inverse": true,
@@ -725,6 +726,7 @@
       "雷瓦汀基地",
       "拉勒凯镇",
       "罗戴夫镇",
+      "科库托斯圣域",
       "安全"
     ],
     "doc": "详细地图确定位置"
@@ -753,6 +755,8 @@
       "贫民区",
       "剑之神殿左侧回廊",
       "童话镇旅馆",
+      "儿童房",
+      "官邸地",
       "战斗I",
       "战斗 I",
       "战斗\\s*[1IⅠ!！](?!I)(?!Ⅰ)(?!！)(?!!)",
@@ -789,6 +793,7 @@
       "盗贼据点",
       "剑之神殿右侧回廊",
       "童话镇旅馆",
+      "第一记忆空间",
       "战斗II",
       "战斗Ⅱ",
       "战斗 II",
@@ -824,6 +829,31 @@
       "妖怪镇"
     ],
     "doc": "详细地图确定位置3"
+  },
+  "Collect_TargetMap1_Special_PerRight": {
+    "doc": "[维护点C05]复位到箱庭1图时需要特殊跳过的图,用来跳过图1非目标图,(EP18)需要持续维护!",
+    "recognition": "OCR",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "科库托斯暗黑神殿",
+      "记忆岔路口"
+    ],
+    "action": "Click",
+    "target": [
+      977,
+      342,
+      2,
+      2
+    ],
+    "next": [
+      "Collect_TargetMap1_Special_PerRight",
+      "Collect_TargetMap1-2"
+    ]
   },
   "Collect_TargetMap1_Special_Right": {
     "doc": "[维护点C04]箱庭1图转2图时,特殊跳过的节点,因为若跳过图有传送阵图标,则不能依赖_MapRight_NoFind,最后还是得多写一组节点,与nofind不同,这里是定向识别,需要持续维护!",
@@ -1103,6 +1133,7 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
+      "Collect_ClickTelepor_ButNotActive",
       "Collect_Skill_Start",
       "Collect_ClickTeleporCircleMap"
     ],
@@ -1118,6 +1149,20 @@
       "TpCircleMap.png"
     ],
     "doc": "详细地图内传送阵选择"
+  },
+  "Collect_ClickTelepor_ButNotActive": {
+    "doc": "如果传送阵没有激活,需要从这里决定中断",
+    "next": [
+      "Collect_OperationsMain_OperationsEnd"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      511,
+      577,
+      262,
+      47
+    ],
+    "expected": "没有已激活的魔法阵"
   },
   "Collect_ClickBackOnSecureMap": {
     "recognition": "OCR",
