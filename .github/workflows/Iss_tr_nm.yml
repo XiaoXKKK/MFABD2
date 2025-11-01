@@ -187,7 +187,6 @@ jobs:
           echo "数据获取完成:"
           echo "评论: $COMMENT_COUNT, 标签变更: $LABEL_COUNT, 分配: $ASSIGN_COUNT"
           cat summary_data.json 
-
       - name: Generate Summary Message
         id: generate_message
         env:
@@ -197,8 +196,9 @@ jobs:
           ASSIGN_COUNT: ${{ steps.fetch_activities.outputs.assign_count }}
           TOTAL_COUNT: ${{ steps.fetch_activities.outputs.total_count }}
         run: |
-          # 读取汇总数据
-          SUMMARY_DATA=$(cat summary_data.json)
+          # 读取并清理汇总数据（移除控制字符）
+          CLEANED_JSON=$(cat summary_data.json | tr -d '\000-\031')
+          SUMMARY_DATA=$(echo "$CLEANED_JSON")
           
           # 构建消息内容
           MESSAGE="📊 [${{ github.repository }}] Issue动态 ($TIME_LABEL)"
