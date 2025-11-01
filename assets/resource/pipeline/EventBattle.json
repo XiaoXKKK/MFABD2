@@ -704,7 +704,7 @@
     "recognition": "OCR",
     "next": [
       "Even_MamonoFollowUp_lv1NoMet",
-      "Even_MamonoFollowUp_MmnHpNoCk_ocr"
+      "Even_MamonoFollowUp_MmnHpNoCk_Clr"
     ],
     "post_delay": 3000,
     "post_wait_freezes": 3000,
@@ -715,7 +715,7 @@
       67
     ],
     "expected": [
-      "[lL][vv][^a-zA-Z0-9]?1$"
+      "[lL][Vv][^a-zA-Z0-9]?1$"
     ]
   },
   "Even_MamonoFollowUp_lv1NoMet": {
@@ -772,21 +772,29 @@
       0
     ]
   },
-  "Even_MamonoFollowUp_MmnHpNoCk_ocr": {
-    "recognition": "OCR",
+  "Even_MamonoFollowUp_MmnHpNoCk_Clr": {
+    "recognition": "ColorMatch",
     "next": [
       "Even_MamonoFollowUp_MmnNoHpCk_color"
     ],
-    "focus": "EM.EM.魔兽血量0-字核通过",
+    "focus": "EM.EM.魔兽血量0-色核通过",
     "roi": [
       711,
       130,
       34,
       43
     ],
-    "expected": [
-      "0"
-    ]
+    "lower": [
+      221,
+      218,
+      209
+    ],
+    "upper": [
+      221,
+      218,
+      209
+    ],
+    "inverse": true
   },
   "Even_MamonoFollowUp_MmnNoHpCk_color": {
     "recognition": "ColorMatch",
