@@ -37,9 +37,14 @@
 			"name": "[执行]地图采集",
 			"entry": "Collect_StartGame_HomePage",
 			"check": true,
-			"doc": "**地图采集**：进入地图，依次切主城、战斗I图、II图，途中分别用技能`探查`、`吸取`、`召集`；技能最高等级次数5+5、5，则最多吸取3个章节余1次`吸取`。必要时使用`传送`救场。\n\n**注意：必须按说明图位置放置好技能才能调用。**\n\n包含两套切图逻辑：**传统主界面-卡带**、**新UI快速卡带-前三张图**(自定义便捷，**推荐**)\n\n**传统主界面-卡带**：固定主线9、7、8三图（专注木材和矿石）、固定主线2（适合低练度完成每日任务）\n\n**新UI快速卡带-前三张图**：利用快速卡带图钉标黄会前置，将`前三张图`与`主线/角色 卡带`进行条件组合，列出较有价值的。(自定义卡带排序规则，黄图钉移动到置顶组，各组内按章节先后排列)\n\n比如**快速，第二项`剧情-剧情-角色`意为：剧情卡带左起第1张→剧情卡带左起第2张→角色卡带左起第1张**",
+			"doc": "**地图采集**：进入卡带，对有传送阵地图进行`探查`、`吸取`、`召集`。请根据技能数量与等级合理决定每日吸取卡带数量。\n\n**采集方案:**\n\n**快速(快速卡带列表)：**从箱庭点击卡带图标后从左选取x张卡带采集（通过卡带右上图钉实现自定义排序，进而自定义选刷）,剧情游戏卡和角色游戏卡分开选择（二者可改变先后顺序）,合计不宜大于每日技能吸取数量。\n\n**固定：**旧逻辑，不能自定义卡带，作为备案保留。\n\n**举例：**目标先刷主线7+8+9+13，再刷火片。设置为，剧情卡带只标记这4张图给置顶，只标记角色卡的火片给置顶；采集方案=快速：1#剧情卡→2#角色卡；剧情卡带-刷取张数=4、角色卡带-刷取张数=1。看不全下拉菜单可选项上悬停1秒或调大MFA窗口。",
 			"option": [
-				"采集方案"
+				"采集方案",
+				"快速卡带-剧情卡带-刷取张数",
+				"快速卡带-角色卡带-刷取张数"
+			],
+			"advanced": [
+				"第三图采集额外等待"
 			]
 		},
 		{
@@ -148,10 +153,121 @@
 	],
 	"option": {
 		"采集方案": {
+			"doc": "决定2件事:\n\n1、切卡入口是箱庭快速卡带按钮，还是主页面卡带老菜单。\n\n2、快速卡带的类型顺序 or 固定卡带的刷取内容",
 			"cases": [
 				{
-					"name": "固定:低练度-章节2",
+					"name": "快速：1#剧情卡→2#角色卡",
+					"pipeline_override": {}
+				},
+				{
+					"name": "快速：1#角色卡→2#剧情卡",
 					"pipeline_override": {
+						"Collect_QuickCart_Menu_Ocr": {
+							"next": [
+								"Collect_QuickCart_QR_Sort"
+							]
+						},
+						"Collect_QuickCart_Switch": {
+							"next": [
+								"Collect_QuickCart_QC_Sort"
+							]
+						},
+						"Collect_QuickCart_QC_Out": {
+							"next": [
+								"Collect_ChapterSelectionError"
+							]
+						},
+						"Collect_QuickCart_QR_Out": {
+							"next": [
+								"Collect_QuickCart_Switch"
+							]
+						}
+					}
+				},
+				{
+					"name": "固定：木&金-章节9+7+8",
+					"pipeline_override": {
+						"Collect_HomePageHub": {
+							"next": [
+								"Collect_PerPetTask",
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_HomePageHub1": {
+							"next": [
+								"Collect_PerPetTask",
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_StartGameType2": {
+							"next": [
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_TargetMap3": {
+							"next": [
+								"Collect_TargetMapEnd"
+							]
+						},
+						"Collect_TeleporNotFind": {
+							"next": [
+								"Collect_TargetMapEnd_End",
+								"Collect_ClickTeleporCircleMap",
+								"Collect_TeleporNotFind"
+							]
+						}
+					}
+				},
+				{
+					"name": "固定：低练度-章节2",
+					"pipeline_override": {
+						"Collect_HomePageHub": {
+							"next": [
+								"Collect_PerPetTask",
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_HomePageHub1": {
+							"next": [
+								"Collect_PerPetTask",
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_StartGameType2": {
+							"next": [
+								"Collect_PVEChapterIden2#"
+							],
+							"interrupt": [
+								"Collect_HomePageSwipeInitialize_BackHomePage"
+							]
+						},
+						"Collect_TargetMap3": {
+							"next": [
+								"Collect_TargetMapEnd"
+							]
+						},
+						"Collect_TeleporNotFind": {
+							"next": [
+								"Collect_TargetMapEnd_End",
+								"Collect_ClickTeleporCircleMap",
+								"Collect_TeleporNotFind"
+							]
+						},
 						"Collect_ChapterSelection1": {
 							"next": [
 								"Collect_ChapterSelectionEnd"
@@ -161,222 +277,264 @@
 							]
 						}
 					}
+				}
+			]
+		},
+		"快速卡带-剧情卡带-刷取张数": {
+			"doc": "【仅适用于‘快速’方案】左起第1张开始，刷几个剧情游戏卡带？\n\n最大值 = $‘吸取’技能总次数 ÷3 - $角色卡带计划刷取张数 。超选都是浪费时间！",
+			"cases": [
+				{
+					"name": "3",
+					"pipeline_override": {
+						"Collect_QuickCart_QC3": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
 				},
 				{
-					"name": "固定:木&金-章节9+7+8",
+					"name": "0",
+					"pipeline_override": {
+						"Collect_QuickCart_QC_Sort": {
+							"next": [
+								"Collect_QuickCart_Switch"
+							]
+						}
+					}
+				},
+				{
+					"name": "1",
+					"pipeline_override": {
+						"Collect_QuickCart_QC1": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "2",
+					"pipeline_override": {
+						"Collect_QuickCart_QC2": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "4",
+					"pipeline_override": {
+						"Collect_QuickCart_QC4": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "5",
+					"pipeline_override": {
+						"Collect_QuickCart_QC5": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "6",
+					"pipeline_override": {
+						"Collect_QuickCart_QC6": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "7",
+					"pipeline_override": {
+						"Collect_QuickCart_QC7": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "8",
+					"pipeline_override": {
+						"Collect_QuickCart_QC8": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "9",
+					"pipeline_override": {
+						"Collect_QuickCart_QC9": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "10",
+					"pipeline_override": {
+						"Collect_QuickCart_QC10": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "11",
+					"pipeline_override": {
+						"Collect_QuickCart_QC11": {
+							"next": [
+								"Collect_QuickCart_QC_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "12",
 					"pipeline_override": {}
-				},
+				}
+			]
+		},
+		"快速卡带-角色卡带-刷取张数": {
+			"doc": "【仅适用于‘快速’方案】左起第1张开始，刷几个角色游戏卡带？\n\n最大值 = $‘吸取’技能总次数 ÷3 - $剧情卡带计划刷取张数 【且不能超过当前版本最大角色卡带数！】。超选都是浪费时间！",
+			"cases": [
 				{
-					"name": "快速:剧情卡-剧情卡-剧情卡",
+					"name": "0",
 					"pipeline_override": {
-						"Collect_HomePageHub": {
+						"Collect_QuickCart_QR_Sort": {
 							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_HomePageHub1": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_StartGameType2": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_TargetMap3": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd"
-							]
-						},
-						"Collect_QuickCart_QC2": {
-							"index": 1
-						},
-						"Collect_QuickCart_QC3": {
-							"index": 2
-						},
-						"Collect_TeleporNotFind": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd_End",
-								"Collect_ClickTeleporCircleMap",
-								"Collect_TeleporNotFind"
+								"Collect_QuickCart_QR_Fin"
 							]
 						}
 					}
 				},
 				{
-					"name": "快速:剧情卡-剧情卡-角色卡",
+					"name": "1",
 					"pipeline_override": {
-						"Collect_HomePageHub": {
+						"Collect_QuickCart_QR1": {
 							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_HomePageHub1": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_StartGameType2": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_TargetMap3": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd"
-							]
-						},
-						"Collect_QuickCart_QC2": {
-							"index": 1
-						},
-						"Collect_QuickCart_QC3Sort": {
-							"expected": [
-								"角色游戏卡"
-							]
-						},
-						"Collect_TeleporNotFind": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd_End",
-								"Collect_ClickTeleporCircleMap",
-								"Collect_TeleporNotFind"
+								"Collect_QuickCart_QR_Fin"
 							]
 						}
 					}
 				},
 				{
-					"name": "快速:剧情卡-角色卡-角色卡",
+					"name": "2",
 					"pipeline_override": {
-						"Collect_HomePageHub": {
+						"Collect_QuickCart_QR2": {
 							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_HomePageHub1": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_StartGameType2": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_TargetMap3": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd"
-							]
-						},
-						"Collect_QuickCart_QC2Sort": {
-							"expected": [
-								"角色游戏卡"
-							]
-						},
-						"Collect_QuickCart_QC3": {
-							"index": 1
-						},
-						"Collect_QuickCart_QC3Sort": {
-							"expected": [
-								"角色游戏卡"
-							]
-						},
-						"Collect_TeleporNotFind": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd_End",
-								"Collect_ClickTeleporCircleMap",
-								"Collect_TeleporNotFind"
+								"Collect_QuickCart_QR_Fin"
 							]
 						}
 					}
 				},
 				{
-					"name": "快速:角色卡-角色卡-角色卡",
+					"name": "3",
 					"pipeline_override": {
-						"Collect_HomePageHub": {
+						"Collect_QuickCart_QR3": {
 							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_HomePageHub1": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_StartGameType2": {
-							"next": [
-								"Collect_QuickCart_QC1Sort"
-							],
-							"interrupt": [
-								"Collect_QuickCart_FastIcons"
-							]
-						},
-						"Collect_TargetMap3": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd"
-							]
-						},
-						"Collect_QuickCart_QC1Sort": {
-							"expected": [
-								"角色游戏卡"
-							]
-						},
-						"Collect_QuickCart_QC2Sort": {
-							"expected": [
-								"角色游戏卡"
-							]
-						},
-						"Collect_QuickCart_QC3Sort": {
-							"expected": [
-								"角色游戏卡"
-							]
-						},
-						"Collect_QuickCart_QC2": {
-							"index": 1
-						},
-						"Collect_QuickCart_QC3": {
-							"index": 2
-						},
-						"Collect_TeleporNotFind": {
-							"next": [
-								"Collect_QuickCart_TargetMapEnd_End",
-								"Collect_ClickTeleporCircleMap",
-								"Collect_TeleporNotFind"
+								"Collect_QuickCart_QR_Fin"
 							]
 						}
 					}
+				},
+				{
+					"name": "4",
+					"pipeline_override": {
+						"Collect_QuickCart_QR4": {
+							"next": [
+								"Collect_QuickCart_QR_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "5",
+					"pipeline_override": {
+						"Collect_QuickCart_QR5": {
+							"next": [
+								"Collect_QuickCart_QR_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "6",
+					"pipeline_override": {
+						"Collect_QuickCart_QR6": {
+							"next": [
+								"Collect_QuickCart_QR_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "7",
+					"pipeline_override": {
+						"Collect_QuickCart_QR7": {
+							"next": [
+								"Collect_QuickCart_QR_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "8",
+					"pipeline_override": {
+						"Collect_QuickCart_QR8": {
+							"next": [
+								"Collect_QuickCart_QR_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "9",
+					"pipeline_override": {
+						"Collect_QuickCart_QR9": {
+							"next": [
+								"Collect_QuickCart_QR_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "10",
+					"pipeline_override": {
+						"Collect_QuickCart_QR10": {
+							"next": [
+								"Collect_QuickCart_QR_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "11",
+					"pipeline_override": {
+						"Collect_QuickCart_QR11": {
+							"next": [
+								"Collect_QuickCart_QR_Fin"
+							]
+						}
+					}
+				},
+				{
+					"name": "12",
+					"pipeline_override": {}
 				}
 			]
 		},
@@ -1100,10 +1258,31 @@
 					]
 				}
 			}
+		},
+		"第三图采集额外等待": {
+			"doc": [
+				"如果探查技能非180s的传说级，可能第三次采集刚好超过技能时间。\n\n故可以在此设定一个强制等待时间，以便脚本识别后重新施放。\n\n单位ms，1000ms=1s。"
+			],
+			"field": [
+				"第三次采集额外等待时间(ms)"
+			],
+			"type": [
+				"int"
+			],
+			"default": [
+				"200"
+			],
+			"pipeline_override": {
+				"Collect_TargetMap3": {
+					"post_delay": [
+						"{等待时间(ms)}"
+					]
+				}
+			}
 		}
 	},
 	"name": "MFABD2",
-	"custom_title": "MFABD2 | 棕色尘埃2自动化助手(sunyink/MFABD2)v0.0.4 | 游戏版本：20251010 (無職轉生Ⅱ)复刻",
+	"custom_title": "MFABD2 | 棕色尘埃2自动化助手(sunyink/MFABD2)v0.0.5 | 游戏版本：20251023 (Halloween Night)",
 	"url": "https://github.com/sunyink/MFABD2",
 	"mirrorchyan_rid": "MFABD2",
 	"mirrorchyan_multiplatform": false,

@@ -22,44 +22,8 @@
 本项目继承 [JZPPP/MaaBD2](https://github.com/JZPPP/MaaBD2)衣钵 继续跟进游戏版本更新，主攻任务流程的优化强化。（任务流程基本重做，以前经验不再适用。）
 
 > 向[JZPPP/MaaBD2]的开发和支持者致敬，在前人肩膀上起步事半功倍。
-# 
 
 
-
-### 版本区分
-  
-#### 稳定版
-
-+ **[MFABD2-Main分支]** 暂定位为`发布版`或`稳定版`: [github.com/sunyink/MFABD2-Main](https://github.com/sunyink/MFABD2/releases)
-
-  ``稳定版``，一波修改初步通过测试、为适配游戏更新的紧急补丁会做成发布版。发布版参照正规MFA模板发布，**直接在releases下载包**，支持软件UI内资源版本升级，体验十分接近MAA。框架是新界面，UI与快速版不同。
-  
-#### 快速版
-<details>
-  <summary>   快速版 </summary>
-  
-**[MFABD2-Fast分支]** `快速版`: [github.com/sunyink/MFABD2-Fast](https://github.com/sunyink/MFABD2/tree/Fast)
-  
-
-  快速版，WPF旧版框架，**使用git更新**，可以选择比较稳定的提交来用。
-  </details>
-<br>
-
-
-<details>
-  <summary> ⚠️【重要公告】 ：如果你正在使用1.*.*版本，请展开查看 </summary>
-
-  
-  __📌   以`快速版3c86ad0`、`发行版v1.2.2`为分界点，项目仓库进行重组。正在使用1.*.*用户应进行如下操作：__
-
-  
-  - `快速版`删除原文件夹，重新`git clone` `fast`分支。_（也可以自行命令行修改映射）_
-  - `发行版`删除原文件夹，重新下载新的[`2.*.*`](https://github.com/sunyink/MFABD2/releases) 及更新发布包。
-
- 📌 请放心，`1.*.*`本身没有问题，可以继续使用。但重组后远程路径已改变，一旦正常方法**更新**就会出现很大问题。
-</details>
-
-<br>
 
 ## 获取&部署
 
@@ -69,35 +33,6 @@
 + `v2.1.0`之后，UI内可以直接获得更新信息。
 
 
-### ◆快速版部署
-+ 部署：选择合适位置使用`Git` or `Powershell`，会自行创建子文件夹：
-
-  1.`shift` + `右键` ,单击`在此处打开powershell窗口`。
-  
-  2.在弹出窗口中运行`git clone -c advice.detachedHead=false --depth 1 --branch Fast https://github.com/sunyink/MFABD2.git`
-
-  - 版本切换：先完成`clone`，之后参照历史提交Hash标记切换，比如`git checkout 8002d62`
-<details>
-  <summary>版本切换进阶</summary>
-
-  <p><strong>！！不要离开Fast分支确保你在<code>git switch Fast</code>！！</strong></p>
-
-  <p>想自由切换先将浅层克隆恢复：<code>git fetch</code></p>
-
-  <p>选取<code>Fast</code>分支的版本号来回溯，如：<code>git checkout 8002d62 -- .</code></p>
-
-  <hr>
-</details>
-
-+ 更新：在根目录`pull`:
-
-  1.在程序`根目录`中`shift` + `右键` ,单击`在此处打开powershell窗口`。
-  
-  2.在弹出窗口中运行`git pull`
-
-**注意，快速版不要开启、使用GUI界面本身的更新功能，此版本应仅进行GitHub Code更新同步。** _重组改版后，逻辑上可以点Gui更新，但不推荐。_
-
-<br>
 
 
 ## 使用方式 （仅支持模拟器使用）
@@ -113,7 +48,7 @@
 > - 多模拟器运作需要一定ADB知识。参考：adb.exe可视为windows服务，默认服务端口号`5037`，模拟器为其客户端，有各自的客户端口号。Mumu模拟器根据多开器编号决定`Adb端口号`，默认`0`号为`16384`、`1`号为`16416`。国际版与普通版可以共存。后启动的版本的端口号遵循前者规律+1，如`16385`。通常adb开启一个就可以控制多个模拟器，不建议多版本Adb并行启动，可能影响识别，可以自定义ADB路径与端口解决。
   
 
-  2.游戏内设置均为默认，其中设置 `操作-选择操作方式-点击地面` `图像-分辨率-FHD` 。
+ 2.游戏内设置均为默认，其中设置 `操作-选择操作方式-点击地面` `图像-分辨率-FHD`、`图像-游戏开始画面-主界面`、`通知-黄色圆点-不使用` 。
  > 画面质量异常请进行检查，步骤2后仍异常可尝试切换渲染方法。_一般经验，新机器`Vulkan`、旧机器`DirectX`表现较好。_
 
  3.任务流程已基本实现箱庭地图状态识别、技能传送阵自行生成、几乎所有自行复位(餐馆卡带例外，请避免从餐馆下线)。推荐在`剧情主线地图`、`传送阵上`结束游戏。
@@ -130,7 +65,7 @@
 > 
 - 人物技能请按图中设置
 
- > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/Fast/ReadMe/IT.jpg"  width="600px"/>
+ > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/Fast/ReadMe/IT-2511.jpg"  width="600px"/>
  > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/Fast/ReadMe/3.png"  width="400px"/>
 
 ## 功能一览

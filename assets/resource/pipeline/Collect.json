@@ -9,11 +9,10 @@
   "Collect_HomePageHub": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_PerPetTask",
-      "Collect_PVEChapterIden2#"
+      "Collect_QuickCart_Menu_Ocr"
     ],
     "interrupt": [
-      "Collect_HomePageSwipeInitialize_BackHomePage"
+      "Global_QuickCart_MenuReset"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内，箱庭确认",
@@ -38,11 +37,10 @@
   "Collect_HomePageHub1": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_PerPetTask",
-      "Collect_PVEChapterIden2#"
+      "Collect_QuickCart_Menu_Ocr"
     ],
     "interrupt": [
-      "Collect_HomePageSwipeInitialize_BackHomePage"
+      "Global_QuickCart_MenuReset"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内。BM.箱庭地图pin已确认",
@@ -100,26 +98,26 @@
       714,
       412
     ],
+    "template": [
+      "tanhaoGE.png"
+    ],
+    "threshold": 0.85,
+    "green_mask": true,
     "target_offset": [
       -3,
       -4,
       6,
       6
     ],
-    "threshold": 0.85,
-    "template": [
-      "tanhaoGE.png"
-    ],
-    "green_mask": true,
     "doc": "宠物派遣"
   },
   "Collect_StartGameType2": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_PVEChapterIden2#"
+      "Collect_QuickCart_Menu_Ocr"
     ],
     "interrupt": [
-      "Collect_HomePageSwipeInitialize_BackHomePage"
+      "Global_QuickCart_MenuReset"
     ],
     "post_delay": 2000,
     "focus": "CM.StartGameType2",
@@ -540,9 +538,14 @@
       "Collect_OperationsMain_ToAreaMap"
     ],
     "interrupt": [
+      "Collect_Special_EP6",
+      "Collect_Special_QR7-CW",
       "Collect_FindPickupCat",
       "Collect_FindTeleporCircle0.9",
-      "Collect_FindTeleporCircle",
+      "Collect_FindTeleporCircle"
+    ],
+    "timeout": 8000,
+    "on_error": [
       "Collect_ForceTeleporCircle"
     ],
     "post_delay": 1000,
@@ -560,91 +563,91 @@
   },
   "Collect_FindPickupCat": {
     "recognition": "TemplateMatch",
-    "template": [
-      "PickupCatGE.png"
+    "next": [
+      "Collect_FindPickupCat_LeaveCircle_Ty1"
     ],
-    "green_mask": true,
     "roi": [
       820,
       516,
       105,
       102
     ],
-    "next": [
-      "Collect_FindPickupCat_LeaveCircle_Ty1"
+    "template": [
+      "PickupCatGE.png"
     ],
+    "green_mask": true,
     "doc": "找到猫咪图标，"
   },
   "Collect_FindPickupCat_LeaveCircle_Ty1": {
+    "action": "Click",
+    "next": [
+      "Collect_FindPickupCat_LeaveCircle_Ty2"
+    ],
+    "post_delay": 800,
     "target": [
       229,
       88,
       0,
       0
     ],
-    "action": "Click",
-    "post_delay": 800,
-    "next": [
-      "Collect_FindPickupCat_LeaveCircle_Ty2"
-    ],
     "doc": "自动寻路菜单"
   },
   "Collect_FindPickupCat_LeaveCircle_Ty2": {
+    "action": "Click",
+    "next": [
+      "Collect_FindPickupCat_LeaveCircle_Ty3"
+    ],
+    "post_delay": 800,
     "target": [
       304,
       183,
       31,
       9
     ],
-    "next": [
-      "Collect_FindPickupCat_LeaveCircle_Ty3"
-    ],
-    "action": "Click",
-    "post_delay": 800,
     "doc": "自动寻路酒馆"
   },
   "Collect_FindPickupCat_LeaveCircle_Ty3": {
+    "action": "Click",
+    "next": [
+      "Collect_FindPickupCat_LeaveCircle_Ty4"
+    ],
+    "post_delay": 3000,
     "target": [
       722,
       446,
       31,
       13
     ],
-    "action": "Click",
-    "post_delay": 3000,
-    "next": [
-      "Collect_FindPickupCat_LeaveCircle_Ty4"
-    ],
     "doc": "自动寻路酒馆-确认，等待x秒"
   },
   "Collect_FindPickupCat_LeaveCircle_Ty4": {
+    "action": "Click",
+    "next": [
+      "Collect_FindPickupCat_LeaveCircle_Ty5"
+    ],
+    "post_delay": 800,
     "target": [
       638,
       640,
       8,
       9
     ],
-    "action": "Click",
-    "post_delay": 800,
-    "next": [
-      "Collect_FindPickupCat_LeaveCircle_Ty5"
-    ],
     "doc": "停止自动寻路"
   },
   "Collect_FindPickupCat_LeaveCircle_Ty5": {
     "recognition": "TemplateMatch",
-    "template": [
-      "PickupCatGE.png"
-    ],
-    "green_mask": true,
+    "action": "Click",
+    "post_delay": 4000,
     "roi": [
       820,
       516,
       105,
       102
     ],
-    "action": "Click",
-    "post_delay": 4000,
+    "template": [
+      "PickupCatGE.png"
+    ],
+    "green_mask": true,
     "doc": "放下猫咪，等待x秒，让它走开"
   },
   "Collect_OperationsMain_ToAreaMap": {
@@ -683,6 +686,10 @@
   },
   "Collect_TargetMap1-1": {
     "recognition": "TemplateMatch",
+    "next": [
+      "Collect_TargetMap1_Special_PerRight",
+      "Collect_TargetMap1-2"
+    ],
     "inverse": true,
     "roi": [
       270,
@@ -694,18 +701,20 @@
       "TpMapLeft.png"
     ],
     "green_mask": true,
-    "next": "Collect_TargetMap1-2",
     "doc": "详细地图内左图标，目的移动到最左"
   },
   "Collect_TargetMap1-2": {
     "recognition": "OCR",
     "next": [
+      "Collect_TargetMap1_Special_Right",
       "Collect_TargetMap2"
     ],
     "interrupt": [
       "Collect_ClickTeleporCircleMap",
-      "Collect_ClickBackOnSecureMap"
+      "Collect_ClickBackOnSecureMap",
+      "Collect_TeleporNotFind"
     ],
+    "focus": "确认区域地图tp1",
     "roi": [
       408,
       622,
@@ -717,20 +726,22 @@
       "雷瓦汀基地",
       "拉勒凯镇",
       "罗戴夫镇",
+      "科库托斯圣域",
       "安全"
     ],
-    "focus": "确认区域地图tp1",
     "doc": "详细地图确定位置"
   },
   "Collect_TargetMap2": {
     "recognition": "OCR",
     "next": [
+      "Collect_TargetMap2_Special_Right",
       "Collect_TargetMap3"
     ],
     "interrupt": [
       "Collect_TeleporNotFind",
       "Collect_ClickTeleporCircleMap"
     ],
+    "focus": "确认区域地图tp2",
     "roi": [
       408,
       622,
@@ -743,36 +754,47 @@
       "洞穴神殿",
       "贫民区",
       "剑之神殿左侧回廊",
+      "童话镇旅馆",
+      "儿童房",
+      "官邸地",
       "战斗I",
       "战斗 I",
       "战斗\\s*[1IⅠ!！](?!I)(?!Ⅰ)(?!！)(?!!)",
       "战斗[1IⅠ](?!I)(?!Ⅰ)"
     ],
-    "focus": "确认区域地图tp2",
     "doc": "详细地图确定位置2"
   },
   "Collect_TargetMap3": {
     "recognition": "OCR",
     "next": [
-      "Collect_TargetMapEnd"
+      "Collect_TargetMap4",
+      "Collect_QuickCart_TargetMapEnd",
+      "Collect_QuickCart_FastUI"
     ],
     "interrupt": [
       "Collect_TeleporNotFind",
       "Collect_ClickTeleporCircleMap"
     ],
+    "timeout": 3000,
+    "on_error": [
+      "Collect_MapRight_NoFind"
+    ],
+    "focus": "确认区域地图tp3",
+    "post_delay": 200,
     "roi": [
       408,
       622,
       466,
       47
     ],
-    "focus": "确认区域地图tp3",
     "expected": [
       "禁地矿山",
       "加尔顿山后段",
       "隐藏神殿",
       "盗贼据点",
       "剑之神殿右侧回廊",
+      "童话镇旅馆",
+      "第一记忆空间",
       "战斗II",
       "战斗Ⅱ",
       "战斗 II",
@@ -781,6 +803,126 @@
       "战斗([1Il|Ⅰ!！][1Il|Ⅰ!！]|Ⅱ|II)(?!\\d)(?![a-zA-Z])"
     ],
     "doc": "详细地图确定位置3"
+  },
+  "Collect_TargetMap4": {
+    "recognition": "OCR",
+    "next": [
+      "Collect_QuickCart_TargetMapEnd",
+      "Collect_QuickCart_FastUI"
+    ],
+    "interrupt": [
+      "Collect_TeleporNotFind",
+      "Collect_ClickTeleporCircleMap"
+    ],
+    "timeout": 3000,
+    "on_error": [
+      "Collect_MapRight_NoFind"
+    ],
+    "focus": "确认区域地图tp4",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "商场1楼",
+      "妖怪镇"
+    ],
+    "doc": "详细地图确定位置3"
+  },
+  "Collect_TargetMap1_Special_PerRight": {
+    "doc": "[维护点C05]复位到箱庭1图时需要特殊跳过的图,用来跳过图1非目标图,(EP18)需要持续维护!",
+    "recognition": "OCR",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "科库托斯暗黑神殿",
+      "记忆岔路口"
+    ],
+    "action": "Click",
+    "target": [
+      977,
+      342,
+      2,
+      2
+    ],
+    "next": [
+      "Collect_TargetMap1_Special_PerRight",
+      "Collect_TargetMap1-2"
+    ]
+  },
+  "Collect_TargetMap1_Special_Right": {
+    "doc": "[维护点C04]箱庭1图转2图时,特殊跳过的节点,因为若跳过图有传送阵图标,则不能依赖_MapRight_NoFind,最后还是得多写一组节点,与nofind不同,这里是定向识别,需要持续维护!",
+    "recognition": "OCR",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "凯那尔工业2楼"
+    ],
+    "action": "Click",
+    "target": [
+      977,
+      342,
+      2,
+      2
+    ],
+    "next": [
+      "Collect_TargetMap2",
+      "Collect_TargetMap1_Special_Right"
+    ]
+  },
+  "Collect_TargetMap2_Special_Right": {
+    "doc": "[维护点C04]箱庭2图转3图时,特殊跳过的节点,因为若跳过图有传送阵图标,则不能依赖_MapRight_NoFind,最后还是得多写一组节点,与nofind不同,这里是定向识别,需要持续维护!",
+    "recognition": "OCR",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "施塔因之塔第8层",
+      "施塔因之塔宿舍"
+    ],
+    "action": "Click",
+    "target": [
+      977,
+      342,
+      2,
+      2
+    ],
+    "next": [
+      "Collect_TargetMap3",
+      "Collect_TargetMap2_Special_Right"
+    ]
+  },
+  "Collect_MapRight_NoFind": {
+    "recognition": "TemplateMatch",
+    "inverse": true,
+    "next": [
+      "Collect_QuickCart_HomePageHub2"
+    ],
+    "roi": [
+      838,
+      311,
+      418,
+      63
+    ],
+    "focus": "QBC.[INF]特殊地图.类EP6区域地图到底",
+    "template": [
+      "TpMapRight.png"
+    ],
+    "green_mask": true,
+    "doc": "EP6.特殊地图，最后一图是紧接战斗2的狩猎图,特征是无右侧箭头。处理，直接结束箱庭内流程"
   },
   "Collect_TargetMapEnd": {
     "recognition": "OCR",
@@ -814,9 +956,7 @@
   },
   "Collect_TargetMapEnd_End": {
     "recognition": "OCR",
-    "focus": [
-      "Collect_TargetMapEnd"
-    ],
+    "focus": "卡带出口",
     "roi": [
       408,
       622,
@@ -840,19 +980,13 @@
   },
   "Collect_TeleporNotFind": {
     "recognition": "TemplateMatch",
-    "action": "Click",
-    "target": [
-      977,
-      342,
-      2,
-      2
-    ],
     "next": [
-      "Collect_TargetMapEnd_End",
-      "Collect_ClickTeleporCircleMap",
-      "Collect_TeleporNotFind"
+      "Collect_TeleporNotFind_Right",
+      "Collect_TeleporNotFind_NORight"
     ],
+    "inverse": true,
     "post_delay": 1000,
+    "focus": "CBB.[WRN]未识别到传送阵，执行特殊换页",
     "roi": [
       209,
       82,
@@ -863,9 +997,58 @@
       "TpCircleMapGE.png"
     ],
     "green_mask": true,
+    "doc": "[维护点末端，前手interface的 采集方案 op]主线13的区域图的2#、5#均不是正常图，特征是没有传送阵。在此写一个原中断吸取的反向‘找不到’中断来应对.然后存在两种情况:存在右按钮,切1次图.不存在,这就是最后一图,如火片,操作切到卡带,来给中断外传递退出信号"
+  },
+  "Collect_TeleporNotFind_Right": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "next": [
+      "Collect_QuickCart_TargetMapEnd_End",
+      "Collect_ClickTeleporCircleMap",
+      "Collect_TeleporNotFind"
+    ],
+    "post_delay": 1000,
+    "focus": "CBB.[WRN]特殊换页-存在右换页-方案1",
+    "roi": [
+      943,
+      309,
+      67,
+      72
+    ],
+    "template": [
+      "TpMapRight.png"
+    ],
+    "green_mask": true,
+    "target": [
+      977,
+      342,
+      2,
+      2
+    ],
+    "doc": "方案1:识别到存在右侧按键,点一下.next:1.若是旅馆安全图,异常消除,退出中断/2.有传送阵,点进去(非安全),尝试吸取【？，万一是狩猎场呢，逻辑又漏洞！】/3.还是没传送标,前位循环"
+  },
+  "Collect_TeleporNotFind_NORight": {
+    "recognition": "TemplateMatch",
+    "next": [
+      "Global_QuickCart_MenuReset"
+    ],
+    "interrupt": [
+      "Global_BackPageHub_Once"
+    ],
+    "post_delay": 1000,
+    "focus": "CBB.[WRN]特殊换页-不存在右换页-方案2",
+    "roi": [
+      943,
+      309,
+      67,
+      72
+    ],
     "inverse": true,
-    "focus": "CBB.[WRN]未识别到传送阵，执行特殊换页",
-    "doc": "[维护点末端，前手interface的 采集方案 op]主线13的区域图的2#、5#均不是正常图，特征是没有传送阵。在此写一个原中断吸取的反向‘找不到’中断来应对，动作为右切一图"
+    "template": [
+      "TpMapRight.png"
+    ],
+    "green_mask": true,
+    "doc": "方案2:识别到右侧按键不存在,这是卡带中最后一图,如火片.操作,切到快速卡带界面,传递退出信号"
   },
   "Collect_TargetMap_Special_Right": {
     "recognition": "OCR",
@@ -879,7 +1062,9 @@
     ],
     "expected": [
       "剑之神殿中央回廊",
-      "封印指定室"
+      "封印指定室",
+      "施塔因之塔第8层",
+      "施塔因之塔宿舍"
     ],
     "target": [
       977,
@@ -887,6 +1072,47 @@
       2,
       2
     ]
+  },
+  "Collect_Special_EP6": {
+    "recognition": "OCR",
+    "expected": "魔塔见习魔法师",
+    "focus": "CQB.[INF]检测到EP6,进行魔塔特殊操作",
+    "roi": [
+      481,
+      197,
+      310,
+      252
+    ],
+    "action": "Click",
+    "target": [
+      1271,
+      628,
+      0,
+      0
+    ],
+    "post_delay": 4000,
+    "doc": "EP6主城默认位置异常,需要点右下角传送阵物件"
+  },
+  "Collect_Special_QR7-CW": {
+    "recognition": "TemplateMatch",
+    "roi": [
+      670,
+      356,
+      203,
+      287
+    ],
+    "template": [
+      "QR6CW.png"
+    ],
+    "focus": "CQB.[INF]检测到QR6,进行合约之战特殊操作",
+    "action": "Click",
+    "target": [
+      950,
+      458,
+      0,
+      0
+    ],
+    "post_delay": 2000
   },
   "Collect_OperationsMain_PVEChapterIden2#": {
     "recognition": "TemplateMatch",
@@ -908,7 +1134,8 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_Skill1",
+      "Collect_ClickTelepor_ButNotActive",
+      "Collect_Skill_Start",
       "Collect_ClickTeleporCircleMap"
     ],
     "post_delay": 5000,
@@ -924,11 +1151,25 @@
     ],
     "doc": "详细地图内传送阵选择"
   },
+  "Collect_ClickTelepor_ButNotActive": {
+    "doc": "如果传送阵没有激活,需要从这里决定中断",
+    "next": [
+      "Collect_OperationsMain_OperationsEnd"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      511,
+      577,
+      262,
+      47
+    ],
+    "expected": "没有已激活的魔法阵"
+  },
   "Collect_ClickBackOnSecureMap": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Collect_Skill1"
+      "Collect_Skill_Start"
     ],
     "focus": "CB.区域地图.tp1.已正确",
     "roi": [
@@ -952,113 +1193,19 @@
     ],
     "doc": "详细地图确定位置"
   },
-  "Collect_Skill1": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "Collect_Skill2"
-    ],
-    "focus": "CB.吸取技能组施放",
-    "post_delay": 5000,
-    "roi": [
-      1108,
-      637,
-      65,
-      57
-    ],
-    "template": [
-      "pin.png"
-    ],
-    "target": [
-      1012,
-      648,
-      0,
-      0
-    ],
-    "doc": "PVE点击技能1。next暴力修改：因无物品可吸取不会消耗次数，故两个吸取技能连续使用；且缩减延迟。"
-  },
-  "Collect_Skill2": {
-    "action": "Click",
-    "next": [
-      "Collect_Skill2_2"
-    ],
-    "post_delay": 500,
-    "roi": [
-      961,
-      89,
-      60,
-      330
-    ],
-    "threshold": 0.98,
-    "lower": [
-      255,
-      255,
-      255
-    ],
-    "upper": [
-      255,
-      255,
-      255
-    ],
-    "target": [
-      980,
-      560,
-      0,
-      0
-    ],
-    "doc": "PVE点击技能2"
-  },
-  "Collect_Skill2_2": {
-    "action": "Click",
-    "next": [
-      "Collect_Skill3"
-    ],
-    "post_delay": 5000,
-    "target": [
-      1190,
-      485,
-      0,
-      0
-    ],
-    "doc": "PVE点击技能2"
-  },
-  "Collect_Skill3": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "Collect_OperationsMain_OperationsEnd"
-    ],
-    "interrupt": [
-      "Collect_FindTeleporCircle0.9",
-      "Collect_FindTeleporCircle",
-      "Collect_ForceTeleporCircle"
-    ],
-    "post_delay": 5000,
-    "roi": [
-      1108,
-      637,
-      65,
-      57
-    ],
-    "template": [
-      "pin.png"
-    ],
-    "target": [
-      1010,
-      480,
-      0,
-      0
-    ],
-    "doc": "PVE点击技能3"
+  "Info-C01": {
+    "doc": "skills.json的技能点击1k行代码原本从此开始."
   },
   "Collect_OperationsMain_OperationsEnd": {
     "recognition": "OCR",
     "next": [
-      "Collect_MapRight"
+      "Collect_MapRight",
+      "Collect_OperationsEnd_NORight"
     ],
     "interrupt": [
       "Collect_FindTeleporCircle"
     ],
+    "timeout": 3000,
     "roi": [
       128,
       13,
@@ -1069,6 +1216,23 @@
       "移动魔法阵"
     ],
     "doc": "找到图钉 ，进入区域地图"
+  },
+  "Collect_OperationsEnd_NORight": {
+    "recognition": "TemplateMatch",
+    "post_delay": 1000,
+    "focus": "CBB.[WRN]中继特殊结束-不存在右换页",
+    "roi": [
+      267,
+      298,
+      743,
+      84
+    ],
+    "threshold": 0.85,
+    "template": [
+      "MapOlayLeftButt.png"
+    ],
+    "green_mask": true,
+    "doc": "防止识别不到右键/且能误识别FindTeleporCircle的离谱情况."
   },
   "Collect_MapRight": {
     "recognition": "TemplateMatch",
@@ -1103,16 +1267,17 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "focus": "CB.箱庭地图内找到传送阵-按钮标",
-    "template": [
-      "IcoHand.png"
-    ],
     "roi": [
       828,
       519,
       91,
       90
     ],
-    "threshold": 0.90,
+    "post_delay": 500,
+    "template": [
+      "IcoHand.png"
+    ],
+    "threshold": 0.9,
     "green_mask": true,
     "doc": "0.9是否过高待评，图案两侧边缘有黑色纹路，另外有场景没有纹路（每日派遣），区别待深入考证"
   },
@@ -1139,6 +1304,7 @@
       "TpCircleS1.png",
       "TpCircleS2.png"
     ],
+    "threshold": 0.8,
     "doc": "场景地图内传送阵选择"
   },
   "Collect_ForceTeleporCircle": {
@@ -1146,7 +1312,7 @@
     "next": [
       "Collect_ForceTeleporCircleClick1"
     ],
-    "post_delay": 5000,
+    "post_delay": 3000,
     "focus": "CB.技能传送门.进入流程",
     "roi": [
       1122,
@@ -1162,16 +1328,114 @@
   "Collect_ForceTeleporCircleClick1": {
     "action": "Click",
     "next": [
-      "Collect_ForceTeleporCircleClick2"
+      "Collect_Skill_Tap3_clr",
+      "Collect_ForceTeleporCircleClick1"
     ],
-    "post_delay": 500,
+    "post_delay": 800,
     "target": [
-      1080,
+      1200,
       665,
       0,
       0
     ],
-    "doc": "点击Pin2快捷技能栏"
+    "doc": "点击Pin3快捷技能栏"
+  },
+  "Collect_Skill_Tap3_clr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_Skill3_1_Nothing",
+      "Collect_Skill3_1",
+      "Collect_Skill3_1_Unable"
+    ],
+    "focus": "CSB.技能页3-色核通过",
+    "roi": [
+      1181,
+      641,
+      46,
+      48
+    ],
+    "count": 200,
+    "lower": [
+      192,
+      141,
+      23
+    ],
+    "upper": [
+      223,
+      194,
+      129
+    ],
+    "doc": "技能页3"
+  },
+  "Collect_Skill3_1_Nothing": {
+    "recognition": "TemplateMatch",
+    "next": [
+      "Collect_Skill3_1_Unable"
+    ],
+    "focus": "CSB.无技能被设置，栏位3-1",
+    "roi": [
+      963,
+      607,
+      80,
+      85
+    ],
+    "template": [
+      "Skill-Nothing.png"
+    ]
+  },
+  "Collect_Skill3_1": {
+    "recognition": "TemplateMatch",
+    "next": [
+      "Collect_Skill3_1_perClr",
+      "Collect_Skill2_1~5_Unable"
+    ],
+    "focus": "CSB.技能'吸取'已配置，栏位1-1",
+    "timeout": 5000,
+    "on_error": [],
+    "roi": [
+      963,
+      607,
+      80,
+      85
+    ],
+    "template": [
+      "Skill3-1.png"
+    ]
+  },
+  "Collect_Skill3_1_perClr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_ForceTeleporCircleClick2.1",
+      "Collect_ForceTeleporCircleClick2.14"
+    ],
+    "interrupt": [
+      "Collect_ForceTeleporCircleClick2.05"
+    ],
+    "post_delay": 1500,
+    "action": "Click",
+    "focus": "CSB.施放'召唤传送阵'技能,栏位3-1",
+    "roi": [
+      963,
+      607,
+      80,
+      85
+    ],
+    "count": 480,
+    "lower": [
+      178,
+      178,
+      177
+    ],
+    "upper": [
+      255,
+      255,
+      255
+    ],
+    "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+  },
+  "Collect_Skill3_1_Unable": {
+    "focus": "CSB.[WRM]'传送'技能,运作错误",
+    "next": []
   },
   "Collect_ForceTeleporCircleClick2": {
     "action": "Click",
@@ -1189,7 +1453,7 @@
       0,
       0
     ],
-    "doc": "点击Pin2快捷技能栏中的传送技能"
+    "doc": "[废弃]点击Pin3快捷技能栏中的传送技能"
   },
   "Collect_ForceTeleporCircleClick2.05": {
     "action": "Click",
@@ -1200,7 +1464,7 @@
       0,
       0
     ],
-    "doc": "点击Pin2快捷技能栏中的传送技能"
+    "doc": "点击Pin3快捷技能栏中的传送技能"
   },
   "Collect_ForceTeleporCircleClick2.1": {
     "recognition": "TemplateMatch",
@@ -1293,6 +1557,7 @@
     "template": [
       "TpMapLeft.png"
     ],
+    "post_delay": 800,
     "green_mask": true,
     "doc": "详细地图内左图标，目的移动到最左"
   },
@@ -1342,21 +1607,500 @@
       306,
       125
     ],
+    "next": [
+      "Collect_Mode_QC_Isenable",
+      "Collect_Mode_QR_Isenable"
+    ],
     "expected": [
       "最近"
     ]
   },
-  "Collect_QuickCart_QC1Sort": {
+  "Collect_Mode_QC_Isenable": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_QC_SafeArea_Clr",
+      "Collect_QC_NoSafeArea_Clr"
+    ],
+    "interrupt": [
+      "Collect_QuickCart_NOHavePointer_Swip"
+    ],
+    "roi": [
+      214,
+      536,
+      113,
+      39
+    ],
+    "upper": [
+      255,
+      255,
+      255
+    ],
+    "lower": [
+      167,
+      167,
+      165
+    ],
+    "count": 500,
+    "focus": "CM.主线卡带确认"
+  },
+  "Collect_QC_SafeArea_Clr": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "doc": "卡带指针在安全位置,可以放手退出中断"
+  },
+  "Collect_QC_NoSafeArea_Clr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_QC_NoSafeArea_Swip1"
+    ],
+    "roi": [
+      1040,
+      659,
+      240,
+      19
+    ],
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000
+  },
+  "Collect_QC_NoSafeArea_Swip1": {
+    "next": [
+      "Collect_QC_SafeArea_Clr",
+      "Collect_QC_NoSafeArea_Swip2"
+    ],
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      117,
+      640,
+      0,
+      0
+    ],
+    "duration": 500,
+    "end_hold": 1000,
+    "pre_delay": 3000,
+    "doc": "滑动到更右侧,执行3次.目的,尽量排除吞操作前提下,识别最后一章卡带."
+  },
+  "Collect_QC_NoSafeArea_Swip2": {
+    "next": [
+      "Collect_QC_SafeArea_Clr",
+      "Collect_QC_NoSafeArea_Swip3"
+    ],
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      117,
+      640,
+      0,
+      0
+    ],
+    "duration": 500,
+    "end_hold": 1000,
+    "pre_delay": 3000
+  },
+  "Collect_QC_NoSafeArea_Swip3": {
+    "next": [
+      "Collect_QC_SafeArea_Clr",
+      "Collect_QC_End"
+    ],
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      117,
+      640,
+      0,
+      0
+    ],
+    "duration": 500,
+    "end_hold": 1000,
+    "pre_delay": 3000
+  },
+  "Collect_QC_End": {
+    "focus": "剧情类卡带到底",
+    "doc": "用户参数错误,大于实际卡带数可能性较高,强制切出.点一下'最近'",
+    "action": "Click",
+    "target": [
+      97,
+      552,
+      0,
+      0
+    ],
+    "next": [
+      "Collect_QC_End_Ck",
+      "Collect_QC_End"
+    ]
+  },
+  "Collect_QC_End_Ck": {
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QC_NoSafeArea_SwipToResetArea": {
+    "recognition": "ColorMatch",
+    "roi": [
+      1040,
+      659,
+      240,
+      19
+    ],
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      117,
+      640,
+      0,
+      0
+    ],
+    "duration": 500,
+    "end_hold": 1000
+  },
+  "Collect_QR_AllArea_HavePointer_Clr": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1280,
+      19
+    ],
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "doc": "当前页面有无卡带在位指针"
+  },
+  "Collect_Mode_QR_Isenable": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_QR_SafeArea_Clr",
+      "Collect_QR_NoSafeArea_Clr"
+    ],
+    "interrupt": [
+      "Collect_QuickCart_NOHavePointer_Swip"
+    ],
+    "roi": [
+      392,
+      536,
+      104,
+      35
+    ],
+    "upper": [
+      255,
+      255,
+      255
+    ],
+    "lower": [
+      167,
+      167,
+      165
+    ],
+    "count": 500,
+    "focus": "CM.角色卡带确认"
+  },
+  "Collect_QR_SafeArea_Clr": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      890,
+      19
+    ],
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "doc": "[维护点C03].目前进度,新进员工赛尔.卡带指针在安全位置,可以放手退出中断."
+  },
+  "Collect_QR_NoSafeArea_Clr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_QR_NoSafeArea_Swip1"
+    ],
+    "roi": [
+      890,
+      659,
+      390,
+      19
+    ],
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "doc": "[维护点C03],x=1280-$ANS"
+  },
+  "Collect_QR_NoSafeArea_Swip1": {
+    "next": [
+      "Collect_QR_SafeArea_Clr",
+      "Collect_QR_NoSafeArea_Swip2"
+    ],
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      117,
+      640,
+      0,
+      0
+    ],
+    "duration": 500,
+    "end_hold": 1000,
+    "pre_delay": 3000,
+    "doc": "滑动到更右侧,执行3次.目的,尽量排除吞操作前提下,识别最后一章卡带."
+  },
+  "Collect_QR_NoSafeArea_Swip2": {
+    "next": [
+      "Collect_QR_SafeArea_Clr",
+      "Collect_QR_NoSafeArea_Swip3"
+    ],
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      117,
+      640,
+      0,
+      0
+    ],
+    "duration": 500,
+    "end_hold": 1000,
+    "pre_delay": 3000
+  },
+  "Collect_QR_NoSafeArea_Swip3": {
+    "next": [
+      "Collect_QR_SafeArea_Clr",
+      "Collect_QR_End"
+    ],
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      117,
+      640,
+      0,
+      0
+    ],
+    "duration": 500,
+    "end_hold": 1000,
+    "pre_delay": 3000
+  },
+  "Collect_QR_End": {
+    "focus": "角色类卡带到底",
+    "doc": "用户参数错误,大于实际卡带数可能性较高,强制切出.点一下'最近'",
+    "action": "Click",
+    "target": [
+      97,
+      552,
+      0,
+      0
+    ],
+    "next": [
+      "Collect_QR_End_Ck",
+      "Collect_QR_End"
+    ]
+  },
+  "Collect_QR_End_Ck": {
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_NOHavePointer_Swip": {
+    "roi": [
+      1040,
+      659,
+      240,
+      19
+    ],
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "action": "Swipe",
+    "begin": [
+      1025,
+      640,
+      0,
+      0
+    ],
+    "end": [
+      117,
+      640,
+      0,
+      0
+    ],
+    "duration": 500,
+    "end_hold": 1000,
+    "post_delay": 500,
+    "doc": "将卡带表滑到更右侧,中继"
+  },
+  "Collect_QuickCart_Menu_Ocr": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Collect_QuickCart_QC1"
+      "Collect_QuickCart_QC_Sort"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "CM.接入快速卡带",
+    "roi": [
+      32,
+      506,
+      306,
+      125
+    ],
+    "expected": [
+      "最近"
+    ],
+    "doc": "此处为分歧点,后接主线卡带or角色卡带,interrupt"
+  },
+  "Collect_QuickCart_QC_Sort": {
+    "recognition": "OCR",
+    "action": "Click",
+    "next": [
+      "Collect_QuickCart_QC_Sort_Clr",
+      "Collect_QuickCart_QC_Sort"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
     ],
     "post_delay": 2000,
-    "focus": "QCM.快速卡带类选择-1",
+    "focus": "QCM.快速卡带类选择-剧情",
     "roi": [
       36,
       527,
@@ -1367,11 +2111,62 @@
       "剧情游戏卡"
     ]
   },
+  "Collect_QuickCart_QC_Sort_Clr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_QuickCart_QC1"
+    ],
+    "interrupt": [],
+    "roi": [
+      214,
+      536,
+      113,
+      39
+    ],
+    "upper": [
+      255,
+      255,
+      255
+    ],
+    "lower": [
+      167,
+      167,
+      165
+    ],
+    "count": 500,
+    "focus": "CM.快速卡带类确认-剧情"
+  },
+  "Collect_QuickCart_QC_Out": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_QuickCart_Switch"
+    ],
+    "focus": "CM.[WRN]QC.识别到中断给出中止指示",
+    "roi": [
+      57,
+      538,
+      87,
+      36
+    ],
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "doc": "主动识别中断给出的更改,'最近'亮起,通往QC/QR转换节点|注意interface"
+  },
   "Collect_QuickCart_QC1": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_QuickCart_QC2Sort"
+      "Collect_QuickCart_QC2",
+      "Collect_QuickCart_QC_Out"
     ],
     "interrupt": [
       "Collect_OperationsMain_Sandplay"
@@ -1394,19 +2189,474 @@
       25,
       0,
       0
+    ],
+    "doc": "卡带类的第一个卡带用2代图钉逻辑进入,而不是3代探针"
+  },
+  "Collect_QuickCart_QC2": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC3",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-2",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC3": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC4",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-3",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC4": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC5",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-4",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC5": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC6",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-5",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC6": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC7",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-6",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC7": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC8",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-7",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC8": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC9",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-8",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC9": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC10",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-9",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC10": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC11",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-10",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC11": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC12",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-11",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC12": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QC_Fin"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QCM.快速卡带-12",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QC_Fin": {
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ],
+    "next": [
+      "Collect_QuickCart_Switch"
     ]
   },
-  "Collect_QuickCart_QC2Sort": {
+  "Collect_QuickCart_Switch": {
+    "focus": "CM.剧情/角色卡带切换节点",
+    "next": [
+      "Collect_QuickCart_QR_Sort"
+    ],
+    "interrupt": [
+      "Global_QuickCart_MenuReset",
+      "Global_BackPageHub_Once"
+    ]
+  },
+  "Collect_QuickCart_QR_Sort": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Collect_QuickCart_QC2"
+      "Collect_QuickCart_QR_Sort_Clr",
+      "Collect_QuickCart_QR_Sort"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
     ],
     "post_delay": 2000,
-    "focus": "QCM.快速卡带类选择-2",
+    "focus": "QRM.快速卡带类选择-角色",
     "roi": [
       36,
       527,
@@ -1414,67 +2664,71 @@
       63
     ],
     "expected": [
-      "剧情游戏卡"
+      "角色游戏卡"
     ]
   },
-  "Collect_QuickCart_QC2": {
+  "Collect_QuickCart_QR_Sort_Clr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_QuickCart_QR1"
+    ],
+    "interrupt": [],
+    "roi": [
+      382,
+      537,
+      124,
+      42
+    ],
+    "upper": [
+      255,
+      255,
+      255
+    ],
+    "lower": [
+      167,
+      167,
+      165
+    ],
+    "count": 500,
+    "focus": "CM.快速卡带类确认-角色"
+  },
+  "Collect_QuickCart_QR_Out": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "CM.[WRN]QR.识别到中断给出中止指示",
+    "roi": [
+      57,
+      538,
+      87,
+      36
+    ],
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "doc": "主动识别中断给出的更改,'最近'亮起,通往QR/QR转换节点|注意interface"
+  },
+  "Collect_QuickCart_QR1": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_QuickCart_QC3Sort"
+      "Collect_QuickCart_QR2",
+      "Collect_QuickCart_QR_Out"
     ],
     "interrupt": [
       "Collect_OperationsMain_Sandplay"
     ],
     "post_delay": 3000,
-    "focus": "QCM.快速卡带-2",
-    "roi": [
-      51,
-      582,
-      873,
-      133
-    ],
-    "template": [
-      "KadaiGe.png"
-    ],
-    "order_by": "Horizontal",
-    "green_mask": true,
-    "target_offset": [
-      -40,
-      30,
-      0,
-      0
-    ]
-  },
-  "Collect_QuickCart_QC3Sort": {
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "Collect_QuickCart_QC3"
-    ],
-    "on_error": [
-      "Collect_ChapterSelectionError"
-    ],
-    "post_delay": 2000,
-    "focus": "QCM.快速卡带类选择-3",
-    "roi": [
-      36,
-      527,
-      1104,
-      63
-    ],
-    "expected": [
-      "剧情游戏卡"
-    ]
-  },
-  "Collect_QuickCart_QC3": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "Collect_OperationsMain_Sandplay"
-    ],
-    "post_delay": 3000,
-    "focus": "QCM.快速卡带-3",
+    "focus": "QRM.快速卡带-1",
     "roi": [
       51,
       582,
@@ -1488,10 +2742,457 @@
     "green_mask": true,
     "target_offset": [
       -35,
-      30,
+      25,
       0,
       0
+    ],
+    "doc": "卡带类的第一个卡带用2代图钉逻辑进入,而不是3代探针"
+  },
+  "Collect_QuickCart_QR2": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR3",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-2",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR3": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR4",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-3",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR4": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR5",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-4",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR5": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR6",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-5",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR6": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR7",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-6",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR7": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR8",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-7",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR8": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR9",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-8",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR9": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR10",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-9",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR10": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR11",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-10",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR11": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR12",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-11",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR12": {
+    "recognition": "ColorMatch",
+    "roi": [
+      0,
+      659,
+      1040,
+      19
+    ],
+    "next": [
+      "Collect_QuickCart_QR_Fin"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "on_error": [
+      "Collect_ChapterSelectionError"
+    ],
+    "focus": "QRM.快速卡带-12",
+    "lower": [
+      226,
+      191,
+      13
+    ],
+    "upper": [
+      254,
+      254,
+      184
+    ],
+    "count": 10,
+    "target_offset": [
+      145,
+      -20,
+      0,
+      0
+    ],
+    "pre_delay": 1000,
+    "action": "Click"
+  },
+  "Collect_QuickCart_QR_Fin": {
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ],
+    "next": [
+      "Collect_QuickCart_Fin"
     ]
+  },
+  "Collect_QuickCart_Fin": {
+    "focus": "CM.正常运行完毕. [0x00] (・ω≦)"
   },
   "Collect_QuickCart_TargetMapEnd": {
     "recognition": "OCR",

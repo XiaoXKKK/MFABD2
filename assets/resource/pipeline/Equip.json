@@ -10,7 +10,7 @@
   "Equip_HomePageHub": {
     "recognition": "TemplateMatch",
     "next": [
-      "Equip_Skill4"
+      "Equip_Skill_Tap3"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内，普通启动。BM.箱庭地图run已确认",
@@ -27,7 +27,7 @@
   "Equip_HomePageHub1": {
     "recognition": "TemplateMatch",
     "next": [
-      "Equip_Skill4"
+      "Equip_Skill_Tap3"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内，普通启动。BM.箱庭地图pin已确认",
@@ -64,12 +64,74 @@
     "green_mask": true,
     "doc": "其他页面，返回按钮"
   },
-  "Equip_Skill4": {
-    "recognition": "TemplateMatch",
+  "Equip_Skill_Tap3": {
     "action": "Click",
     "next": [
-      "Equip_EquipMakeGui",
-      "Equip_Skill4"
+      "Equip_Skill_Tap3_clr",
+      "Equip_Skill_Tap3"
+    ],
+    "post_delay": 800,
+    "roi": [
+      1049,
+      632,
+      58,
+      59
+    ],
+    "template": [
+      "pin.png"
+    ],
+    "target": [
+      1200,
+      664,
+      0,
+      0
+    ],
+    "doc": "第3页技能点击"
+  },
+  "Equip_Skill_Tap3_clr": {
+    "recognition": "ColorMatch",
+    "next": [
+      "Equip_Skill3_5_Nothing",
+      "Equip_Skill3_5"
+    ],
+    "focus": "ESB.技能页3-色核通过",
+    "roi": [
+      1179,
+      639,
+      50,
+      52
+    ],
+    "count": 200,
+    "lower": [
+      192,
+      141,
+      23
+    ],
+    "upper": [
+      223,
+      194,
+      129
+    ],
+    "doc": "技能页3，色核识别.next遍历是防止放置其他技能;次节点每轮next判定"
+  },
+  "Equip_Skill3_5_Nothing": {
+    "recognition": "TemplateMatch",
+    "focus": "ESB.无技能被设置，栏位3-5",
+    "roi": [
+      1139,
+      443,
+      80,
+      86
+    ],
+    "template": [
+      "Skill-Nothing.png"
+    ],
+    "doc": "PVE点击技能2（栏位4。栏位5留空，摸鱼）"
+  },
+  "Equip_Skill3_5": {
+    "action": "Click",
+    "next": [
+      "Equip_EquipMakeGui"
     ],
     "post_delay": 2000,
     "roi": [
@@ -82,8 +144,8 @@
       "pin.png"
     ],
     "target": [
-      1097,
-      442,
+      1181,
+      486,
       0,
       0
     ],
@@ -1156,7 +1218,9 @@
   },
   "Equip_FinBackMapPage": {
     "recognition": "TemplateMatch",
-    "next": [],
+    "next": [
+      "Equip_Skill_Tap1"
+    ],
     "roi": [
       1122,
       646,
@@ -1167,5 +1231,52 @@
       "pin.png"
     ],
     "doc": "识别右下图钉-章节主页"
-  }
+  },
+  "Equip_Skill_Tap1": {
+    "action": "Click",
+    "next": [
+      "Equip_Skill_Tap1_clr",
+      "Equip_Skill_Tap1"
+    ],
+    "post_delay": 800,
+    "roi": [
+      1049,
+      632,
+      58,
+      59
+    ],
+    "template": [
+      "pin.png"
+    ],
+    "target": [
+      1083,
+      664,
+      0,
+      0
+    ],
+    "doc": "第1页技能点击,复位"
+  },
+  "Equip_Skill_Tap1_clr": {
+    "recognition": "ColorMatch",
+    "next": [],
+    "focus": "ESB.复位技能页-色核通过",
+    "roi": [
+      1061,
+      645,
+      41,
+      43
+    ],
+    "count": 200,
+    "lower": [
+      192,
+      141,
+      23
+    ],
+    "upper": [
+      223,
+      194,
+      129
+    ],
+    "doc": "技能页3，色核识别.next遍历是防止放置其他技能;次节点每轮next判定"
+  },
 }
