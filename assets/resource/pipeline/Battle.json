@@ -657,6 +657,9 @@
     "next": [
       "Battle_CollectMapInitialize_Out_Ty2"
     ],
+    "interrupt": [
+      "Battle_MapLocReset_once"
+    ],
     "expected": [
       "可以获得"
     ]
@@ -962,5 +965,15 @@
       0
     ],
     "duration": 500
+  },
+  "Battle_MapLocReset_once": {
+    "action": "Click",
+    "target": [
+      140,
+      120,
+      0,
+      0
+    ],
+    "post_delay": 800
   }
 }

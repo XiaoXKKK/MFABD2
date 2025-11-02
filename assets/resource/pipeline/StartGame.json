@@ -159,7 +159,7 @@
     "next": [
       "StartGame_Start"
     ],
-    "timeout": 50000,
+    "timeout": 40000,
     "post_wait_freezes": 1000,
     "roi": [
       127,
@@ -250,7 +250,7 @@
       "StartGame_LoadingPage",
       "StartGame_Loading"
     ],
-    "post_delay": 15000,
+    "post_delay": 8000,
     "focus": "SM.ORC游戏启动中",
     "roi": [
       820,
@@ -756,8 +756,10 @@
   "StartGame_PerPetTask": {
     "recognition": "TemplateMatch",
     "action": "Click",
-    "next": [],
-    "timeout": 8000,
+    "next": [
+      "StartGame_PerPetTask"
+    ],
+    "timeout": 5000,
     "post_delay": 1000,
     "focus": "SM.宠物派遣",
     "roi": [

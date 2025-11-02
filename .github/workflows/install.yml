@@ -116,7 +116,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ needs.meta.outputs.is_dev_version == 'true' && format('MFABD2-{0}-{1}-{2}', needs.meta.outputs.tag, matrix.os, matrix.arch) || format('MFABD2-{1}-{2}', matrix.os, matrix.arch) }}
+          name: ${{ needs.meta.outputs.is_dev_version == 'true' && format('MFABD2-{0}-{1}-{2}', needs.meta.outputs.tag, matrix.os, matrix.arch) || format('MFABD2-{0}-{1}', matrix.os, matrix.arch) }}
           path: "install"
 
   changelog:
