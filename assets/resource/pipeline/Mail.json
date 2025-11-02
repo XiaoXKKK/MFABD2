@@ -154,15 +154,18 @@
     ],
     "next": [
       "Mail_GetAll",
-      "Mail_CheckMail"
+      "Mail_TabBus",
+      "Mail_CheckMail",
+      "Mail_BackHomePage2"
     ],
     "focus": "GM.新邮件确认"
   },
   "Mail_GetAll": {
-    "recognition": "OCR",
+    "recognition": "ColorMatch",
     "action": "Click",
     "next": [
       "Mail_GetAllBack",
+      "Mail_GetAll",
       "Mail_TabBus"
     ],
     "focus": "GM.一般邮件领取",
@@ -173,8 +176,15 @@
       87,
       35
     ],
-    "expected": [
-      "全部领取"
+    "lower": [
+      212,
+      210,
+      201
+    ],
+    "upper": [
+      213,
+      212,
+      203
     ],
     "doc": "全部领取"
   },
@@ -200,7 +210,7 @@
     "doc": "点击画面即可返回"
   },
   "Mail_TabBus": {
-    "recognition": "OCR",
+    "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
       "Mail_GetBusAll",
@@ -208,21 +218,22 @@
     ],
     "post_delay": 2000,
     "roi": [
-      171,
-      100,
-      141,
-      194
+      184,
+      146,
+      185,
+      62
     ],
-    "expected": [
-      "商品信箱"
+    "template": [
+      "FreeGacha.png"
     ],
     "doc": "切换to月卡信箱"
   },
   "Mail_GetBusAll": {
-    "recognition": "OCR",
+    "recognition": "ColorMatch",
     "action": "Click",
     "next": [
       "Mail_GetBusAllBack",
+      "Mail_GetBusAll",
       "Mail_BackHomePage2"
     ],
     "post_delay": 2000,
@@ -232,8 +243,15 @@
       87,
       35
     ],
-    "expected": [
-      "全部领取"
+    "lower": [
+      212,
+      210,
+      201
+    ],
+    "upper": [
+      213,
+      212,
+      203
     ],
     "doc": "全部领取"
   },
