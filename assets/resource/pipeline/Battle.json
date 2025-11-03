@@ -600,15 +600,16 @@
       31
     ],
     "lower": [
-      226,
-      201,
-      192
+      241,
+      0,
+      0
     ],
     "upper": [
-      226,
-      201,
-      192
-    ]
+      255,
+      139,
+      133
+    ],
+    "count": 40
   },
   "Battle_FastBattleReward": {
     "recognition": "OCR",
@@ -632,10 +633,10 @@
   "Battle_CollectMapInitialize": {
     "action": "Click",
     "next": [
-      "Battle_CollectMapInitialize_Out",
+      "Battle_CollectMapInitialize_Out_Ty1",
       "Battle_CollectMapInitialize"
     ],
-    "post_delay": 3000,
+    "post_delay": 1000,
     "focus": "BB.快速狩猎-结算-狩猎地图默认位置",
     "target": [
       140,
@@ -644,17 +645,40 @@
       0
     ]
   },
-  "Battle_CollectMapInitialize_Out": {
+  "Battle_CollectMapInitialize_Out_Ty1": {
     "recognition": "OCR",
-    "focus": "BB.地图复位确认-默认位置",
+    "focus": "BB.地图复位默认位置-Ty1复核",
     "roi": [
       199,
       45,
       180,
       52
     ],
+    "next": [
+      "Battle_CollectMapInitialize_Out_Ty2"
+    ],
+    "interrupt": [
+      "Battle_MapLocReset_once"
+    ],
     "expected": [
       "可以获得"
+    ]
+  },
+  "Battle_CollectMapInitialize_Out_Ty2": {
+    "recognition": "OCR",
+    "focus": "BB.地图复位默认位置-Ty2复核",
+    "roi": [
+      518,
+      241,
+      313,
+      225
+    ],
+    "expected": [
+      "野猪洞穴"
+    ],
+    "timeout": 3000,
+    "on_error": [
+      "Battle_CollectMapInitialize"
     ]
   },
   "Battle_CollectMapInitializeE": {
@@ -769,6 +793,9 @@
     "next": [
       "Battle_TurnCharact_CollectMapInitializeE"
     ],
+    "interrupt": [
+      "Battle_CollectMapInitialize"
+    ],
     "roi": [
       649,
       532,
@@ -776,14 +803,14 @@
       31
     ],
     "lower": [
-      226,
-      201,
-      192
+      241,
+      0,
+      0
     ],
     "upper": [
-      226,
-      201,
-      192
+      255,
+      139,
+      133
     ]
   },
   "Battle_TurnCharact_TurnDuo": {
@@ -938,5 +965,15 @@
       0
     ],
     "duration": 500
+  },
+  "Battle_MapLocReset_once": {
+    "action": "Click",
+    "target": [
+      140,
+      120,
+      0,
+      0
+    ],
+    "post_delay": 800
   }
 }

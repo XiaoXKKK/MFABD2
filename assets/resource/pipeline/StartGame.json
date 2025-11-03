@@ -2,10 +2,10 @@
   "StartGame_Start": {
     "action": "StartApp",
     "next": [
-      "StartGame_Logo",
       "StartGame_LinkError",
       "StartGame_Error_API",
       "StartGame_Error_AM",
+      "StartGame_Logo",
       "StartGame_LoadingPage"
     ],
     "post_delay": 8000,
@@ -16,10 +16,10 @@
   "StartGame_Logo": {
     "recognition": "OCR",
     "next": [
-      "StartGame_Logo",
+      "StartGame_PayFaild",
       "StartGame_LoadingPage",
       "StartGame_TouchStart",
-      "StartGame_PayFaild"
+      "StartGame_Logo"
     ],
     "post_delay": 10000,
     "focus": "NEO",
@@ -36,14 +36,14 @@
   "StartGame_LoadingPage": {
     "recognition": "OCR",
     "next": [
-      "StartGame_Loading",
       "StartGame_Update",
       "StartGame_UpdateDate",
       "StartGame_PayFaild",
-      "StartGame_TouchStart",
-      "StartGame_LoadingPage",
       "StartGame_Error_API",
-      "StartGame_Error_AM"
+      "StartGame_Error_AM",
+      "StartGame_TouchStart",
+      "StartGame_Loading",
+      "StartGame_LoadingPage"
     ],
     "post_delay": 10000,
     "pre_wait_freezes": 3000,
@@ -128,20 +128,14 @@
     "timeout": 50000,
     "post_delay": 60000,
     "roi": [
-      884,
-      189,
-      142,
-      77
+      127,
+      89,
+      951,
+      333
     ],
     "expected": [
       "Update",
       "更新"
-    ],
-    "target": [
-      954,
-      224,
-      0,
-      0
     ]
   },
   "StartGame_UpdateEngShopnothink": {
@@ -165,13 +159,13 @@
     "next": [
       "StartGame_Start"
     ],
-    "timeout": 50000,
+    "timeout": 40000,
     "post_wait_freezes": 1000,
     "roi": [
-      869,
-      183,
-      178,
-      92
+      127,
+      89,
+      951,
+      333
     ],
     "expected": [
       "Play",
@@ -248,15 +242,15 @@
   "StartGame_Loading": {
     "recognition": "OCR",
     "next": [
-      "StartGame_Loading",
       "StartGame_Update",
       "StartGame_UpdateDate",
       "StartGame_PayFaild",
+      "StartGame_Linkdwon",
       "StartGame_TouchStart",
       "StartGame_LoadingPage",
-      "StartGame_Linkdwon"
+      "StartGame_Loading"
     ],
-    "post_delay": 15000,
+    "post_delay": 8000,
     "focus": "SM.ORC游戏启动中",
     "roi": [
       820,
@@ -298,10 +292,10 @@
     ],
     "post_delay": 3000,
     "roi": [
-      572,
+      573,
       385,
       135,
-      58
+      136
     ],
     "expected": [
       "确认"
@@ -313,12 +307,15 @@
     "next": [
       "StartGame_PayFaild",
       "StartGame_TouchStart",
-      "StartGame_MapPage",
       "StartGame_PVPSet",
       "StartGame_Special",
-      "StartGame_BackMapPage",
       "StartGame_NewChar",
-      "StartGame_DaliyBanner"
+      "StartGame_DaliyBanner",
+      "StartGame_MapPage",
+      "StartGame_BackMapPage"
+    ],
+    "interrupt": [
+      "PVP_PerOperationsMain_Error"
     ],
     "pre_delay": 5000,
     "post_delay": 20000,
@@ -759,8 +756,10 @@
   "StartGame_PerPetTask": {
     "recognition": "TemplateMatch",
     "action": "Click",
-    "next": [],
-    "timeout": 8000,
+    "next": [
+      "StartGame_PerPetTask"
+    ],
+    "timeout": 5000,
     "post_delay": 1000,
     "focus": "SM.宠物派遣",
     "roi": [

@@ -133,7 +133,8 @@
     "recognition": "OCR",
     "action": "Swipe",
     "next": [
-      "PVP_PVPBook"
+      "PVP_PVPBook",
+      "PVP_HomePageSwipe"
     ],
     "pre_delay": 1000,
     "focus": "PM.卡带界面垂直复位(一次性)",
@@ -167,6 +168,9 @@
       "PVP_PVPMes",
       "PVP_PVPMes2",
       "PVP_PVPStart"
+    ],
+    "interrupt": [
+      "PVP_PerOperationsMain_Error"
     ],
     "post_delay": 8500,
     "focus": "PM.PVP卡带",
@@ -547,10 +551,10 @@
     "post_delay": 3000,
     "focus": "PM.PVP.PVP战斗进行中...",
     "roi": [
-      49,
+      50,
       576,
-      124,
-      68
+      203,
+      69
     ],
     "expected": [
       "正在进行"
@@ -691,7 +695,8 @@
     "recognition": "OCR",
     "action": "Swipe",
     "next": [
-      "PVP_TouchPVEBook"
+      "PVP_TouchPVEBook",
+      "PVP_PVEBookSwipe"
     ],
     "roi": [
       118,
@@ -703,17 +708,18 @@
       "活动游戏卡"
     ],
     "begin": [
-      1400,
+      30,
       300,
       0,
       0
     ],
     "end": [
-      1400,
+      30,
       700,
       0,
       0
     ],
+    "duration": 400,
     "doc": "识别活动游戏卡-上划"
   },
   "PVP_TouchPVEBook": {
@@ -749,5 +755,35 @@
       "pin.png"
     ],
     "doc": "识别右下图钉-章节主页"
+  },
+  "PVP_PerOperationsMain_Error": {
+    "recognition": "OCR",
+    "roi": [
+      480,
+      139,
+      322,
+      429
+    ],
+    "expected": [
+      "没有赛季奖励",
+      "error"
+    ],
+    "next": [
+      "PVP_PerOperationsMain_Error_Processing"
+    ],
+    "focus": "PB.[WRN]游戏异常弹窗"
+  },
+  "PVP_PerOperationsMain_Error_Processing": {
+    "recognition": "OCR",
+    "action": "Click",
+    "roi": [
+      480,
+      139,
+      322,
+      429
+    ],
+    "expected": [
+      "确认"
+    ]
   }
 }

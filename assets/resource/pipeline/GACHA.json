@@ -207,6 +207,7 @@
       0
     ],
     "duration": 700,
+    "end_hold": 1000,
     "post_wait_freezes": 1000,
     "doc": "下滑寻找免费抽卡"
   },

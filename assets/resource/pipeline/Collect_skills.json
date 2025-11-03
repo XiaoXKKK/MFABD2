@@ -1,0 +1,1096 @@
+{
+    "Collect_Skill_Start": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill_Tap1"
+        ],
+        "post_delay": 1000,
+        "focus": "CSB.吸取技能组施放",
+        "roi": [
+            1108,
+            637,
+            65,
+            57
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "doc": "PVE点击技能队列开启（识别到3个中的2，固定点击1号位"
+    },
+    "Collect_Skill_Tap1": {
+        "action": "Click",
+        "next": [
+            "Collect_Skill_Tap1_clr",
+            "Collect_Skill_Tap1"
+        ],
+        "post_delay": 800,
+        "roi": [
+            1049,
+            632,
+            58,
+            59
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "target": [
+            1083,
+            664,
+            0,
+            0
+        ],
+        "doc": "第一页技能点击"
+    },
+    "Collect_Skill_Tap1_clr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill1_2_Nothing",
+            "Collect_Skill1_2",
+            "Collect_Skill1_3_Nothing",
+            "Collect_Skill1_3",
+            "Collect_Skill1_4_Nothing",
+            "Collect_Skill1_4",
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5",
+            "Collect_Skill1_1"
+        ],
+        "focus": "CSB.技能页1-色核通过",
+        "roi": [
+            1061,
+            645,
+            41,
+            43
+        ],
+        "count": 200,
+        "lower": [
+            192,
+            141,
+            23
+        ],
+        "upper": [
+            223,
+            194,
+            129
+        ],
+        "doc": "技能页1，色核识别.next遍历是防止放置其他技能;次节点每轮next判定"
+    },
+    "Collect_Skill1_1": {
+        "action": "Click",
+        "next": [
+            "Collect_Skill_Tap2"
+        ],
+        "focus": "SCB.'探查'技能施放(无判定),栏位1-1",
+        "post_delay": 1500,
+        "roi": [
+            970,
+            620,
+            66,
+            67
+        ],
+        "template": [
+            "Skill1-1.png"
+        ],
+        "target": [
+            1002,
+            651,
+            0,
+            0
+        ],
+        "doc": "技能1设定为探查。识别位，技能环左1"
+    },
+    "Collect_Skill1_1_Unable": {
+        "recognition": "ColorMatch",
+        "focus": "技能1冷却",
+        "roi": [
+            970,
+            620,
+            66,
+            67
+        ],
+        "lower": [
+            76,
+            91,
+            114
+        ],
+        "upper": [
+            156,
+            166,
+            179
+        ],
+        "doc": "技能1冷却"
+    },
+    "Collect_Skill1_2": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill1_2_perOcr",
+            "Collect_Skill1_2_perClr",
+            "Collect_Skill1_3_Nothing",
+            "Collect_Skill1_3"
+        ],
+        "focus": "CSB.技能'召集'施放，栏位1-1",
+        "timeout": 3000,
+        "on_error": [
+            "Collect_Skill1_1"
+        ],
+        "roi": [
+            933,
+            526,
+            75,
+            73
+        ],
+        "template": [
+            "Skill2-1-2.png"
+        ],
+        "doc": "PVE点击技能2"
+    },
+    "Collect_Skill1_3": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill1_3_perOcr",
+            "Collect_Skill1_3_perClr",
+            "Collect_Skill1_4_Nothing",
+            "Collect_Skill1_4"
+        ],
+        "timeout": 3000,
+        "on_error": [
+            "Collect_Skill1_1"
+        ],
+        "roi": [
+            966,
+            437,
+            80,
+            86
+        ],
+        "template": [
+            "Skill2-1-2.png"
+        ]
+    },
+    "Collect_Skill1_4": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill1_4_perOcr",
+            "Collect_Skill1_4_perClr",
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5"
+        ],
+        "timeout": 3000,
+        "on_error": [
+            "Collect_Skill1_1"
+        ],
+        "post_delay": 1500,
+        "roi": [
+            1054,
+            404,
+            75,
+            76
+        ],
+        "template": [
+            "Skill2-1-2.png"
+        ]
+    },
+    "Collect_Skill1_5": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill1_5_perOcr",
+            "Collect_Skill1_5_perClr"
+        ],
+        "timeout": 1500,
+        "on_error": [
+            "Collect_Skill1_1"
+        ],
+        "post_delay": 1500,
+        "roi": [
+            1139,
+            443,
+            80,
+            86
+        ],
+        "template": [
+            "Skill2-1-2.png"
+        ],
+        "doc": "PVE点击技能2（栏位4。栏位5留空，摸鱼）"
+    },
+    "Collect_Skill1_2_perOcr": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill1_3_Nothing",
+            "Collect_Skill1_3",
+            "Collect_Skill1_4_Nothing",
+            "Collect_Skill1_4",
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5",
+            "Collect_Skill1_5_OCRERR"
+        ],
+        "focus": "CSB.施放次数已满,栏位1-2",
+        "roi": [
+            942,
+            535,
+            54,
+            58
+        ],
+        "expected": [
+            "(\\d+)\\s*[/:：|\\-~]?\\s*\\1(?!\\d)"
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill1_3_perOcr": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill1_4_Nothing",
+            "Collect_Skill1_4",
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5",
+            "Collect_Skill1_5_OCRERR"
+        ],
+        "focus": "CSB.施放次数已满,栏位1-3",
+        "roi": [
+            976,
+            453,
+            56,
+            57
+        ],
+        "expected": [
+            "(\\d+)\\s*[/:：|\\-~]?\\s*\\1(?!\\d)"
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill1_4_perOcr": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5",
+            "Collect_Skill1_5_OCRERR"
+        ],
+        "focus": "CSB.施放次数已满,栏位1-4",
+        "roi": [
+            1062,
+            420,
+            56,
+            50
+        ],
+        "expected": [
+            "(\\d+)\\s*[/:：|\\-~]?\\s*\\1(?!\\d)"
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill1_5_perOcr": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill1_1"
+        ],
+        "focus": "CSB.施放次数已满,栏位1-5",
+        "roi": [
+            1155,
+            458,
+            53,
+            59
+        ],
+        "expected": [
+            "(\\d+)\\s*[/:：|\\-~]?\\s*\\1(?!\\d)"
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill1_2_Nothing": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill1_3_Nothing",
+            "Collect_Skill1_3",
+            "Collect_Skill1_4_Nothing",
+            "Collect_Skill1_4",
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5",
+            "Collect_Skill1_1"
+        ],
+        "focus": "CSB.无技能被设置,栏位1-2",
+        "roi": [
+            933,
+            526,
+            75,
+            73
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ],
+        "doc": "PVE点击技能2"
+    },
+    "Collect_Skill1_3_Nothing": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill1_4_Nothing",
+            "Collect_Skill1_4",
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5",
+            "Collect_Skill1_1"
+        ],
+        "focus": "CSB.无技能被设置，栏位1-3",
+        "roi": [
+            966,
+            437,
+            80,
+            86
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ],
+        "doc": "PVE点击技能2"
+    },
+    "Collect_Skill1_4_Nothing": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5"
+        ],
+        "focus": "CSB.无技能被设置，栏位1-4",
+        "roi": [
+            1054,
+            404,
+            75,
+            76
+        ],
+        "timeout": 5000,
+        "on_error": [
+            "Collect_Skill1_1"
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ],
+        "doc": "PVE点击技能2"
+    },
+    "Collect_Skill1_5_Nothing": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill1_1"
+        ],
+        "focus": "CSB.无技能被设置，栏位1-5",
+        "roi": [
+            1139,
+            443,
+            80,
+            86
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ],
+        "doc": "PVE点击技能2（栏位4。栏位5留空，摸鱼）"
+    },
+    "Collect_Skill1_5_OCRERR": {
+        "next": [
+            "Collect_Skill1_1"
+        ]
+    },
+    "Collect_Skill_Tap2": {
+        "action": "Click",
+        "next": [
+            "Collect_Skill_Tap2_clr",
+            "Collect_Skill_Tap2"
+        ],
+        "post_delay": 800,
+        "roi": [
+            1112,
+            638,
+            62,
+            58
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "target": [
+            1138,
+            667,
+            0,
+            0
+        ],
+        "doc": "第2页技能点击"
+    },
+    "Collect_Skill1_2~5_Unable": {
+        "focus": "CSB.[WRM]'召集'技能施放错误",
+        "next": [
+            "Collect_Skill1_1"
+        ]
+    },
+    "Collect_Skill_Tap2_clr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill2_1_Nothing",
+            "Collect_Skill2_1",
+            "Collect_Skill2_2_Nothing",
+            "Collect_Skill2_2",
+            "Collect_Skill2_3_Nothing",
+            "Collect_Skill2_3",
+            "Collect_Skill2_4_Nothing",
+            "Collect_Skill2_4",
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5",
+            "Collect_Skill2_1~5_Unable"
+        ],
+        "focus": "CSB.技能页2-色核通过",
+        "roi": [
+            1112,
+            638,
+            62,
+            58
+        ],
+        "count": 200,
+        "lower": [
+            192,
+            141,
+            23
+        ],
+        "upper": [
+            223,
+            194,
+            129
+        ],
+        "doc": "技能页1，色核识别"
+    },
+    "Collect_Skill2_1_perOcr": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill2_2_Nothing",
+            "Collect_Skill2_2",
+            "Collect_Skill2_3_Nothing",
+            "Collect_Skill2_3",
+            "Collect_Skill2_4_Nothing",
+            "Collect_Skill2_4",
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5",
+            "Collect_Skill_TapReset"
+        ],
+        "focus": "CSB.施放次数已满,栏位2-1",
+        "roi": [
+            963,
+            607,
+            80,
+            85
+        ],
+        "expected": [
+            "(\\d+)\\s*[/:：|\\-~]?\\s*\\1(?!\\d)"
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_2_perOcr": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill2_3_Nothing",
+            "Collect_Skill2_3",
+            "Collect_Skill2_4_Nothing",
+            "Collect_Skill2_4",
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5",
+            "Collect_Skill_TapReset"
+        ],
+        "focus": "CSB.施放次数已满,栏位2-2",
+        "roi": [
+            942,
+            535,
+            54,
+            58
+        ],
+        "expected": [
+            "(\\d+)\\s*[/:：|\\-~]?\\s*\\1(?!\\d)"
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_3_perOcr": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill2_4_Nothing",
+            "Collect_Skill2_4",
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5",
+            "Collect_Skill_TapReset"
+        ],
+        "focus": "CSB.施放次数已满,栏位2-3",
+        "roi": [
+            976,
+            453,
+            56,
+            57
+        ],
+        "expected": [
+            "(\\d+)\\s*[/:：|\\-~]?\\s*\\1(?!\\d)"
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_4_perOcr": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5",
+            "Collect_Skill_TapReset"
+        ],
+        "focus": "CSB.施放次数已满,栏位2-4",
+        "roi": [
+            1062,
+            420,
+            56,
+            50
+        ],
+        "expected": [
+            "(\\d+)\\s*[/:：|\\-~]?\\s*\\1(?!\\d)"
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_5_perOcr": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill_TapReset"
+        ],
+        "focus": "CSB.施放次数已满,栏位2-5",
+        "roi": [
+            1155,
+            458,
+            53,
+            59
+        ],
+        "expected": [
+            "(\\d+)\\s*[/:：|\\-~]?\\s*\\1(?!\\d)"
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_1_perClr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill_TapReset"
+        ],
+        "post_delay": 1500,
+        "action": "Click",
+        "focus": "CSB.施放'吸取'技能,栏位2-1",
+        "roi": [
+            963,
+            607,
+            80,
+            85
+        ],
+        "count": 480,
+        "lower": [
+            178,
+            178,
+            177
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_2_perClr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill_TapReset"
+        ],
+        "post_delay": 1500,
+        "action": "Click",
+        "focus": "CSB.施放'吸取'技能,栏位2-2",
+        "roi": [
+            942,
+            535,
+            54,
+            58
+        ],
+        "count": 480,
+        "lower": [
+            178,
+            178,
+            177
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_3_perClr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill_TapReset"
+        ],
+        "action": "Click",
+        "post_delay": 1500,
+        "focus": "CSB.施放'吸取'技能,栏位2-3",
+        "roi": [
+            976,
+            453,
+            56,
+            57
+        ],
+        "count": 480,
+        "lower": [
+            178,
+            178,
+            177
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_4_perClr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill_TapReset"
+        ],
+        "action": "Click",
+        "post_delay": 1500,
+        "focus": "CSB.施放'吸取'技能,栏位1-4",
+        "roi": [
+            1062,
+            420,
+            56,
+            50
+        ],
+        "count": 480,
+        "lower": [
+            178,
+            178,
+            177
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_5_perClr": {
+        "recognition": "ColorMatch",
+        "action": "Click",
+        "next": [
+            "Collect_Skill_TapReset"
+        ],
+        "timeout": 1500,
+        "on_error": [
+            "Collect_Skill2_1~5_Unable"
+        ],
+        "post_delay": 1500,
+        "focus": "CSB.施放'吸取'技能,栏位2-5",
+        "roi": [
+            1155,
+            458,
+            53,
+            59
+        ],
+        "count": 480,
+        "lower": [
+            178,
+            178,
+            177
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill1_2_perClr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill1_3_Nothing",
+            "Collect_Skill1_3",
+            "Collect_Skill1_1"
+        ],
+        "post_delay": 1500,
+        "action": "Click",
+        "focus": "CSB.施放'召集'技能,栏位1-2",
+        "roi": [
+            942,
+            535,
+            54,
+            58
+        ],
+        "count": 480,
+        "lower": [
+            178,
+            178,
+            177
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill1_3_perClr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill1_4_Nothing",
+            "Collect_Skill1_4",
+            "Collect_Skill1_1"
+        ],
+        "post_delay": 1500,
+        "action": "Click",
+        "focus": "CSB.施放'召集'技能,栏位1-3",
+        "roi": [
+            976,
+            453,
+            56,
+            57
+        ],
+        "count": 480,
+        "lower": [
+            178,
+            178,
+            177
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill1_4_perClr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5",
+            "Collect_Skill1_1"
+        ],
+        "post_delay": 1500,
+        "action": "Click",
+        "focus": "CSB.施放'召集'技能,栏位1-4",
+        "roi": [
+            1062,
+            420,
+            56,
+            50
+        ],
+        "count": 480,
+        "lower": [
+            178,
+            178,
+            177
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill1_5_perClr": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_Skill1_1"
+        ],
+        "timeout": 3000,
+        "on_error": "Collect_Skill1_2~5_Unable",
+        "post_delay": 1500,
+        "action": "Click",
+        "focus": "CSB.施放'召集'技能,栏位1-5",
+        "roi": [
+            1155,
+            458,
+            53,
+            59
+        ],
+        "count": 480,
+        "lower": [
+            178,
+            178,
+            177
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
+    },
+    "Collect_Skill2_1": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill2_1_perOcr",
+            "Collect_Skill2_1_perClr",
+            "Collect_Skill2_2_Nothing",
+            "Collect_Skill2_2"
+        ],
+        "focus": "CSB.技能'吸取'施放，栏位1-1",
+        "timeout": 5000,
+        "on_error": [
+            "Collect_Skill2_1~5_Unable"
+        ],
+        "roi": [
+            963,
+            607,
+            80,
+            85
+        ],
+        "template": [
+            "Skill1-2~5.png"
+        ]
+    },
+    "Collect_Skill2_2": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill2_2_perOcr",
+            "Collect_Skill2_2_perClr",
+            "Collect_Skill2_3_Nothing",
+            "Collect_Skill2_3"
+        ],
+        "post_delay": 1500,
+        "focus": "CSB.技能'吸取'施放，栏位2-2",
+        "timeout": 5000,
+        "on_error": [
+            "Collect_Skill2_1~5_Unable"
+        ],
+        "roi": [
+            933,
+            526,
+            75,
+            73
+        ],
+        "template": [
+            "Skill1-2~5.png"
+        ]
+    },
+    "Collect_Skill2_3": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill2_3_perOcr",
+            "Collect_Skill2_3_perClr",
+            "Collect_Skill2_4_Nothing",
+            "Collect_Skill2_4"
+        ],
+        "focus": "CSB.技能'吸取'施放，栏位2-3",
+        "timeout": 5000,
+        "on_error": [
+            "Collect_Skill2_1~5_Unable"
+        ],
+        "roi": [
+            966,
+            437,
+            80,
+            86
+        ],
+        "template": [
+            "Skill1-2~5.png"
+        ]
+    },
+    "Collect_Skill2_4": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill2_4_perOcr",
+            "Collect_Skill2_4_perClr",
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5"
+        ],
+        "focus": "CSB.技能'吸取'施放，栏位2-4",
+        "timeout": 5000,
+        "on_error": [
+            "Collect_Skill2_1~5_Unable"
+        ],
+        "post_delay": 1500,
+        "roi": [
+            1054,
+            404,
+            75,
+            76
+        ],
+        "template": [
+            "Skill1-2~5.png"
+        ]
+    },
+    "Collect_Skill2_5": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill2_5_perOcr",
+            "Collect_Skill2_5_perClr"
+        ],
+        "focus": "CSB.技能吸取施放，栏位1-5",
+        "timeout": 5000,
+        "on_error": [
+            "Collect_Skill2_1~5_Unable"
+        ],
+        "roi": [
+            1139,
+            443,
+            80,
+            86
+        ],
+        "template": [
+            "Skill1-2~5.png"
+        ]
+    },
+    "Collect_Skill2_1_Nothing": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill2_2_Nothing",
+            "Collect_Skill2_2",
+            "Collect_Skill2_3_Nothing",
+            "Collect_Skill2_3",
+            "Collect_Skill2_4_Nothing",
+            "Collect_Skill2_4",
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5",
+            "Collect_Skill2_5_OCRERR"
+        ],
+        "focus": "CSB.无技能被设置，栏位2-1",
+        "roi": [
+            963,
+            607,
+            80,
+            85
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ]
+    },
+    "Collect_Skill2_2_Nothing": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill2_3_Nothing",
+            "Collect_Skill2_3",
+            "Collect_Skill2_4_Nothing",
+            "Collect_Skill2_4",
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5",
+            "Collect_Skill2_5_OCRERR"
+        ],
+        "focus": "CSB.无技能被设置，栏位2-2",
+        "roi": [
+            942,
+            535,
+            54,
+            58
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ]
+    },
+    "Collect_Skill2_3_Nothing": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill2_4_Nothing",
+            "Collect_Skill2_4",
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5",
+            "Collect_Skill2_5_OCRERR"
+        ],
+        "focus": "CSB.无技能被设置，栏位2-3",
+        "roi": [
+            966,
+            437,
+            80,
+            86
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ]
+    },
+    "Collect_Skill2_4_Nothing": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill2_5_Nothing",
+            "Collect_Skill2_5",
+            "Collect_Skill2_5_OCRERR"
+        ],
+        "post_delay": 1500,
+        "focus": "CSB.无技能被设置，栏位2-4",
+        "roi": [
+            1054,
+            404,
+            75,
+            76
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ]
+    },
+    "Collect_Skill2_5_Nothing": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Skill_TapReset"
+        ],
+        "timeout": 3000,
+        "on_error": [
+            "Collect_Skill2_5_OCRERR"
+        ],
+        "focus": "CSB.无技能被设置，栏位2-5",
+        "roi": [
+            1139,
+            443,
+            80,
+            86
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ]
+    },
+    "Collect_Skill2_5_OCRERR": {
+        "next": [
+            "Collect_Skill_TapReset"
+        ]
+    },
+    "Collect_Skill2_1~5_Unable": {
+        "focus": "CSB.[WRM]'吸取'技能施放错误",
+        "next": [
+            "Collect_Skill_TapReset"
+        ]
+    },
+    "Collect_Skill_TapReset": {
+        "action": "Click",
+        "next": [
+            "Collect_Skill_End",
+            "Collect_Skill_TapReset"
+        ],
+        "post_delay": 800,
+        "roi": [
+            1049,
+            632,
+            58,
+            59
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "threshold": 0.9,
+        "target": [
+            1080,
+            663,
+            0,
+            0
+        ],
+        "doc": "第一页技能点击"
+    },
+    "Collect_Skill_End": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Collect_OperationsMain_OperationsEnd"
+        ],
+        "interrupt": [
+            "Collect_FindTeleporCircle0.9",
+            "Collect_FindTeleporCircle"
+        ],
+        "timeout": 5000,
+        "on_error": [
+            "Collect_ForceTeleporCircle"
+        ],
+        "post_delay": 4000,
+        "focus": "CSB.技能组复位-色核通过",
+        "roi": [
+            1049,
+            632,
+            58,
+            59
+        ],
+        "count": 200,
+        "lower": [
+            192,
+            141,
+            23
+        ],
+        "upper": [
+            223,
+            194,
+            129
+        ],
+        "doc": "技能页1，结束复位色核识别"
+    }
+}
