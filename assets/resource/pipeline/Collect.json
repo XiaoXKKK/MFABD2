@@ -1284,6 +1284,12 @@
   "Collect_FindTeleporCircle": {
     "recognition": "FeatureMatch",
     "action": "Click",
+    "target_offset": [
+      20,
+      10,
+      0,
+      0
+    ],
     "post_delay": 5000,
     "focus": "CB.箱庭地图内找到传送阵-物件",
     "roi": [
@@ -1293,18 +1299,14 @@
       0
     ],
     "template": [
+      "TpCircle2.png",
       "TpCircle0.9.png",
       "TpCircle0.92.png",
-      "TpCircle0.93.png",
-      "TpCircle.png",
-      "TpCircle2.png",
-      "TpCircle3.png",
-      "TpCircle4.png",
-      "TpCircle2-1.png",
-      "TpCircleS1.png",
-      "TpCircleS2.png"
+      "TpCircle0.93.png"
     ],
-    "threshold": 0.8,
+    "count": 9,
+    "ratio": 0.5,
+    "green_mask": true,
     "doc": "场景地图内传送阵选择"
   },
   "Collect_ForceTeleporCircle": {
@@ -2165,11 +2167,7 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_QuickCart_QC2",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC1_Post"
     ],
     "post_delay": 3000,
     "focus": "QCM.快速卡带-1",
@@ -2201,15 +2199,12 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC3",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC2_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
     ],
+    "post_delay": 3000,
     "focus": "QCM.快速卡带-2",
     "lower": [
       226,
@@ -2240,11 +2235,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC4",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC3_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2267,7 +2258,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC4": {
@@ -2279,11 +2270,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC5",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC4_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2306,7 +2293,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC5": {
@@ -2318,11 +2305,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC6",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC5_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2345,7 +2328,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC6": {
@@ -2357,11 +2340,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC7",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC6_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2384,7 +2363,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC7": {
@@ -2396,11 +2375,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC8",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC7_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2423,7 +2398,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC8": {
@@ -2435,11 +2410,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC9",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC8_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2462,7 +2433,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC9": {
@@ -2474,11 +2445,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC10",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC9_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2501,7 +2468,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC10": {
@@ -2513,11 +2480,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC11",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC10_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2540,7 +2503,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC11": {
@@ -2552,11 +2515,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC12",
-      "Collect_QuickCart_QC_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC11_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2579,7 +2538,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC12": {
@@ -2617,7 +2576,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QC_Fin": {
@@ -2633,6 +2592,798 @@
     ],
     "next": [
       "Collect_QuickCart_Switch"
+    ]
+  },
+  "Collect_QuickCart_QC1_Post": {
+    "next": [
+      "Collect_QuickCart_QC2_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC2_pre": {
+    "next": [
+      "Collect_QuickCart_QC2",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC2_Post": {
+    "next": [
+      "Collect_QuickCart_QC3_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC3_pre": {
+    "next": [
+      "Collect_QuickCart_QC3",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC3_Post": {
+    "next": [
+      "Collect_QuickCart_QC4_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC4_pre": {
+    "next": [
+      "Collect_QuickCart_QC4",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC4_Post": {
+    "next": [
+      "Collect_QuickCart_QC5_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC5_pre": {
+    "next": [
+      "Collect_QuickCart_QC5",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC5_Post": {
+    "next": [
+      "Collect_QuickCart_QC6_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC6_pre": {
+    "next": [
+      "Collect_QuickCart_QC6",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC6_Post": {
+    "next": [
+      "Collect_QuickCart_QC7_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC7_pre": {
+    "next": [
+      "Collect_QuickCart_QC7",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC7_Post": {
+    "next": [
+      "Collect_QuickCart_QC8_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC8_pre": {
+    "next": [
+      "Collect_QuickCart_QC8",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC8_Post": {
+    "next": [
+      "Collect_QuickCart_QC9_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC9_pre": {
+    "next": [
+      "Collect_QuickCart_QC9",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC9_Post": {
+    "next": [
+      "Collect_QuickCart_QC10_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC10_pre": {
+    "next": [
+      "Collect_QuickCart_QC10",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC10_Post": {
+    "next": [
+      "Collect_QuickCart_QC11_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC11_pre": {
+    "next": [
+      "Collect_QuickCart_QC11",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QC11_Post": {
+    "next": [
+      "Collect_QuickCart_QC12_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QC12_pre": {
+    "next": [
+      "Collect_QuickCart_QC12",
+      "Collect_QuickCart_QC_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR1_Post": {
+    "next": [
+      "Collect_QuickCart_QR2_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR2_pre": {
+    "next": [
+      "Collect_QuickCart_QR2",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR2_Post": {
+    "next": [
+      "Collect_QuickCart_QR3_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR3_pre": {
+    "next": [
+      "Collect_QuickCart_QR3",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR3_Post": {
+    "next": [
+      "Collect_QuickCart_QR4_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR4_pre": {
+    "next": [
+      "Collect_QuickCart_QR4",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR4_Post": {
+    "next": [
+      "Collect_QuickCart_QR5_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR5_pre": {
+    "next": [
+      "Collect_QuickCart_QR5",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR5_Post": {
+    "next": [
+      "Collect_QuickCart_QR6_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR6_pre": {
+    "next": [
+      "Collect_QuickCart_QR6",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR6_Post": {
+    "next": [
+      "Collect_QuickCart_QR7_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR7_pre": {
+    "next": [
+      "Collect_QuickCart_QR7",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR7_Post": {
+    "next": [
+      "Collect_QuickCart_QR8_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR8_pre": {
+    "next": [
+      "Collect_QuickCart_QR8",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR8_Post": {
+    "next": [
+      "Collect_QuickCart_QR9_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR9_pre": {
+    "next": [
+      "Collect_QuickCart_QR9",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR9_Post": {
+    "next": [
+      "Collect_QuickCart_QR10_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR10_pre": {
+    "next": [
+      "Collect_QuickCart_QR10",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR10_Post": {
+    "next": [
+      "Collect_QuickCart_QR11_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR11_pre": {
+    "next": [
+      "Collect_QuickCart_QR11",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "Collect_QuickCart_QR11_Post": {
+    "next": [
+      "Collect_QuickCart_QR12_pre"
+    ],
+    "interrupt": [
+      "Collect_OperationsMain_Sandplay"
+    ],
+    "recognition": "TemplateMatch",
+    "roi": [
+      1047,
+      516,
+      107,
+      110
+    ],
+    "template": [
+      "Run.png"
+    ],
+    "green_mask": true,
+    "doc": "与下方吼yige节点的pre是一组,1/确保中断在进入箱庭后触发,而不是卡带菜单中误触发.2/确保next回到卡带菜单触发,而不是箱庭中相似颜色误触发"
+  },
+  "Collect_QuickCart_QR12_pre": {
+    "next": [
+      "Collect_QuickCart_QR12",
+      "Collect_QuickCart_QR_Out"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      53,
+      532,
+      105,
+      46
+    ],
+    "expected": [
+      "最近"
     ]
   },
   "Collect_QuickCart_Switch": {
@@ -2721,11 +3472,7 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_QuickCart_QR2",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR1_Post"
     ],
     "post_delay": 3000,
     "focus": "QRM.快速卡带-1",
@@ -2757,11 +3504,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR3",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR2_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2784,7 +3527,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR3": {
@@ -2796,11 +3539,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR4",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR3_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2823,7 +3562,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR4": {
@@ -2835,11 +3574,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR5",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR4_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2862,7 +3597,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR5": {
@@ -2874,11 +3609,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR6",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR5_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2901,7 +3632,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR6": {
@@ -2913,11 +3644,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR7",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR6_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2940,7 +3667,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR7": {
@@ -2952,11 +3679,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR8",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR7_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2979,7 +3702,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR8": {
@@ -2991,11 +3714,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR9",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR8_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -3018,7 +3737,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR9": {
@@ -3030,11 +3749,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR10",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR9_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -3057,7 +3772,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR10": {
@@ -3069,11 +3784,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR11",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR10_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -3096,7 +3807,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR11": {
@@ -3108,11 +3819,7 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR12",
-      "Collect_QuickCart_QR_Out"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR11_Post"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -3135,7 +3842,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR12": {
@@ -3173,7 +3880,7 @@
       0,
       0
     ],
-    "pre_delay": 1000,
+    "post_delay": 3000,
     "action": "Click"
   },
   "Collect_QuickCart_QR_Fin": {
