@@ -170,7 +170,8 @@
       "PVP_PVPStart"
     ],
     "interrupt": [
-      "PVP_PerOperationsMain_Error"
+      "PVP_PerOperationsMain_Error",
+      "PVP_InsandboxAndlocAbnormal"
     ],
     "post_delay": 8500,
     "focus": "PM.PVP卡带",
@@ -191,6 +192,18 @@
       0
     ],
     "doc": "点击PVP本子"
+  },
+  "PVP_InsandboxAndlocAbnormal": {
+    "recognition": "TemplateMatch",
+    "template": "pvplocreset.png",
+    "action": "Click",
+    "target_offset": [
+      0,
+      100,
+      0,
+      0
+    ],
+    "post_delay": 6000
   },
   "PVP_PVPMes": {
     "recognition": "OCR",
