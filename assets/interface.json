@@ -65,7 +65,8 @@
 			"entry": "Gacha_HomePage",
 			"check": true,
 			"option": [
-				"付费钻-总开关"
+				"付费钻-总开关",
+				"抽卡v2版开关-按需|强制"
 			],
 			"advanced": [
 				"90付费抽目标卡池"
@@ -1195,6 +1196,25 @@
 				}
 			]
 		},
+		"抽卡v2版开关-按需|强制": {
+			"doc": "一套更严谨的抽卡流程。\n\n可应对抽抽乐点数达到200，但想保留机会不立即兑换的情况。\n\n按需：默认流程检测到问题，则启用v2版抽卡\n\n强制：从一开始就调用V2版抽卡。",
+			"cases": [
+				{
+					"name": "No",
+					"pipeline_override": {}
+				},
+				{
+					"name": "Yes",
+					"pipeline_override": {
+						"Gacha_HomePage": {
+							"next": [
+								"GachaADV_Start"
+							]
+						}
+					}
+				}
+			]
+		},
 		"进入前先领取邮件": {
 			"doc": "常闭。\n\n开启：按版本需要，版本活动抽奖需要代币、代币预先被发放到邮件内时。",
 			"cases": [
@@ -1256,6 +1276,46 @@
 			],
 			"pipeline_override": {
 				"Gacha_PaidDiamond_CustomField": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
+				},
+				"GachaADV_Location1_90LotPost": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
+				},
+				"GachaADV_Location2_90LotPost": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
+				},
+				"GachaADV_Location3_90LotPost": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
+				},
+				"GachaADV_Location4_90LotPost": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
+				},
+				"GachaADV_Location5_90LotPost": {
 					"expected": [
 						"{目标池1}",
 						"{目标池2}",

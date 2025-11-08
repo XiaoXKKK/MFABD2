@@ -239,6 +239,7 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
+      "Gacha_FindFreeGacha_GotoADV",
       "Gacha_PvAnimeIsOver",
       "Gacha_SkipPV",
       "Gacha_FindFreeGacha"
@@ -264,6 +265,24 @@
       0
     ],
     "doc": "点击,存在免费抽的卡池,每日首次进入卡池pv动画开始"
+  },
+  "Gacha_FindFreeGacha_GotoADV": {
+    "focus": "GM.[WRN]卡池内存在特殊红点-调用抽卡V2",
+    "recognition": "TemplateMatch",
+    "template": [
+      "GACHA_Special.ReservedRights_Red_GE.png"
+    ],
+    "green_mask": true,
+    "roi": [
+      721,
+      210,
+      462,
+      297
+    ],
+    "threshold": 0.8,
+    "next": [
+      "GachaADV_Start"
+    ]
   },
   "Gacha_SkipPV": {
     "action": "Click",

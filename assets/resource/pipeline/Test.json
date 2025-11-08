@@ -204,5 +204,12 @@
       2200,
       100
     ]
+  },
+  "ocrtemptest": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "Gacha-homepage.png"
+    ],
+    "green_mask": false
   }
 }
