@@ -39,40 +39,44 @@ jobs:
             is_tag_push=true
           fi
           
-          # 获取提交信息
+          # 获取提交信息（用于检测 [deploy-beta]）
           commit_message="${{ github.event.head_commit.message }}"
           
           if [ "$is_tag_push" = true ]; then
-            # 从环境变量提取标签名
+            # 正式标签：直接使用标签名
             tag="${GITHUB_REF#refs/tags/}"
           else
-            # 非标签推送：生成开发版本号
-            latest_tag=$(git describe --tags --match "v*" --abbrev=0 2>/dev/null || echo "v0.0.0")
+            # 获取最新的正式版本标签（按版本号排序，不是按时间）
+            # 使用 git tag 列出所有正式版标签，按版本号降序排列，取最后一个（最高版本）
+            base_tag=$(git tag -l "v[0-9]*.[0-9]*.[0-9]*" | sort -V | tail -1)
+            
+            # 如果没有找到纯版本号标签，使用默认值
+            if [ -z "$base_tag" ] || [[ "$base_tag" != v*.*.* ]]; then
+              base_tag="v0.0.0"
+            fi
+            
             commit_short=$(git rev-parse --short HEAD)
             date_suffix=$(date +"%y%m%d")
             
-            # 检查是否为手动触发且选择了内测版
+            # 统一使用点号分隔日期和提交哈希
             if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ github.event.inputs.deploy_beta }}" = "true" ]; then
-              tag="${latest_tag}-beta.${date_suffix}.${commit_short}"
-            # 检查提交信息最后一行是否有 [deploy-beta]
+              tag="${base_tag}-beta.${date_suffix}.${commit_short}"
             elif echo "$commit_message" | tail -n1 | grep -q "\[deploy-beta\]"; then
-              tag="${latest_tag}-beta.${date_suffix}.${commit_short}"
+              tag="${base_tag}-beta.${date_suffix}.${commit_short}"
             else
-              tag="${latest_tag}-ci.${date_suffix}.${commit_short}"
+              tag="${base_tag}-ci.${date_suffix}.${commit_short}"
             fi
           fi
           
-          # 设置开发版本标识
-          if [ "$is_tag_push" = true ]; then
-            is_dev_version=false
-          else
-            is_dev_version=true
-          fi
-
-          # 输出变量
+          # 添加调试信息
+          echo "Base tag: $base_tag"
+          echo "Generated tag: $tag"
+          echo "Commit short: $commit_short"
+          echo "Date suffix: $date_suffix"
+          
           echo "tag=$tag" | tee -a $GITHUB_OUTPUT
           echo "is_tag_push=$is_tag_push" | tee -a $GITHUB_OUTPUT
-          echo "is_dev_version=$is_dev_version" | tee -a $GITHUB_OUTPUT
+          echo "is_dev_version=$([ "$is_tag_push" = true ] && echo "false" || echo "true")" | tee -a $GITHUB_OUTPUT
     outputs:
       tag: ${{ steps.set_tag.outputs.tag }}
       is_tag_push: ${{ steps.set_tag.outputs.is_tag_push }}
@@ -92,6 +96,17 @@ jobs:
         with:
           submodules: true
 
+      # 新增：设置 Python 环境
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # 新增：安装 Python 依赖
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       - name: Download MaaFramework
         uses: robinraju/release-downloader@v1
         with:
