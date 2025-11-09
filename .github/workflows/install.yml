@@ -60,10 +60,15 @@ jobs:
             
             # 统一使用点号分隔日期和提交哈希
             if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ github.event.inputs.deploy_beta }}" = "true" ]; then
-              tag="${base_tag}-beta.${date_suffix}.${commit_short}"
+              # 内测版：在基础版本上增加补丁版本号
+              incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
+              tag="${incremented_tag}-beta.${date_suffix}.${commit_short}"
             elif echo "$commit_message" | tail -n1 | grep -q "\[deploy-beta\]"; then
-              tag="${base_tag}-beta.${date_suffix}.${commit_short}"
+              # 内测版：在基础版本上增加补丁版本号
+              incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
+              tag="${incremented_tag}-beta.${date_suffix}.${commit_short}"
             else
+              # 开发版：保持原有逻辑
               tag="${base_tag}-ci.${date_suffix}.${commit_short}"
             fi
           fi
