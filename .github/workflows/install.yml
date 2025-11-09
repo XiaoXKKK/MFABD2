@@ -18,6 +18,11 @@ on:
       - "assets/**"
       - "**.py"
   workflow_dispatch:
+    inputs:
+      deploy_beta:
+        type: boolean
+        description: '发布内测版'
+        default: false  # 默认不勾选，避免误触
 
 jobs:
   meta:
@@ -34,6 +39,9 @@ jobs:
             is_tag_push=true
           fi
           
+          # 获取提交信息
+          commit_message="${{ github.event.head_commit.message }}"
+          
           if [ "$is_tag_push" = true ]; then
             # 从环境变量提取标签名
             tag="${GITHUB_REF#refs/tags/}"
@@ -42,7 +50,16 @@ jobs:
             latest_tag=$(git describe --tags --match "v*" --abbrev=0 2>/dev/null || echo "v0.0.0")
             commit_short=$(git rev-parse --short HEAD)
             date_suffix=$(date +"%y%m%d")
-            tag="${latest_tag}-ci.${date_suffix}-${commit_short}"
+            
+            # 检查是否为手动触发且选择了内测版
+            if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ github.event.inputs.deploy_beta }}" = "true" ]; then
+              tag="${latest_tag}-beta.${date_suffix}.${commit_short}"
+            # 检查提交信息最后一行是否有 [deploy-beta]
+            elif echo "$commit_message" | tail -n1 | grep -q "\[deploy-beta\]"; then
+              tag="${latest_tag}-beta.${date_suffix}.${commit_short}"
+            else
+              tag="${latest_tag}-ci.${date_suffix}.${commit_short}"
+            fi
           fi
           
           # 设置开发版本标识
@@ -116,7 +133,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ needs.meta.outputs.is_dev_version == 'true' && format('MFABD2-{0}-{1}-{2}', needs.meta.outputs.tag, matrix.os, matrix.arch) || format('MFABD2-{0}-{1}', matrix.os, matrix.arch) }}
+          name: MFABD2-${{ needs.meta.outputs.tag }}-${{ matrix.os }}-${{ matrix.arch }}
           path: "install"
 
   changelog:
