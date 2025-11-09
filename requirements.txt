@@ -1,1 +1,2 @@
 json-with-comments
+requests>=2.25.0
