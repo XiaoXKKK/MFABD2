@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
+"""
+综合变更日志生成脚本
+自动合并同一次版本的所有正式版更新内容
+"""
+
 import os
-import requests
 import re
+import requests
 import logging
 from typing import List, Dict, Optional
 
@@ -24,7 +29,8 @@ class ChangelogGenerator:
         self.base_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}"
         self.headers = {
             "Authorization": f"token {github_token}",
-            "Accept": "application/vnd.github.v3+json"
+            "Accept": "application/vnd.github.v3+json",
+            "User-Agent": "MFABD2-Changelog-Generator"
         }
     
     def get_all_releases(self) -> List[Dict]:
@@ -55,125 +61,107 @@ class ChangelogGenerator:
         logger.info(f"共获取 {len(releases)} 个 releases")
         return releases
     
-    def is_formal_version(self, tag: str) -> bool:
-        """检查是否为正式版"""
+    def is_formal_release(self, tag: str) -> bool:
+        """判断是否为正式版标签"""
         return bool(re.match(r'^v\d+\.\d+\.\d+$', tag))
     
-    def get_current_minor_version(self) -> str:
-        """获取当前次版本号（如 v2.3）"""
-        match = re.match(r'^(v\d+\.\d+)\.\d+', self.current_tag)
-        if match:
-            return match.group(1)
-        logger.warning(f"无法解析当前版本号: {self.current_tag}")
-        return ""
+    def extract_minor_version(self, tag: str) -> Optional[str]:
+        """从标签中提取次版本号"""
+        match = re.match(r'^v(\d+\.\d+)\.\d+$', tag)
+        return match.group(1) if match else None
     
-    def extract_clean_content(self, body: str) -> str:
-        """提取标记之前的内容"""
+    def extract_main_content(self, body: str) -> str:
+        """提取主要内容（使用成功版本的逻辑）"""
         if not body:
             return ""
         
+        # 方法1：查找标记 "## 历史版本更新内容"
         marker = "## 历史版本更新内容"
         marker_pos = body.find(marker)
         
         if marker_pos != -1:
-            # 返回标记之前的所有内容
             clean_content = body[:marker_pos].strip()
-            logger.info(f"使用标记提取内容，长度: {len(clean_content)}")
+            logger.info("使用标记截断内容")
             return clean_content
-        else:
-            # 如果没有标记，返回整个内容（兼容旧版本）
-            logger.info("未找到标记，返回完整内容")
-            return body.strip()
+        
+        # 方法2：使用成功版本的正则表达式，移除固定结尾
+        pattern = r'^(.*?)(?=\n\[已有 Mirror酱 CDK|\n*$)'
+        match = re.search(pattern, body, re.DOTALL)
+        content = match.group(1).strip() if match else body
+        
+        logger.info("使用CDK链接截断内容")
+        return content
     
-    def extract_version_number(self, version_string: str) -> str:
-        """提取纯净版本号"""
-        match = re.search(r'v\d+\.\d+\.\d+', version_string)
-        return match.group(0) if match else version_string
-    
-    def parse_version(self, version: str) -> tuple:
-        """解析版本号为数字元组"""
-        match = re.match(r'v(\d+)\.(\d+)\.(\d+)', version)
-        if match:
-            return tuple(map(int, match.groups()))
-        return (0, 0, 0)
-    
-    def collect_historical_versions(self) -> List[Dict]:
-        """收集当前次版本的历史正式版"""
-        logger.info(f"开始收集历史版本，当前版本: {self.current_tag}")
+    def build_comprehensive_changelog(self) -> str:
+        """构建完整的次版本变更历史（基于成功版本的逻辑）"""
         
-        current_minor = self.get_current_minor_version()
-        if not current_minor:
-            return []
-        
-        all_releases = self.get_all_releases()
-        historical_versions = []
-        
-        for release in all_releases:
-            tag = release['tag_name']
-            
-            # 跳过当前版本
-            if tag == self.current_tag:
-                continue
-                
-            # 只处理正式版
-            if not self.is_formal_version(tag):
-                continue
-            
-            # 检查是否属于当前次版本
-            if tag.startswith(current_minor + '.'):
-                historical_versions.append({
-                    'tag': tag,
-                    'body': release.get('body', ''),
-                    'name': release.get('name', ''),
-                    'created_at': release.get('created_at', '')
-                })
-                logger.info(f"收集到历史版本: {tag}")
-        
-        # 按版本号排序（从旧到新）
-        historical_versions.sort(key=lambda x: self.parse_version(x['tag']))
-        
-        logger.info(f"最终收集到 {len(historical_versions)} 个历史正式版")
-        return historical_versions
-    
-    def create_folded_block(self, version_info: Dict) -> str:
-        """创建折叠块"""
-        clean_version = self.extract_version_number(version_info['tag'])
-        content = version_info['clean_content']
-        
-        return f"""<details>
-<summary>{clean_version} 版本更新内容</summary>
-
-{content}
-
-</details>"""
-    
-    def generate_historical_section(self, historical_versions: List[Dict]) -> str:
-        """生成历史版本区块"""
-        if not historical_versions:
-            logger.info("没有历史版本，跳过生成历史区块")
+        # 只处理正式版
+        if not self.is_formal_release(self.current_tag):
+            logger.info(f"{self.current_tag} 不是正式版，跳过历史合并")
             return ""
         
-        # 处理每个版本的内容
-        processed_versions = []
-        for version in historical_versions:
-            clean_content = self.extract_clean_content(version['body'])
-            if clean_content:  # 只处理有内容的版本
-                version['clean_content'] = clean_content
-                processed_versions.append(version)
+        minor_version = self.extract_minor_version(self.current_tag)
+        if not minor_version:
+            logger.error(f"无法从 {self.current_tag} 提取次版本号")
+            return ""
         
-        # 按版本号倒序排列（最新在前）
-        processed_versions.sort(key=lambda x: self.parse_version(x['tag']), reverse=True)
+        logger.info(f"查找次版本 {minor_version} 的所有正式版 Release...")
         
-        # 创建折叠块
-        folded_blocks = [self.create_folded_block(version) for version in processed_versions]
+        # 获取所有 Release
+        all_releases = self.get_all_releases()
         
-        historical_section = "## 历史版本更新内容\n\n" + "\n\n".join(folded_blocks)
-        logger.info(f"生成历史区块，包含 {len(folded_blocks)} 个版本")
+        # 过滤出同一次版本的正式版 Release
+        minor_releases = []
+        for release in all_releases:
+            tag = release['tag_name']
+            if (self.is_formal_release(tag) and 
+                self.extract_minor_version(tag) == minor_version and
+                not release.get('prerelease', False)):
+                minor_releases.append(release)
         
-        return historical_section
+        # 按版本号排序（新版在上）
+        minor_releases.sort(key=lambda x: [int(n) for n in x['tag_name'][1:].split('.')], reverse=True)
+        
+        if len(minor_releases) <= 1:
+            logger.info(f"次版本 {minor_version} 只有一个正式版，无需合并历史")
+            return ""
+        
+        logger.info(f"找到 {len(minor_releases)} 个正式版: {[r['tag_name'] for r in minor_releases]}")
+        
+        # 构建历史内容
+        historical_content = ""
+        for release in minor_releases[1:]:  # 跳过当前版本
+            tag = release['tag_name']
+            body = release.get('body', '') or ""
+            published_at = release.get('published_at', '')[:10] if release.get('published_at') else "未知日期"
+            
+            main_content = self.extract_main_content(body)
+            if not main_content.strip():
+                continue
+                
+            # 创建折叠块
+            folded_block = f"""
+<details>
+<summary>{tag} ({published_at}) 版本更新内容</summary>
+
+{main_content}
+
+</details>
+"""
+            historical_content += folded_block + "\n\n"
+        
+        if historical_content:
+            final_content = f"""
+## 历史版本更新内容
+
+{historical_content}
+"""
+            return final_content
+        else:
+            return ""
     
     def merge_into_current_changelog(self, current_content: str, historical_section: str) -> str:
-        """将历史区块合并到当前 changelog"""
+        """将历史区块合并到当前 changelog（保持现有逻辑）"""
         if not historical_section:
             logger.info("没有历史区块，返回原始内容")
             return current_content
@@ -184,10 +172,8 @@ class ChangelogGenerator:
         
         if build_info_pos != -1:
             # 找到构建信息的末尾
-            # 假设构建信息后没有其他重要内容，我们在构建信息后插入
             insert_pos = current_content.find('\n', build_info_pos)
             while insert_pos != -1 and insert_pos < len(current_content) - 1:
-                # 查找构建信息的结束（空行或新标题）
                 next_chars = current_content[insert_pos:insert_pos+10]
                 if next_chars.strip() == "" or next_chars.startswith('\n##'):
                     break
@@ -196,7 +182,7 @@ class ChangelogGenerator:
             if insert_pos == -1:
                 insert_pos = len(current_content)
             
-            logger.info(f"在构建信息后插入历史区块，位置: {insert_pos}")
+            logger.info(f"在构建信息后插入历史区块")
             return (current_content[:insert_pos] + 
                     "\n\n" + historical_section + 
                     current_content[insert_pos:])
@@ -206,7 +192,6 @@ class ChangelogGenerator:
             cdk_pos = current_content.find(cdk_marker)
             
             if cdk_pos != -1:
-                # 找到CDK链接的末尾
                 cdk_end = current_content.find('\n', cdk_pos)
                 if cdk_end == -1:
                     cdk_end = len(current_content)
@@ -216,7 +201,6 @@ class ChangelogGenerator:
                         "\n\n" + historical_section + 
                         current_content[cdk_end:])
             else:
-                # 作为最后手段，在末尾添加
                 logger.info("在末尾插入历史区块")
                 return current_content + "\n\n" + historical_section
     
@@ -233,9 +217,8 @@ class ChangelogGenerator:
             logger.error("找不到 current_changelog.md 文件")
             return ""
         
-        # 收集并处理历史版本
-        historical_versions = self.collect_historical_versions()
-        historical_section = self.generate_historical_section(historical_versions)
+        # 生成历史内容
+        historical_section = self.build_comprehensive_changelog()
         
         # 合并到当前内容
         final_content = self.merge_into_current_changelog(current_content, historical_section)
@@ -252,13 +235,13 @@ def main():
     
     if not all([current_tag, github_token, github_repository]):
         logger.error("缺少必要的环境变量")
-        return
+        return 1
     
     # 解析仓库信息
     repo_parts = github_repository.split('/')
     if len(repo_parts) != 2:
         logger.error(f"无效的仓库名称: {github_repository}")
-        return
+        return 1
     
     repo_owner = repo_parts[0]
     repo_name = repo_parts[1]
@@ -276,6 +259,9 @@ def main():
         logger.info("CHANGES.md 写入成功")
     else:
         logger.error("生成 changelog 失败")
+        return 1
+    
+    return 0
 
 if __name__ == "__main__":
-    main()
+    exit(main())
