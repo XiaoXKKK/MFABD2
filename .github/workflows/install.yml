@@ -45,10 +45,10 @@ jobs:
           if [ "$is_tag_push" = true ]; then
             # 正式标签：直接使用标签名
             tag="${GITHUB_REF#refs/tags/}"
+            version_type="release"
           else
-            # 获取最新的正式版本标签（按版本号排序，不是按时间）
-            # 使用 git tag 列出所有正式版标签，按版本号降序排列，取最后一个（最高版本）
-            base_tag=$(git tag -l "v[0-9]*.[0-9]*.[0-9]*" | sort -V | tail -1)
+            # 获取最新的正式版本标签（只匹配纯粹的正式版，不包含-beta或-ci）
+            base_tag=$(git tag -l "v*" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
             
             # 如果没有找到纯版本号标签，使用默认值
             if [ -z "$base_tag" ] || [[ "$base_tag" != v*.*.* ]]; then
@@ -58,18 +58,21 @@ jobs:
             commit_short=$(git rev-parse --short HEAD)
             date_suffix=$(date +"%y%m%d")
             
-            # 统一使用点号分隔日期和提交哈希
+            # 判断版本类型
             if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ github.event.inputs.deploy_beta }}" = "true" ]; then
               # 内测版：在基础版本上增加补丁版本号
               incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
               tag="${incremented_tag}-beta.${date_suffix}.${commit_short}"
+              version_type="beta"
             elif echo "$commit_message" | tail -n1 | grep -q "\[deploy-beta\]"; then
               # 内测版：在基础版本上增加补丁版本号
               incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
               tag="${incremented_tag}-beta.${date_suffix}.${commit_short}"
+              version_type="beta"
             else
-              # 开发版：保持原有逻辑
+              # 开发版：使用基础版本号，不增加补丁版本
               tag="${base_tag}-ci.${date_suffix}.${commit_short}"
+              version_type="ci"
             fi
           fi
           
@@ -78,14 +81,17 @@ jobs:
           echo "Generated tag: $tag"
           echo "Commit short: $commit_short"
           echo "Date suffix: $date_suffix"
+          echo "Version type: $version_type"
           
           echo "tag=$tag" | tee -a $GITHUB_OUTPUT
           echo "is_tag_push=$is_tag_push" | tee -a $GITHUB_OUTPUT
-          echo "is_dev_version=$([ "$is_tag_push" = true ] && echo "false" || echo "true")" | tee -a $GITHUB_OUTPUT
+          echo "is_dev_version=$([ "$version_type" = "ci" ] && echo "true" || echo "false")" | tee -a $GITHUB_OUTPUT
+          echo "version_type=$version_type" | tee -a $GITHUB_OUTPUT
     outputs:
       tag: ${{ steps.set_tag.outputs.tag }}
       is_tag_push: ${{ steps.set_tag.outputs.is_tag_push }}
       is_dev_version: ${{ steps.set_tag.outputs.is_dev_version }}
+      version_type: ${{ steps.set_tag.outputs.version_type }}
 
   install:
     needs: meta
