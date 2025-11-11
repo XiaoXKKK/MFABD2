@@ -123,7 +123,7 @@ def main():
     changelog_content = generate_changelog_content(commits, current_tag, compare_base)
     
     # 输出到文件
-    output_file = "CHANGES.md"
+    output_file = "../CHANGES.md"
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(changelog_content)
     
