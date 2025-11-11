@@ -92,73 +92,69 @@ class ChangelogGenerator:
         logger.info("使用CDK链接截断内容")
         return content
     
-    def build_comprehensive_changelog(self) -> str:
-        """构建完整的次版本变更历史（基于成功版本的逻辑）"""
+def build_comprehensive_changelog(self) -> str:
+    # 提取次版本号（无论当前版本类型）
+    minor_version = self.extract_minor_version(self.current_tag)
+    if not minor_version:
+        logger.info(f"无法从 {self.current_tag} 提取次版本号，跳过历史合并")
+        return ""
+    
+    logger.info(f"查找次版本 {minor_version} 的所有正式版 Release...")
+    
+    # 获取所有 Release
+    all_releases = self.get_all_releases()
+    
+    # 过滤出同一次版本的正式版 Release
+    minor_releases = []
+    for release in all_releases:
+        tag = release['tag_name']
         
-        # 只处理正式版
-        if not self.is_formal_release(self.current_tag):
-            logger.info(f"{self.current_tag} 不是正式版，跳过历史合并")
-            return ""
+        # 只收集正式版，且与当前版本同一次版本
+        if (self.is_formal_release(tag) and 
+            self.extract_minor_version(tag) == minor_version and
+            not release.get('prerelease', False)):
+            minor_releases.append(release)
+    
+    if not minor_releases:
+        logger.info(f"次版本 {minor_version} 没有正式版，无需合并历史")
+        return ""
+    
+    # 按版本号排序（新版在上）
+    minor_releases.sort(key=lambda x: [int(n) for n in x['tag_name'][1:].split('.')], reverse=True)
+    
+    logger.info(f"找到 {len(minor_releases)} 个正式版: {[r['tag_name'] for r in minor_releases]}")
+    
+    # 构建历史内容
+    historical_content = ""
+    for release in minor_releases:
+        tag = release['tag_name']
+        body = release.get('body', '') or ""
+        published_at = release.get('published_at', '')[:10] if release.get('published_at') else "未知日期"
         
-        minor_version = self.extract_minor_version(self.current_tag)
-        if not minor_version:
-            logger.error(f"无法从 {self.current_tag} 提取次版本号")
-            return ""
-        
-        logger.info(f"查找次版本 {minor_version} 的所有正式版 Release...")
-        
-        # 获取所有 Release
-        all_releases = self.get_all_releases()
-        
-        # 过滤出同一次版本的正式版 Release
-        minor_releases = []
-        for release in all_releases:
-            tag = release['tag_name']
-            if (self.is_formal_release(tag) and 
-                self.extract_minor_version(tag) == minor_version and
-                not release.get('prerelease', False)):
-                minor_releases.append(release)
-        
-        # 按版本号排序（新版在上）
-        minor_releases.sort(key=lambda x: [int(n) for n in x['tag_name'][1:].split('.')], reverse=True)
-        
-        if len(minor_releases) <= 1:
-            logger.info(f"次版本 {minor_version} 只有一个正式版，无需合并历史")
-            return ""
-        
-        logger.info(f"找到 {len(minor_releases)} 个正式版: {[r['tag_name'] for r in minor_releases]}")
-        
-        # 构建历史内容
-        historical_content = ""
-        for release in minor_releases[1:]:  # 跳过当前版本
-            tag = release['tag_name']
-            body = release.get('body', '') or ""
-            published_at = release.get('published_at', '')[:10] if release.get('published_at') else "未知日期"
+        main_content = self.extract_main_content(body)
+        if not main_content.strip():
+            logger.info(f"跳过版本 {tag}，内容为空")
+            continue
             
-            main_content = self.extract_main_content(body)
-            if not main_content.strip():
-                continue
-                
-            # 创建折叠块
-            folded_block = f"""
-<details>
+        # 创建折叠块
+        folded_block = f"""<details>
 <summary>{tag} ({published_at}) 版本更新内容</summary>
 
 {main_content}
 
-</details>
-"""
-            historical_content += folded_block + "\n\n"
-        
-        if historical_content:
-            final_content = f"""
-## 历史版本更新内容
+</details>"""
+        historical_content += folded_block + "\n\n"
+        logger.info(f"为版本 {tag} 创建折叠块")
+    
+    if historical_content:
+        final_content = f"""## 历史版本更新内容
 
-{historical_content}
-"""
-            return final_content
-        else:
-            return ""
+{historical_content}"""
+        logger.info(f"生成历史区块，包含 {len(minor_releases)} 个版本")
+        return final_content
+    else:
+        logger.info("没有生成历史内容")
+        return ""
     
     def merge_into_current_changelog(self, current_content: str, historical_section: str) -> str:
         """将历史区块合并到当前 changelog（保持现有逻辑）"""
