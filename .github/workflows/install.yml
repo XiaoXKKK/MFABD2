@@ -254,6 +254,7 @@ jobs:
         env:
             tag: ${{ needs.meta.outputs.tag }}
             body: ${{ needs.changelog.outputs.release_body }}
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "安全触发镜像服务: 版本=$tag"
           # 触发包发布流程
