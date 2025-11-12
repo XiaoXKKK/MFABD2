@@ -89,10 +89,28 @@ def detect_commit_highlights(commit: Dict) -> Dict[str, bool]:
         'is_highlight': 'HIGHLIGHT:' in body.upper()
     }
 
+def detect_coauthors(body: str) -> List[str]:
+    """检测提交信息中的协作者"""
+    coauthors = []
+    if not body:
+        return coauthors
+    
+    # 匹配 Co-authored-by 格式
+    coauthor_pattern = r'Co-authored-by:\s*([^<\n]+)(?:<[^>]+>)?'
+    matches = re.findall(coauthor_pattern, body, re.IGNORECASE | re.MULTILINE)
+    
+    for match in matches:
+        coauthor_name = match.strip()
+        if coauthor_name:
+            coauthors.append(f"👥{coauthor_name}")
+    
+    return coauthors
+
 def format_commit_message(commit: Dict) -> str:
     """格式化单个提交信息，清理类型前缀"""
     subject = commit['subject']
     author = commit['author_name']
+    body = commit.get('body', '')  # 获取提交正文
     
     # 清理提交信息（移除类型前缀）
     cleaned_subject = clean_commit_message(subject)
@@ -108,6 +126,12 @@ def format_commit_message(commit: Dict) -> str:
         author_display = f"{author} 🤖"
     else:
         author_display = author
+
+    # 检测协作者信息
+    coauthors = detect_coauthors(body)
+    if coauthors and HISTORY_CONFIG['coauthor_display']:
+        coauthor_suffix = " " + " ".join(coauthors)
+        author_display += coauthor_suffix
 
     return f"- {breaking_marker}{highlight_marker}{cleaned_subject} @{author_display}"
 
