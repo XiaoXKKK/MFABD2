@@ -248,22 +248,18 @@ jobs:
         env:  # 添加环境变量以支持高限额API调用
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # 获取完整历史
-          ref: ${{ github.ref }}  # 确保检出正确引用
-
       - name: Trigger MirrorChyanUploading
         if: github.repository_owner == 'sunyink' && ((needs.meta.outputs.is_tag_push == 'true') || contains(needs.meta.outputs.tag, '-beta'))
-        run: |
-          echo "安全触发镜像服务: 版本=${{ needs.meta.outputs.tag }}"
-          # 触发包发布流程
-          gh workflow run mirrorchyan.yml -f tag=${{ needs.meta.outputs.tag }}
-          # 触发更新信息推送流程
-          gh workflow run mirrorchyan_release_note.yml -f tag=${{ needs.meta.outputs.tag }} -f body="${{ needs.changelog.outputs.release_body }}"
+        shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ needs.meta.outputs.tag }}
+            body: ${{ needs.changelog.outputs.release_body }}
+        run: |
+          echo "安全触发镜像服务: 版本=$tag"
+          # 触发包发布流程
+          gh workflow run mirrorchyan.yml --ref ${{ github.ref }} -f tag=$tag
+          # 触发更新信息推送流程
+          gh workflow run mirrorchyan_release_note.yml --ref ${{ github.ref }} -f tag=$tag -f body="$release_note"
 
   notify:
     needs: [meta, install]
