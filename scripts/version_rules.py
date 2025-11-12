@@ -69,10 +69,14 @@ def filter_valid_versions(tags: List[str]) -> Dict[str, List[str]]:
 def sort_versions(versions: List[str]) -> List[str]:
     """按版本号排序（从新到旧）"""
     def version_key(tag):
-        # 提取版本号部分进行排序
-        clean_tag = re.sub(r'(-beta\.\d+\.\w+|-ci\.\d+\.\w+)$', '', tag)
-        numbers = clean_tag[1:].split('.')  # 去掉'v'，按.分割
-        return [int(num) for num in numbers]
+        # 提取版本号部分进行排序（支持内测版/开发版）
+        try:
+            base_tag = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', tag)
+            numbers = base_tag[1:].split('.')  # 去掉'v'，按.分割
+            return [int(num) for num in numbers]
+        except Exception as e:
+            print(f"版本排序警告: {tag} - {e}")
+            return [0, 0, 0]  # 返回默认值避免崩溃
     
     return sorted(versions, key=version_key, reverse=True)
 

@@ -53,11 +53,12 @@ class HistoryManager:
             print(f"❌ 获取Releases失败: {e}")
             sys.exit(1)
     
-    def parse_version(self, tag: str) -> tuple:
-        """解析版本号，带错误处理"""
+        """解析版本号，带错误处理（支持内测版/开发版）"""
         try:
-            # v2.3.7 → (2, 3, 7)
-            clean_tag = tag.lstrip('v')
+            # 提取基础版本号部分
+            # v2.3.7-beta.251112.b91bb42 → v2.3.7 → (2, 3, 7)
+            base_tag = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', tag)
+            clean_tag = base_tag.lstrip('v')
             parts = clean_tag.split('.')
             if len(parts) != 3:
                 raise ValueError(f"版本格式异常: {tag}")
@@ -68,7 +69,20 @@ class HistoryManager:
     
     def get_minor_version_series(self, current_tag: str) -> List[Dict]:
         """获取同次版本的所有正式版Release"""
-        current_major, current_minor, _ = self.parse_version(current_tag)
+        try:
+            current_major, current_minor, _ = self.parse_version(current_tag)
+        except SystemExit:
+            # 如果版本解析失败（比如当前是内测版），使用最新正式版作为基准
+            print(f"当前标签 {current_tag} 不是正式版，使用最新正式版作为历史基准")
+            all_releases = self.fetch_all_releases()
+            formal_releases = [r for r in all_releases if is_valid_formal_version(r['tag_name'])]
+            if formal_releases:
+                latest_formal = max(formal_releases, key=lambda r: self.parse_version(r['tag_name']))
+                current_major, current_minor, _ = self.parse_version(latest_formal['tag_name'])
+            else:
+                print("没有找到任何正式版，跳过历史版本")
+                return []
+        
         all_releases = self.fetch_all_releases()
         
         relevant_releases = []
@@ -77,11 +91,21 @@ class HistoryManager:
             if not is_valid_formal_version(tag):
                 continue
                 
-            major, minor, _ = self.parse_version(tag)
-            if major == current_major and minor <= current_minor:
-                # 排除当前版本自身
-                if tag != current_tag:
-                    relevant_releases.append(release)
+            try:
+                major, minor, _ = self.parse_version(tag)
+                if major == current_major and minor <= current_minor:
+                    # 排除当前版本自身（如果是正式版）
+                    if tag != current_tag:
+                        relevant_releases.append(release)
+            except SystemExit:
+                # 跳过解析失败的版本
+                continue
+        
+        # 按版本号排序（从新到旧）
+        relevant_releases.sort(key=lambda r: self.parse_version(r['tag_name']), reverse=True)
+        
+        print(f"找到 {len(relevant_releases)} 个相关历史版本")
+        return relevant_releases
         
         # 按版本号排序（从新到旧）
         relevant_releases.sort(key=lambda r: self.parse_version(r['tag_name']), reverse=True)

@@ -56,7 +56,7 @@ def find_previous_formal_release(current_tag: str) -> Optional[str]:
         return None
     
     # 清理当前标签，获取基础版本号
-    current_clean = re.sub(r'(-beta\.\d+\.\w+|-ci\.\d+\.\w+)$', '', current_tag)
+    current_clean = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', current_tag)
     
     # 找到当前标签在正式版列表中的位置
     for i, formal_tag in enumerate(formal_versions):
@@ -68,8 +68,17 @@ def find_previous_formal_release(current_tag: str) -> Optional[str]:
                 return None
     
     # 如果当前标签不是正式版，找比它小的最新正式版
+    # 使用版本号比较而不是字符串比较
+    def parse_simple_version(tag):
+        """简单版本解析用于比较"""
+        base_tag = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', tag)
+        numbers = base_tag[1:].split('.')
+        return tuple(int(num) for num in numbers)
+    
+    current_version = parse_simple_version(current_clean)
     for formal_tag in formal_versions:
-        if formal_tag < current_clean:
+        formal_version = parse_simple_version(formal_tag)
+        if formal_version < current_version:
             return formal_tag
     
     return None
