@@ -145,7 +145,28 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
     
     changelog += "[已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=MFABD2)\n\n"
 
-    changelog += f"**对比范围**: {compare_base} → {current_tag}\n"
+    changelog += f"**对比范围**: {compare_base} → {current_tag}\n\n"
+
+    # 构建信息放在这里（历史版本前面）
+    changelog += "**构建信息**:\n"
+    
+    # 动态获取版本类型
+    if '-beta' in current_tag:
+        version_type = "内测版"
+    elif '-ci' in current_tag:
+        version_type = "开发版"
+    else:
+        version_type = "正式版"
+    
+    changelog += f"- 版本: `{current_tag}`\n"
+    changelog += f"- 类型: {version_type}\n"
+    changelog += f"- 分支: {os.environ.get('GITHUB_REF_NAME', '未知')}\n"
+    
+    # 使用当前时间作为构建时间
+    from datetime import datetime
+    build_time = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    changelog += f"- 构建时间: {build_time}\n\n"
+
 
     return changelog
 
@@ -184,10 +205,20 @@ def add_historical_versions(current_changelog: str, current_tag: str) -> str:
             published_at = release.get('published_at', '')[:10] if release.get('published_at') else "未知日期"
             body = release.get('body', '') or ""
             
+            print(f"处理历史版本: {tag} (发布时间: {published_at})")
+            print(f"内容长度: {len(body)} 字符")
+            
             # 截断处理
             truncated_body = manager.truncate_release_body(body)
+            print(f"截断后长度: {len(truncated_body)} 字符")
+            
             if not truncated_body.strip():
+                print(f"跳过版本 {tag}: 内容为空")
                 continue
+            
+            # 检查内容是否与其他版本重复
+            body_hash = hash(truncated_body.strip())
+            print(f"内容哈希: {body_hash}")
             
             historical_section += f"""<details>
 <summary>{tag} ({published_at})</summary>
@@ -199,6 +230,11 @@ def add_historical_versions(current_changelog: str, current_tag: str) -> str:
 """
         
         print(f"成功添加 {len(historical_releases)} 个历史版本")
+        
+        # 添加历史版本结束标识
+        if historical_releases:
+            historical_section += "---\n*以上为历史版本信息*\n\n"
+        
         return current_changelog + historical_section
         
     except Exception as e:

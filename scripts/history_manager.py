@@ -82,10 +82,31 @@ class HistoryManager:
             print(f"❌ 版本解析失败: {tag} - {e}")
             sys.exit(1)
     
+    def remove_duplicate_releases(self, releases: List[Dict]) -> List[Dict]:
+        """移除内容重复的Release"""
+        seen_bodies = set()
+        unique_releases = []
+        
+        for release in releases:
+            body = release.get('body', '') or ""
+            truncated_body = self.truncate_release_body(body)
+            body_hash = hash(truncated_body.strip())
+            
+            if body_hash in seen_bodies:
+                print(f"跳过重复内容版本: {release['tag_name']}")
+                continue
+            
+            seen_bodies.add(body_hash)
+            unique_releases.append(release)
+        
+        print(f"去重后剩余 {len(unique_releases)} 个版本")
+        return unique_releases
+
     def get_minor_version_series(self, current_tag: str) -> List[Dict]:
         """获取同次版本的所有正式版Release"""
         try:
             current_major, current_minor, _ = self.parse_version(current_tag)
+            print(f"当前版本: v{current_major}.{current_minor}.x 系列")
         except SystemExit:
             # 如果版本解析失败（比如当前是内测版），使用最新正式版作为基准
             print(f"当前标签 {current_tag} 不是正式版，使用最新正式版作为历史基准")
@@ -94,6 +115,7 @@ class HistoryManager:
             if formal_releases:
                 latest_formal = max(formal_releases, key=lambda r: self.parse_version(r['tag_name']))
                 current_major, current_minor, _ = self.parse_version(latest_formal['tag_name'])
+                print(f"使用基准版本: v{current_major}.{current_minor}.x 系列")
             else:
                 print("没有找到任何正式版，跳过历史版本")
                 return []
@@ -108,22 +130,26 @@ class HistoryManager:
                 
             try:
                 major, minor, _ = self.parse_version(tag)
-                if major == current_major and minor <= current_minor:
+                # 只包含完全相同的次版本，不包含更早的
+                if major == current_major and minor == current_minor:
                     # 排除当前版本自身（如果是正式版）
                     if tag != current_tag:
                         relevant_releases.append(release)
+                        print(f"包含历史版本: {tag}")
+                    else:
+                        print(f"排除当前版本: {tag}")
+                else:
+                    print(f"跳过不同次版本: {tag} (当前: v{current_major}.{current_minor}.x)")
             except SystemExit:
                 # 跳过解析失败的版本
+                print(f"跳过解析失败版本: {tag}")
                 continue
         
         # 按版本号排序（从新到旧）
         relevant_releases.sort(key=lambda r: self.parse_version(r['tag_name']), reverse=True)
         
-        print(f"找到 {len(relevant_releases)} 个相关历史版本")
-        return relevant_releases
-        
-        # 按版本号排序（从新到旧）
-        relevant_releases.sort(key=lambda r: self.parse_version(r['tag_name']), reverse=True)
+        # 移除重复内容
+        relevant_releases = self.remove_duplicate_releases(relevant_releases)
         
         print(f"找到 {len(relevant_releases)} 个相关历史版本")
         return relevant_releases
