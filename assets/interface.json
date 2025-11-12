@@ -762,7 +762,7 @@
 						},
 						"Battle_FastBattleMAXTouchHangxian": {
 							"next": [
-								"Battle_CollectMapShouLieR2"
+								"Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK"
 							]
 						}
 					}
