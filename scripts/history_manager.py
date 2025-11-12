@@ -21,6 +21,21 @@ class HistoryManager:
             "Accept": "application/vnd.github.v3+json",
             "User-Agent": "MFABD2-History-Manager"
         }
+
+    def parse_version(self, tag: str) -> tuple:
+        """解析版本号，带错误处理（支持内测版/开发版）"""
+        try:
+            # 提取基础版本号部分
+            # v2.3.7-beta.251112.cf64235 → v2.3.7 → (2, 3, 7)
+            base_tag = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', tag)
+            clean_tag = base_tag.lstrip('v')
+            parts = clean_tag.split('.')
+            if len(parts) != 3:
+                raise ValueError(f"版本格式异常: {tag}")
+            return tuple(int(part) for part in parts)
+        except Exception as e:
+            print(f"❌ 版本解析失败: {tag} - {e}")
+            sys.exit(1)
     
     def fetch_all_releases(self) -> List[Dict]:
         """获取所有releases，失败则终止作业"""

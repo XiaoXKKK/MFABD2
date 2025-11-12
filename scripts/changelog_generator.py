@@ -75,18 +75,17 @@ def clean_commit_message(subject: str) -> str:
     
     return subject
 
-def detect_breaking_change(commit: Dict) -> bool:
-    """检测是否为破坏性变更（预埋逻辑）"""
+def detect_commit_highlights(commit: Dict) -> Dict[str, bool]:
+    """检测提交的特殊标记"""
     body = commit.get('body', '')
     subject = commit.get('subject', '')
+    full_text = body + ' ' + subject
     
-    breaking_patterns = [
-        r'BREAKING CHANGE',
-        r'BREAKING-CHANGE', 
-        r'^.*!:',  # feat!: 破坏性变更
-    ]
-    
-    return any(re.search(pattern, body + subject, re.IGNORECASE) for pattern in breaking_patterns)
+    return {
+        'is_breaking': any(re.search(pattern, full_text, re.IGNORECASE) 
+                          for pattern in [r'BREAKING CHANGE', r'BREAKING-CHANGE', r'^.*!:']),
+        'is_highlight': 'HIGHLIGHT:' in body.upper()
+    }
 
 def format_commit_message(commit: Dict) -> str:
     """格式化单个提交信息，清理类型前缀"""
@@ -96,15 +95,16 @@ def format_commit_message(commit: Dict) -> str:
     # 清理提交信息（移除类型前缀）
     cleaned_subject = clean_commit_message(subject)
 
-    # 检测破坏性变更
-    is_breaking = detect_breaking_change(commit)
-    breaking_marker = "⚠️ [破坏性变更] " if is_breaking else ""
+    # 检测特殊标记
+    highlights = detect_commit_highlights(commit)
+    breaking_marker = "⚠️ [破坏性变更] " if highlights['is_breaking'] else ""
+    highlight_marker = "💡 " if highlights['is_highlight'] else ""
 
     # 检测是否为机器人账号
     is_bot = '[bot]' in author.lower()
     author_display = f"{author} 🤖" if is_bot else author
 
-    return f"- {breaking_marker}{cleaned_subject} @{author_display}"
+    return f"- {breaking_marker}{highlight_marker}{cleaned_subject} @{author_display}"
 
 def generate_changelog_content(commits: List[Dict], current_tag: str, compare_base: str) -> str:
     """生成变更日志内容"""
@@ -152,10 +152,14 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
 def add_historical_versions(current_changelog: str, current_tag: str) -> str:
     """添加历史版本折叠内容"""
     print("准备获取历史版本...")
+    print(f"当前标签: {current_tag}")
     
     # 获取环境变量
     github_token = os.environ.get('GITHUB_TOKEN')
     github_repository = os.environ.get('GITHUB_REPOSITORY')
+    
+    print(f"GITHUB_TOKEN: {'已设置' if github_token else '未设置'}")
+    print(f"GITHUB_REPOSITORY: {github_repository}")
     
     if not github_token or not github_repository:
         print("缺少GitHub环境变量，跳过历史版本")
