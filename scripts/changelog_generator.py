@@ -11,6 +11,8 @@ from version_logic import calculate_compare_base
 from git_operations import get_commit_list
 from version_rules import filter_valid_versions, sort_versions
 from history_manager import HistoryManager
+from version_analyzer import analyze_version_highlights
+from config import HISTORY_CONFIG, OUTPUT_CONFIG
 
 def group_commits_by_type(commits: List[Dict]) -> Dict[str, List[Dict]]:
     """按提交类型分组（简化版本，后续可以改进）"""
@@ -100,9 +102,12 @@ def format_commit_message(commit: Dict) -> str:
     breaking_marker = "⚠️ [破坏性变更] " if highlights['is_breaking'] else ""
     highlight_marker = "💡 " if highlights['is_highlight'] else ""
 
-    # 检测是否为机器人账号
+    # 检测是否为机器人账号（根据配置决定是否显示）
     is_bot = '[bot]' in author.lower()
-    author_display = f"{author} 🤖" if is_bot else author
+    if HISTORY_CONFIG['show_bot_accounts'] and is_bot:
+        author_display = f"{author} 🤖"
+    else:
+        author_display = author
 
     return f"- {breaking_marker}{highlight_marker}{cleaned_subject} @{author_display}"
 
@@ -208,6 +213,16 @@ def add_historical_versions(current_changelog: str, current_tag: str) -> str:
             print(f"处理历史版本: {tag} (发布时间: {published_at})")
             print(f"内容长度: {len(body)} 字符")
             
+            # 智能标记分析（根据配置决定是否启用）
+            markers = ""
+            if HISTORY_CONFIG['enable_version_highlights']:
+                markers = analyze_version_highlights(release)
+                marker_display = f" {markers}" if markers else ""
+                print(f"版本标记: '{markers}'")
+            else:
+                marker_display = ""
+                print("版本标记: 已禁用")
+            
             # 截断处理
             truncated_body = manager.truncate_release_body(body)
             print(f"截断后长度: {len(truncated_body)} 字符")
@@ -221,7 +236,7 @@ def add_historical_versions(current_changelog: str, current_tag: str) -> str:
             print(f"内容哈希: {body_hash}")
             
             historical_section += f"""<details>
-<summary>{tag} ({published_at})</summary>
+<summary>{tag} ({published_at}){marker_display}</summary>
 
 {truncated_body}
 
@@ -262,7 +277,7 @@ def main():
     
     # 获取提交列表（使用安全版本）
     print("获取提交列表...")
-    from git_operations import safe_get_commit_list  # ✅ 添加导入
+    from git_operations import safe_get_commit_list
     commits = safe_get_commit_list(compare_base, current_tag)
     print(f"获取到 {len(commits)} 个提交")
     
@@ -307,7 +322,7 @@ def test_changelog_generator():
         commits = get_commit_list(compare_base, test_tag)
         
         print(f"对比基准: {compare_base}")
-        print(f"提交数量: {len(commits)}")  # ✅ 修复：添加了引号
+        print(f"提交数量: {len(commits)}")
         print()
 
 if __name__ == "__main__":

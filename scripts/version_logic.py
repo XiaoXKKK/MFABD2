@@ -4,7 +4,7 @@
 """
 
 import re
-from typing import Optional, List  # ✅ 添加 List 导入
+from typing import Optional, List
 from version_rules import filter_valid_versions, sort_versions, is_valid_formal_version, is_valid_beta_version, is_valid_ci_version
 
 def get_all_tags() -> List[str]:
