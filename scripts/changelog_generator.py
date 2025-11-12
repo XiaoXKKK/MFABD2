@@ -21,6 +21,10 @@ def group_commits_by_type(commits: List[Dict]) -> Dict[str, List[Dict]]:
         'refactor': [],
         'test': [],
         'chore': [],
+        'impr': [],
+        'perf': [],
+        'build': [],
+        'ci': [],
         'other': []
     }
     
@@ -41,6 +45,14 @@ def group_commits_by_type(commits: List[Dict]) -> Dict[str, List[Dict]]:
             groups['test'].append(commit)
         elif subject.startswith('chore'):
             groups['chore'].append(commit)
+        elif subject.startswith('impr'):
+            groups['impr'].append(commit)
+        elif subject.startswith('perf'):
+            groups['perf'].append(commit)
+        elif subject.startswith('build'):
+            groups['build'].append(commit)
+        elif subject.startswith('ci'):
+            groups['ci'].append(commit)
         else:
             groups['other'].append(commit)
     
@@ -82,8 +94,16 @@ def format_commit_message(commit: Dict) -> str:
     
     # 清理提交信息（移除类型前缀）
     cleaned_subject = clean_commit_message(subject)
-    
-    return f"- {cleaned_subject} @{author}"
+
+    # 检测破坏性变更
+    is_breaking = detect_breaking_change(commit)
+    breaking_marker = "⚠️ [破坏性变更] " if is_breaking else ""
+
+    # 检测是否为机器人账号
+    is_bot = '[bot]' in author.lower()
+    author_display = f"{author} 🤖" if is_bot else author
+
+    return f"- {breaking_marker}{cleaned_subject} @{author_display}"
 
 def generate_changelog_content(commits: List[Dict], current_tag: str, compare_base: str) -> str:
     """生成变更日志内容"""
@@ -106,6 +126,10 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
         'refactor': '🚜 代码重构',
         'test': '🧪 测试',
         'chore': '🔧 日常维护',
+        'impr': '💪 功能增强',
+        'perf': '🚀 性能优化',
+        'build': '🔨 构建维护',
+        'ci': '⚙️ CI配置',
         'other': '其他变更'
     }
     
@@ -121,7 +145,7 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
     changelog += f"**对比范围**: {compare_base} → {current_tag}\n"
 
     changelog += "[已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=MFABD2)\n\n"
-        
+
     return changelog
 
 def main():

@@ -240,7 +240,8 @@ jobs:
             
             **构建信息**:
             - 版本: `${{ needs.meta.outputs.tag }}`
-            - 类型: ${{ needs.meta.outputs.is_tag_push == 'true' && '正式版' || (contains(needs.meta.outputs.tag, '-beta') && '内测版' || '开发版') }}
+            - 类型: ${{ needs.meta.outputs.version_type == 'release' && '正式版' || (needs.meta.outputs.version_type == 'beta' && '内测版' || '开发版') }}
+            - 分支: ${{ github.ref_name }}
             - 构建时间: ${{ steps.get_time.outputs.time }}
           draft: false
           prerelease: ${{ contains(needs.meta.outputs.tag, '-beta') }}
