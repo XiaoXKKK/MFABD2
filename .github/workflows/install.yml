@@ -269,13 +269,50 @@ jobs:
   notify:
     needs: [meta, install]
     if: always() && needs.install.result == 'success'
-    uses: ./.github/workflows/sanm.yml
-    with:
-      build_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      tag: ${{ needs.meta.outputs.tag }}
-      is_dev_version: ${{ needs.meta.outputs.is_dev_version }}
-      ci_as_stable: ${{ inputs.ci_as_stable }}
-      commit_sha: ${{ github.sha }}
-      commit_message: ${{ github.event.head_commit.message }}
-      commit_timestamp: ${{ github.event.head_commit.timestamp }}
-    secrets: inherit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract commit info 
+        id: commit-info
+        run: |
+          # 使用更兼容的方法处理提交信息
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          
+          # 提取第一行作为摘要
+          SUBJECT=$(echo "$COMMIT_MSG" | head -n 1)
+          
+          # 提取剩余行作为描述
+          if [ $(echo "$COMMIT_MSG" | wc -l) -gt 1 ]; then
+            BODY=$(echo "$COMMIT_MSG" | tail -n +2 | tr '\n' '|' | sed 's/|/ | /g')
+          else
+            BODY=""
+          fi
+          
+          # 格式化时间戳
+          TIME=$(date -d "${{ github.event.head_commit.timestamp }}" +"%Y-%m-%d %H:%M:%S")
+          
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-8)
+
+          # 输出变量
+          echo "subject=$SUBJECT" >> $GITHUB_OUTPUT
+          echo "body=$BODY" >> $GITHUB_OUTPUT
+          echo "time=$TIME" >> $GITHUB_OUTPUT
+          echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
+      
+      - name: Send Notification
+        uses: Y2Nk4/qmsg-action@master
+        with:
+          qq: ${{ secrets.QMSG_NOTIFY_QQ }}
+          groups: ${{ secrets.QMSG_NOTIFY_GROUPS }}
+          key: ${{ secrets.QMSG_KEY }}
+          message: |
+            🏗️ [${{ github.repository }}] 构建完成
+            👤 提交者: ${{ github.actor }}
+            🌿 分支: ${{ github.ref_name }}
+            🏷️ 版本: ${{ needs.meta.outputs.tag }}
+            📦 类型: ${{ contains(needs.meta.outputs.tag, '-beta') && '内测版' || (contains(needs.meta.outputs.tag, '-ci') && '开发版' || '正式版') }}
+            🆔 提交哈希: ${{ steps.commit-info.outputs.short_sha }}
+            ⏱️ 提交时间: ${{ steps.commit-info.outputs.time }}
+            📝 摘要: ${{ steps.commit-info.outputs.subject }}
+            📖 描述: ${{ steps.commit-info.outputs.body }}
+            🔗 查看提交: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+            🔨 构建下载: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
