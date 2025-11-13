@@ -23,6 +23,10 @@ on:
         type: boolean
         description: '发布内测版'
         default: false  # 默认不勾选，避免误触
+      ci_as_stable:
+        type: boolean
+        description: 'CI版本作为正式发布（非预发布）'
+        default: false
 
 jobs:
   meta:
@@ -184,32 +188,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Generate current changelog
-        uses: orhun/git-cliff-action@v4
-        id: git-cliff
-        with:
-          config: .github/cliff.toml
-          args: -vv --tag ${{ needs.meta.outputs.tag }} --strip header
-        env:
-          OUTPUT: current_changelog.md
-          GITHUB_REPO: ${{ github.repository }}
-
-      - name: Debug generated changelog
-        run: |
-          echo "=== 检查生成的 changelog ==="
-          if [ -f "current_changelog.md" ]; then
-            echo "文件存在，大小: $(wc -c < current_changelog.md) 字节"
-            echo "包含标记: $(grep -c '## 历史版本更新内容' current_changelog.md || echo 0)"
-            echo "=== 文件内容预览 ==="
-            head -20 current_changelog.md
-          else
-            echo "错误: current_changelog.md 文件不存在"
-          fi
-
+      # ✅ 使用新系统替换git-cliff
       - name: Generate comprehensive changelog
         id: merge_changelog
         run: |
-          python comprehensive_changelog.py
+          cd scripts
+          python changelog_generator.py
         env:
           CURRENT_TAG: ${{ needs.meta.outputs.tag }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -225,7 +209,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
   release:
-    if: (needs.meta.outputs.is_tag_push == 'true') || contains(needs.meta.outputs.tag, '-beta')
+    if: (needs.meta.outputs.is_tag_push == 'true') || contains(needs.meta.outputs.tag, '-beta') || (github.event_name == 'workflow_dispatch' && contains(needs.meta.outputs.tag, '-ci'))
     needs: [meta, install, changelog]
     runs-on: ubuntu-latest
     steps:
@@ -260,35 +244,104 @@ jobs:
             
             **构建信息**:
             - 版本: `${{ needs.meta.outputs.tag }}`
-            - 类型: ${{ needs.meta.outputs.is_tag_push == 'true' && '正式版' || (contains(needs.meta.outputs.tag, '-beta') && '内测版' || '开发版') }}
+            - 类型: ${{ needs.meta.outputs.version_type == 'release' && '正式版' || (needs.meta.outputs.version_type == 'beta' && '内测版' || '开发版') }}
+            - 分支: ${{ github.ref_name }}
             - 构建时间: ${{ steps.get_time.outputs.time }}
           draft: false
-          prerelease: ${{ contains(needs.meta.outputs.tag, '-beta') }}
+          prerelease: ${{ contains(needs.meta.outputs.tag, '-beta') || (contains(needs.meta.outputs.tag, '-ci') && !(github.event_name == 'workflow_dispatch' && github.event.inputs.ci_as_stable == 'true')) }}
         env:  # 添加环境变量以支持高限额API调用
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - name: Trigger MirrorChyanUploading
         if: github.repository_owner == 'sunyink' && ((needs.meta.outputs.is_tag_push == 'true') || contains(needs.meta.outputs.tag, '-beta'))
-        run: |
-          echo "安全触发镜像服务: 版本=${{ needs.meta.outputs.tag }}"
-          gh workflow run mirrorchyan.yml -f target_version=${{ needs.meta.outputs.tag }}
+        shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ needs.meta.outputs.tag }}
+            body: ${{ needs.changelog.outputs.release_body }}
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "安全触发镜像服务: 版本=$tag"
+          # 触发包发布流程
+          gh workflow run --repo $GITHUB_REPOSITORY --ref ${{ github.ref }} mirrorchyan.yml -f tag=$tag
+          # 触发更新信息推送流程
+          gh workflow run --repo $GITHUB_REPOSITORY --ref ${{ github.ref }} mirrorchyan_release_note.yml -f tag=$tag -f body="$body"
 
   notify:
     needs: [meta, install]
     if: always() && needs.install.result == 'success'
-    uses: ./.github/workflows/sanm.yml
-    with:
-      build_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      tag: ${{ needs.meta.outputs.tag }}
-      is_dev_version: ${{ needs.meta.outputs.is_dev_version }}
-      commit_sha: ${{ github.sha }}
-      commit_message: ${{ github.event.head_commit.message }}
-      commit_timestamp: ${{ github.event.head_commit.timestamp }}
-    secrets: inherit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract commit info 
+        id: commit-info
+        run: |
+          # 调试：显示所有可用参数
+          echo "=== 调试信息 ==="
+          echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+          echo "HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}"
+          echo "HEAD_COMMIT_TIMESTAMP: ${{ github.event.head_commit.timestamp }}"
+          echo "GITHUB_SHA: $GITHUB_SHA"
+          
+          # 设置默认值
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          if [ -z "$COMMIT_MSG" ]; then
+            COMMIT_MSG="手动触发工作流"
+          fi
+          
+          COMMIT_TIMESTAMP="${{ github.event.head_commit.timestamp }}"
+          if [ -z "$COMMIT_TIMESTAMP" ]; then
+            COMMIT_TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          fi
+          
+          COMMIT_SHA="${{ github.sha }}"
+          if [ -z "$COMMIT_SHA" ]; then
+            COMMIT_SHA="unknown"
+          fi
+          
+          # 提取第一行作为摘要
+          SUBJECT=$(echo "$COMMIT_MSG" | head -n 1)
+          
+          # 简化描述处理
+          if [ $(echo "$COMMIT_MSG" | wc -l) -gt 1 ]; then
+            BODY=$(echo "$COMMIT_MSG" | tail -n +2 | head -c 100 | tr -d '\n')
+            if [ ${#BODY} -eq 100 ]; then
+              BODY="$BODY..."
+            fi
+          else
+            BODY=""
+          fi
+          
+          # 格式化时间戳为东八区时间
+          TIME=$(TZ='Asia/Shanghai' date -d "$COMMIT_TIMESTAMP" +"%Y-%m-%d %H:%M:%S")
+          
+          SHORT_SHA=$(echo "$COMMIT_SHA" | cut -c1-7)
+
+          # 输出变量
+          echo "subject=$SUBJECT" >> $GITHUB_OUTPUT
+          echo "body=$BODY" >> $GITHUB_OUTPUT
+          echo "time=$TIME" >> $GITHUB_OUTPUT
+          echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
+          
+          echo "=== 处理结果 ==="
+          echo "Subject: $SUBJECT"
+          echo "Body: $BODY" 
+          echo "Time: $TIME"
+          echo "Short SHA: $SHORT_SHA"
+      
+      - name: Send Notification
+        uses: Y2Nk4/qmsg-action@master
+        with:
+          qq: ${{ secrets.QMSG_NOTIFY_QQ }}
+          groups: ${{ secrets.QMSG_NOTIFY_GROUPS }}
+          key: ${{ secrets.QMSG_KEY }}
+          message: |
+            🏗️ [${{ github.repository }}] 构建完成
+            👤 提交者: ${{ github.actor }}
+            🌿 分支: ${{ github.ref_name }}
+            🏷️ 版本: ${{ needs.meta.outputs.tag }}
+            📦 类型: ${{ contains(needs.meta.outputs.tag, '-beta') && '内测版' || (contains(needs.meta.outputs.tag, '-ci') && '开发版' || '正式版') }}
+            🆔 提交哈希: ${{ steps.commit-info.outputs.short_sha }}
+            ⏱️ 提交时间: ${{ steps.commit-info.outputs.time }}
+            📝 摘要: ${{ steps.commit-info.outputs.subject }}
+            ${{ steps.commit-info.outputs.body != '' && format('📖 描述: {0}', steps.commit-info.outputs.body) || '📖 描述: 无' }}
+            🔗 查看提交: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+            🔨 构建下载: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

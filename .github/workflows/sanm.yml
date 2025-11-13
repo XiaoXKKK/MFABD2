@@ -12,6 +12,10 @@ on:
       is_dev_version:
         required: true
         type: string
+      ci_as_stable:
+        required: false
+        type: boolean
+        default: false
       commit_sha:
         required: true
         type: string
@@ -37,7 +41,7 @@ jobs:
           
           # 提取剩余行作为描述
           if [ $(echo "$COMMIT_MSG" | wc -l) -gt 1 ]; then
-            BODY=$(echo "$COMMIT_MSG" | tail -n +2 | sed ':a;N;$!ba;s/\n/ | /g')
+            BODY=$(echo "$COMMIT_MSG" | tail -n +2 | tr '\n' '|' | sed 's/|/ | /g')
           else
             BODY=""
           fi
@@ -64,7 +68,7 @@ jobs:
             👤 提交者: ${{ github.actor }}
             🌿 分支: ${{ github.ref_name }}
             🏷️ 版本: ${{ inputs.tag }}
-            📦 类型: ${{ inputs.is_dev_version == 'true' && '开发版' || '正式版' }}
+            📦 类型: ${{ contains(inputs.tag, '-beta') && '内测版' || (contains(inputs.tag, '-ci') && '开发版' || '正式版') }}
             🆔 提交哈希: ${{ steps.commit-info.outputs.short_sha }}
             ⏱️ 提交时间: ${{ steps.commit-info.outputs.time }}
             📝 摘要: ${{ steps.commit-info.outputs.subject }}
