@@ -313,7 +313,7 @@ jobs:
           # 格式化时间戳为东八区时间
           TIME=$(TZ='Asia/Shanghai' date -d "$COMMIT_TIMESTAMP" +"%Y-%m-%d %H:%M:%S")
           
-          SHORT_SHA=$(echo "$COMMIT_SHA" | cut -c1-8)
+          SHORT_SHA=$(echo "$COMMIT_SHA" | cut -c1-7)
 
           # 输出变量
           echo "subject=$SUBJECT" >> $GITHUB_OUTPUT
@@ -342,6 +342,6 @@ jobs:
             🆔 提交哈希: ${{ steps.commit-info.outputs.short_sha }}
             ⏱️ 提交时间: ${{ steps.commit-info.outputs.time }}
             📝 摘要: ${{ steps.commit-info.outputs.subject }}
-            ${{ steps.commit-info.outputs.body != '' && format('📖 描述: {0}', steps.commit-info.outputs.body) || '' }}
+            ${{ steps.commit-info.outputs.body != '' && format('📖 描述: {0}', steps.commit-info.outputs.body) || '📖 描述: 无' }}
             🔗 查看提交: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             🔨 构建下载: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
