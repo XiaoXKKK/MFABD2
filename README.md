@@ -133,7 +133,7 @@
 ### 规范
 > 如果要参与开发，可以参考文档。必须先本地测试通过再合并，请使用非快速合并-no-ff参数。
 
-- [Pipeline协议规范](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/1.1-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B.md)
+- [Pipeline协议规范](https://maafw.xyz/docs/1.1-QuickStarted)
 - [帮助](/开发帮助.txt)
 - [工具]制作了发布用Hook,运行`git config core.hooksPath scripts/hooks`,后直接`git commit`可以打开提交信息辅助。帮助快速享用发版系统。
 
