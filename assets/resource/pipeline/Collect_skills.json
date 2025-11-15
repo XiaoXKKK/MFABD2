@@ -81,7 +81,8 @@
     "Collect_Skill1_1": {
         "action": "Click",
         "next": [
-            "Collect_Skill_Tap2"
+            "Collect_Skill1_1_Ck",
+            "Collect_Skill1_1"
         ],
         "focus": "SCB.'探查'技能施放(无判定),栏位1-1",
         "post_delay": 1500,
@@ -101,6 +102,22 @@
             0
         ],
         "doc": "技能1设定为探查。识别位，技能环左1"
+    },
+    "Collect_Skill1_1_Ck": {
+        "recognition": "OCR",
+        "next": [
+            "Collect_Skill_Tap2"
+        ],
+        "expected": [
+            "\\d+)"
+        ],
+        "focus": "SCB.'探查'技能施放-通过",
+        "roi": [
+            970,
+            620,
+            66,
+            67
+        ]
     },
     "Collect_Skill1_1_Unable": {
         "recognition": "ColorMatch",
@@ -201,7 +218,17 @@
         "next": [
             "Collect_Skill1_3_perOcr",
             "Collect_Skill1_3_Nothing",
-            "Collect_Skill1_3_perClr"
+            "Collect_Skill1_3_perClr",
+            "Collect_Skill1_4_perOcr",
+            "Collect_Skill1_4_Nothing",
+            "Collect_Skill1_4_perClr",
+            "Collect_Skill1_5_perOcr",
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5_perClr"
+        ],
+        "timeout": 5000,
+        "on_error": [
+            "Collect_Skill1_2~5_Unable"
         ],
         "focus": "CSB.施放次数已满,栏位1-2",
         "roi": [
@@ -220,7 +247,14 @@
         "next": [
             "Collect_Skill1_4_perOcr",
             "Collect_Skill1_4_Nothing",
-            "Collect_Skill1_4_perClr"
+            "Collect_Skill1_4_perClr",
+            "Collect_Skill1_5_perOcr",
+            "Collect_Skill1_5_Nothing",
+            "Collect_Skill1_5_perClr"
+        ],
+        "timeout": 5000,
+        "on_error": [
+            "Collect_Skill1_2~5_Unable"
         ],
         "focus": "CSB.施放次数已满,栏位1-3",
         "roi": [
@@ -240,6 +274,10 @@
             "Collect_Skill1_5_perOcr",
             "Collect_Skill1_5_Nothing",
             "Collect_Skill1_5_perClr"
+        ],
+        "timeout": 5000,
+        "on_error": [
+            "Collect_Skill1_2~5_Unable"
         ],
         "focus": "CSB.施放次数已满,栏位1-4",
         "roi": [
