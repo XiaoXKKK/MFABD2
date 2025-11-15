@@ -109,7 +109,7 @@
             "Collect_Skill_Tap2"
         ],
         "expected": [
-            "\\d+)"
+            "\\d+"
         ],
         "focus": "SCB.'探查'技能施放-通过",
         "roi": [
