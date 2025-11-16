@@ -109,13 +109,19 @@
 			"doc": "**每周独立周常：**每周奖励3项：依次打1轮`末日之书`、`我的小屋`随机点赞4次、访问`街机页面`。\n\n正常运作可以拿完全部`每周任务`奖励。\n\n周触发器开发烂尾中...欢迎协助←(･ω･)ﾉ。 "
 		},
 		{
-			"name": "[领取]公会签到/餐馆每日",
+			"name": "[领取]公会签到/餐馆",
 			"check": true,
-			"entry": "GetReward_HomePage",
+			"entry": "RewardsORG_HomePage",
 			"option": [
 				"公会奖励"
 			],
-			"doc": "**日常奖励：**依次领取`公会每日签到`、`餐馆-格鲁费之星`，进入`餐馆`领取每日`常客圣石`，切出卡带到`主线2`，领取`每日/周任务奖励`。\n\n**无公会请关闭公会奖励开关。**"
+			"doc": "**日常奖励：**依次领取`公会每日签到`、`餐馆-格鲁费之星`，进入`餐馆`领取每日`常客圣石`，切出卡带到`主线2`。\n\n**无公会请关闭公会奖励开关。**"
+		},
+		{
+			"name": "[领取]任务页(每日/每周)",
+			"check": true,
+			"entry": "RewardsDaily_Start",
+			"doc": "**日常奖励：**专指`主界面`下，`任务`按钮内的奖励。。"
 		},
 		{
 			"name": "[领取]活动页奖励",
@@ -1158,9 +1164,9 @@
 				{
 					"name": "No",
 					"pipeline_override": {
-						"GetReward_EnterUnion": {
+						"RewardsORG_EnterUnion": {
 							"next": [
-								"GetReward_BusinReward"
+								"RewardsORG_BusinReward"
 							],
 							"roi": [
 								98,

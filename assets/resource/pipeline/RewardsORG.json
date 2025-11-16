@@ -1,20 +1,20 @@
 {
-  "GetReward_HomePage": {
+  "RewardsORG_HomePage": {
     "next": [
-      "GetReward_HomePageHub",
-      "GetReward_HomePageHub1",
-      "GetReward_HomePageHub2"
+      "RewardsORG_HomePageHub",
+      "RewardsORG_HomePageHub1",
+      "RewardsORG_HomePageHub2"
     ]
   },
-  "GetReward_HomePageHub": {
+  "RewardsORG_HomePageHub": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_EnterUnion",
-      "GetReward_EnterUnion_img",
-      "GetReward_HomePageHub",
-      "GetReward_HomePageHub1",
-      "GetReward_HomePageHub2"
+      "RewardsORG_EnterUnion",
+      "RewardsORG_EnterUnion_img",
+      "RewardsORG_HomePageHub",
+      "RewardsORG_HomePageHub1",
+      "RewardsORG_HomePageHub2"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内，普通启动",
@@ -36,13 +36,13 @@
     ],
     "doc": "找到run-点击返回主页"
   },
-  "GetReward_HomePageHub1": {
+  "RewardsORG_HomePageHub1": {
     "recognition": "TemplateMatch",
     "next": [
-      "GetReward_EnterUnion",
-      "GetReward_EnterUnion_img",
-      "GetReward_HomePageHub",
-      "GetReward_HomePageHub1"
+      "RewardsORG_EnterUnion",
+      "RewardsORG_EnterUnion_img",
+      "RewardsORG_HomePageHub",
+      "RewardsORG_HomePageHub1"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内，普通启动。BM.箱庭地图pin已确认",
@@ -56,13 +56,13 @@
       "pin.png"
     ]
   },
-  "GetReward_HomePageHub2": {
+  "RewardsORG_HomePageHub2": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_HomePageHub",
-      "GetReward_HomePageHub1",
-      "GetReward_HomePageHub2"
+      "RewardsORG_HomePageHub",
+      "RewardsORG_HomePageHub1",
+      "RewardsORG_HomePageHub2"
     ],
     "post_delay": 2000,
     "focus": "G=1.页面非预期，点击返回按钮",
@@ -79,11 +79,11 @@
     "green_mask": true,
     "doc": "其他页面，返回按钮"
   },
-  "GetReward_BackHomePage": {
+  "RewardsORG_BackHomePage": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_EnterUnion"
+      "RewardsORG_EnterUnion"
     ],
     "roi": [
       1122,
@@ -102,15 +102,15 @@
     ],
     "doc": "找到图钉-点击返回主页-（废弃）"
   },
-  "GetReward_EnterUnion": {
+  "RewardsORG_EnterUnion": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_UnionGUI",
-      "GetReward_EnterUnion"
+      "RewardsORG_UnionGUI",
+      "RewardsORG_EnterUnion"
     ],
     "post_delay": 1000,
-    "focus": "GM.公会签到(OCR)",
+    "focus": "GOM.公会签到(OCR)",
     "roi": [
       256,
       84,
@@ -122,15 +122,15 @@
     ],
     "doc": "主菜单，点击工会"
   },
-  "GetReward_EnterUnion_img": {
+  "RewardsORG_EnterUnion_img": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_UnionGUI",
-      "GetReward_EnterUnion_img"
+      "RewardsORG_UnionGUI",
+      "RewardsORG_EnterUnion_img"
     ],
     "post_delay": 1000,
-    "focus": "GM.公会签到(IMG)",
+    "focus": "GOM.公会签到(IMG)",
     "roi": [
       256,
       84,
@@ -144,10 +144,10 @@
     "green_mask": true,
     "doc": "主菜单，点击工会|图按照剪影模式做"
   },
-  "GetReward_UnionGUI": {
+  "RewardsORG_UnionGUI": {
     "recognition": "OCR",
     "next": [
-      "GetReward_UnionBack"
+      "RewardsORG_UnionBack"
     ],
     "post_delay": 3000,
     "roi": [
@@ -167,10 +167,10 @@
     ],
     "doc": "工会签到"
   },
-  "GetReward_UnionBack": {
+  "RewardsORG_UnionBack": {
     "action": "Click",
     "next": [
-      "GetReward_UnionBack2"
+      "RewardsORG_UnionBack2"
     ],
     "post_delay": 3000,
     "roi": [
@@ -190,13 +190,13 @@
     ],
     "doc": "工会返回主页"
   },
-  "GetReward_UnionBack2": {
+  "RewardsORG_UnionBack2": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_BusinReward",
-      "GetReward_BusinReward_img",
-      "GetReward_UnionBack2"
+      "RewardsORG_BusinReward",
+      "RewardsORG_BusinReward_img",
+      "RewardsORG_UnionBack2"
     ],
     "interrupt": [
       "Global_OnceHomeButton"
@@ -219,19 +219,17 @@
     ],
     "doc": "工会返回主页"
   },
-  "GetReward_BusinReward": {
+  "RewardsORG_BusinReward": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_GetBusinHaveNotReward",
-      "GetReward_GetBusinReward",
-      "GetReward_BusinReward"
+      "RewardsORG_GetBusinHaveNotReward",
+      "RewardsORG_GetBusinReward",
+      "RewardsORG_BusinReward"
     ],
-    "on_error": [
-      "GetReward_DailyReward"
-    ],
+    "on_error": [],
     "post_delay": 1000,
-    "focus": "GM.餐馆结算(COR)-主界面",
+    "focus": "GOM.餐馆结算(COR)-主界面",
     "roi": [
       85,
       228,
@@ -243,19 +241,17 @@
     ],
     "doc": "识别点击餐馆"
   },
-  "GetReward_BusinReward_img": {
+  "RewardsORG_BusinReward_img": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_GetBusinHaveNotReward",
-      "GetReward_GetBusinReward",
-      "GetReward_BusinReward_img"
+      "RewardsORG_GetBusinHaveNotReward",
+      "RewardsORG_GetBusinReward",
+      "RewardsORG_BusinReward_img"
     ],
-    "on_error": [
-      "GetReward_DailyReward"
-    ],
+    "on_error": [],
     "post_delay": 1000,
-    "focus": "GM.餐馆结算(IMG)-主界面",
+    "focus": "GOM.餐馆结算(IMG)-主界面",
     "roi": [
       85,
       228,
@@ -267,12 +263,12 @@
     ],
     "doc": "识别点击餐馆图像"
   },
-  "GetReward_GetBusinReward": {
+  "RewardsORG_GetBusinReward": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_GetBusinReward",
-      "GetReward_GetBusinRewardBack"
+      "RewardsORG_GetBusinReward",
+      "RewardsORG_GetBusinRewardBack"
     ],
     "post_delay": 2000,
     "roi": [
@@ -286,7 +282,7 @@
     ],
     "doc": "点击结算"
   },
-  "GetReward_GetBusinHaveNotReward": {
+  "RewardsORG_GetBusinHaveNotReward": {
     "recognition": "ColorMatch",
     "roi": [
       551,
@@ -311,21 +307,19 @@
       ]
     ],
     "next": [
-      "GetReward_Busin_InBusin"
+      "RewardsORG_Busin_InBusin"
     ]
   },
-  "GetReward_GetBusinRewardBack": {
+  "RewardsORG_GetBusinRewardBack": {
     "action": "Click",
     "next": [
-      "GetReward_Busin_In",
-      "GetReward_Busin_In_img"
+      "RewardsORG_Busin_In",
+      "RewardsORG_Busin_In_img"
     ],
     "interrupt": [
-      "GetReward_ClickOnce"
+      "RewardsORG_ClickOnce"
     ],
-    "on_error": [
-      "GetReward_GetDailyReward"
-    ],
+    "on_error": [],
     "post_delay": 3000,
     "roi": [
       534,
@@ -341,15 +335,15 @@
     ],
     "doc": "点击领取全部返回"
   },
-  "GetReward_Busin_In_img": {
+  "RewardsORG_Busin_In_img": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_Busin_InBusin",
-      "GetReward_Busin_In_img"
+      "RewardsORG_Busin_InBusin",
+      "RewardsORG_Busin_In_img"
     ],
     "post_delay": 1000,
-    "focus": "GM.餐馆常客属性石img",
+    "focus": "GOM.餐馆常客属性石img",
     "roi": [
       85,
       228,
@@ -361,15 +355,15 @@
     ],
     "doc": "流程：进入餐馆。领取每日常客水晶。"
   },
-  "GetReward_Busin_In": {
+  "RewardsORG_Busin_In": {
     "recognition": "OCR",
     "action": "Click",
     "post_wait_freezes": 800,
     "next": [
-      "GetReward_Busin_InBusin",
-      "GetReward_Busin_In"
+      "RewardsORG_Busin_InBusin",
+      "RewardsORG_Busin_In"
     ],
-    "focus": "GM.餐馆常客属性石ocr",
+    "focus": "GOM.餐馆常客属性石ocr",
     "roi": [
       72,
       179,
@@ -381,13 +375,13 @@
     ],
     "doc": "流程：进入餐馆。领取每日常客水晶。"
   },
-  "GetReward_Busin_InBusin": {
+  "RewardsORG_Busin_InBusin": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_Busin_GiftGet",
-      "GetReward_Busin_NoGift",
-      "GetReward_Busin_InBusin"
+      "RewardsORG_Busin_GiftGet",
+      "RewardsORG_Busin_NoGift",
+      "RewardsORG_Busin_InBusin"
     ],
     "post_delay": 8000,
     "roi": [
@@ -401,13 +395,13 @@
     ],
     "doc": "餐馆结算页，进入餐馆"
   },
-  "GetReward_Busin_GiftGet": {
+  "RewardsORG_Busin_GiftGet": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_Busin_GiftGet",
-      "GetReward_Busin_Quick_BackPVEPage_Str",
-      "GetReward_Busin_BackPVEPage"
+      "RewardsORG_Busin_GiftGet",
+      "RewardsORG_Busin_Quick_BackPVEPage_Str",
+      "RewardsORG_Busin_BackPVEPage"
     ],
     "post_delay": 3000,
     "focus": "GBM.圣石发现",
@@ -429,11 +423,11 @@
     ],
     "doc": "点击常客位置，获取水晶。"
   },
-  "GetReward_Busin_NoGift": {
+  "RewardsORG_Busin_NoGift": {
     "recognition": "OCR",
     "next": [
-      "GetReward_Busin_Quick_BackPVEPage_Str",
-      "GetReward_Busin_BackPVEPage"
+      "RewardsORG_Busin_Quick_BackPVEPage_Str",
+      "RewardsORG_Busin_BackPVEPage"
     ],
     "focus": "GBM.无圣石情况",
     "roi": [
@@ -446,13 +440,13 @@
       "常客"
     ]
   },
-  "GetReward_Busin_Back": {
+  "RewardsORG_Busin_Back": {
     "action": "Click",
     "next": [
-      "GetReward_Busin_ChapterMenu"
+      "RewardsORG_Busin_ChapterMenu"
     ],
     "post_delay": 5000,
-    "focus": "GM.离开餐馆卡带",
+    "focus": "GOM.离开餐馆卡带",
     "target": [
       1180,
       45,
@@ -461,15 +455,15 @@
     ],
     "doc": "返回主页面，之后流程结束。(废弃，入口已删除。暂留存观察）"
   },
-  "GetReward_Busin_ChapterMenu": {
+  "RewardsORG_Busin_ChapterMenu": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_Busin_ToPvp"
+      "RewardsORG_Busin_ToPvp"
     ],
     "post_delay": 3000,
     "post_wait_freezes": 1000,
-    "focus": "GM.主页面",
+    "focus": "GOM.主页面",
     "roi": [
       98,
       656,
@@ -486,14 +480,14 @@
       0
     ]
   },
-  "GetReward_Busin_ToPvp": {
+  "RewardsORG_Busin_ToPvp": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_Busin_BackHomePage"
+      "RewardsORG_Busin_BackHomePage"
     ],
     "post_delay": 6000,
-    "focus": "GM.进入PVP卡带",
+    "focus": "GOM.进入PVP卡带",
     "roi": [
       75,
       315,
@@ -510,15 +504,10 @@
       0
     ]
   },
-  "GetReward_Busin_BackHomePage": {
+  "RewardsORG_Busin_BackHomePage": {
     "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "GetReward_DailyReward",
-      "GetReward_Busin_BackHomePage"
-    ],
     "post_delay": 1000,
-    "focus": "GM.卡带复位成功",
+    "focus": "GOM.卡带复位成功",
     "roi": [
       1122,
       646,
@@ -536,161 +525,10 @@
     ],
     "doc": "找到图钉-点击返回主页"
   },
-  "GetReward_DailyReward": {
-    "recognition": "OCR",
+  "RewardsORG_BackHomePage2": {
     "action": "Click",
     "next": [
-      "GetReward_GetDailyReward",
-      "GetReward_DailyReward"
-    ],
-    "post_delay": 1000,
-    "focus": "GM.‘任务’奖励领取",
-    "roi": [
-      520,
-      658,
-      52,
-      32
-    ],
-    "expected": [
-      "任务"
-    ],
-    "target_offset": [
-      4,
-      -4,
-      0,
-      0
-    ],
-    "doc": "识别点击任务"
-  },
-  "GetReward_GetDailyReward": {
-    "recognition": "OCR",
-    "next": [
-      "GetReward_GetDailyReward_cor",
-      "GetReward_TabWeeklyReward"
-    ],
-    "post_delay": 3000,
-    "roi": [
-      1022,
-      640,
-      138,
-      38
-    ],
-    "expected": [
-      "全部获得"
-    ],
-    "doc": "点击领取全部"
-  },
-  "GetReward_GetDailyReward_cor": {
-    "recognition": "ColorMatch",
-    "action": "Click",
-    "next": [
-      "GetReward_GetDailyRewardBack",
-      "GetReward_TabWeeklyReward",
-      "GetReward_GetDailyReward_cor"
-    ],
-    "timeout": 3000,
-    "on_error": [
-      "GetReward_BackHomePage2"
-    ],
-    "post_delay": 1000,
-    "roi": [
-      1022,
-      640,
-      138,
-      38
-    ],
-    "count": 200,
-    "lower": [
-      222,
-      218,
-      210
-    ],
-    "upper": [
-      222,
-      218,
-      210
-    ]
-  },
-  "GetReward_GetDailyRewardBack": {
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "GetReward_TabWeeklyReward",
-      "GetReward_GetDailyRewardBack"
-    ],
-    "timeout": 3000,
-    "on_error": [
-      "GetReward_BackHomePage2"
-    ],
-    "post_delay": 3000,
-    "roi": [
-      558,
-      630,
-      147,
-      34
-    ],
-    "expected": [
-      "点击画面即可返回"
-    ],
-    "doc": "点击领取全部返回"
-  },
-  "GetReward_TabWeeklyReward": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "GetReward_GetWeeklyReward"
-    ],
-    "roi": [
-      189,
-      146,
-      169,
-      73
-    ],
-    "template": [
-      "MailRedPr.png"
-    ]
-  },
-  "GetReward_GetWeeklyReward": {
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "GetReward_GetWeeklyRewardBack",
-      "GetReward_BackHomePage2"
-    ],
-    "post_delay": 3000,
-    "roi": [
-      1022,
-      640,
-      138,
-      38
-    ],
-    "expected": [
-      "全部获得"
-    ],
-    "doc": "点击领取全部"
-  },
-  "GetReward_GetWeeklyRewardBack": {
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "GetReward_BackHomePage2"
-    ],
-    "post_delay": 3000,
-    "roi": [
-      558,
-      630,
-      147,
-      34
-    ],
-    "expected": [
-      "点击画面即可返回"
-    ],
-    "doc": "点击领取全部返回"
-  },
-  "GetReward_BackHomePage2": {
-    "action": "Click",
-    "next": [
-      "GetReward_FinGetReward"
+      "RewardsORG_FinRewardsORG"
     ],
     "post_delay": 3000,
     "roi": [
@@ -707,12 +545,12 @@
     ],
     "doc": "点击领取全部返回"
   },
-  "GetReward_FinGetReward": {
+  "RewardsORG_FinRewardsORG": {
     "recognition": "OCR",
     "next": [
-      "GetReward_BackMapPage"
+      "RewardsORG_BackMapPage"
     ],
-    "focus": "GM.‘任务’返回主页面",
+    "focus": "GOM.‘任务’返回主页面",
     "roi": [
       98,
       656,
@@ -724,11 +562,11 @@
     ],
     "doc": "识别左下抽抽乐"
   },
-  "GetReward_BackMapPage": {
+  "RewardsORG_BackMapPage": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_FinBackMapPage"
+      "RewardsORG_FinBackMapPage"
     ],
     "roi": [
       98,
@@ -747,7 +585,7 @@
     ],
     "doc": "识别左下抽抽乐-返回地图页"
   },
-  "GetReward_FinBackMapPage": {
+  "RewardsORG_FinBackMapPage": {
     "recognition": "TemplateMatch",
     "next": [],
     "roi": [
@@ -761,7 +599,7 @@
     ],
     "doc": "识别右下图钉-章节主页"
   },
-  "GetReward_ClickOnce": {
+  "RewardsORG_ClickOnce": {
     "action": "Click",
     "focus": "GB.餐馆结算结束~中继调用",
     "target": [
@@ -771,15 +609,15 @@
       0
     ]
   },
-  "GetReward_Busin_BackPVEPage": {
+  "RewardsORG_Busin_BackPVEPage": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_Busin_BackHomePage2",
-      "GetReward_Busin_BackPVEPage"
+      "RewardsORG_Busin_BackHomePage2",
+      "RewardsORG_Busin_BackPVEPage"
     ],
     "post_delay": 2000,
-    "focus": "PM.开始离开GetReward卡带-传统",
+    "focus": "PM.开始离开RewardsORG卡带-传统",
     "roi": [
       1132,
       4,
@@ -791,12 +629,12 @@
     ],
     "green_mask": true
   },
-  "GetReward_Busin_Quick_BackPVEPage_Str": {
+  "RewardsORG_Busin_Quick_BackPVEPage_Str": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_Busin_Quick_BackPVEPage_Menu",
-      "GetReward_Busin_Quick_BackPVEPage_Str"
+      "RewardsORG_Busin_Quick_BackPVEPage_Menu",
+      "RewardsORG_Busin_Quick_BackPVEPage_Str"
     ],
     "post_delay": 2000,
     "focus": "GBM.快速卡带离开餐馆",
@@ -811,12 +649,12 @@
     ],
     "green_mask": true
   },
-  "GetReward_Busin_Quick_BackPVEPage_Menu": {
+  "RewardsORG_Busin_Quick_BackPVEPage_Menu": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_Busin_Quick_BackPVEPage_Menu_Cor",
-      "GetReward_Busin_Quick_BackPVEPage_Menu"
+      "RewardsORG_Busin_Quick_BackPVEPage_Menu_Cor",
+      "RewardsORG_Busin_Quick_BackPVEPage_Menu"
     ],
     "focus": "GBM.快速卡带离开餐馆-菜单模式",
     "roi": [
@@ -829,10 +667,10 @@
       "剧情游戏卡"
     ]
   },
-  "GetReward_Busin_Quick_BackPVEPage_Menu_Cor": {
+  "RewardsORG_Busin_Quick_BackPVEPage_Menu_Cor": {
     "recognition": "ColorMatch",
     "next": [
-      "GetReward_Busin_Quick_BackPVEPage_Pvemap"
+      "RewardsORG_Busin_Quick_BackPVEPage_Pvemap"
     ],
     "focus": "GBM.菜单模式-色核通过",
     "roi": [
@@ -853,12 +691,12 @@
       255
     ]
   },
-  "GetReward_Busin_Quick_BackPVEPage_Pvemap": {
+  "RewardsORG_Busin_Quick_BackPVEPage_Pvemap": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_Busin_BackHomePage",
-      "GetReward_Busin_Quick_BackPVEPage_Pvemap"
+      "RewardsORG_Busin_BackHomePage",
+      "RewardsORG_Busin_Quick_BackPVEPage_Pvemap"
     ],
     "post_delay": 4000,
     "roi": [
@@ -878,12 +716,12 @@
       0
     ]
   },
-  "GetReward_Busin_BackHomePage2": {
+  "RewardsORG_Busin_BackHomePage2": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "GetReward_Busin_PVEBookSwipe",
-      "GetReward_Busin_BackHomePage2"
+      "RewardsORG_Busin_PVEBookSwipe",
+      "RewardsORG_Busin_BackHomePage2"
     ],
     "roi": [
       89,
@@ -902,12 +740,12 @@
     ],
     "doc": "识别左下抽抽乐-主页-点击选择章节"
   },
-  "GetReward_Busin_PVEBookSwipe": {
+  "RewardsORG_Busin_PVEBookSwipe": {
     "recognition": "OCR",
     "action": "Swipe",
     "next": [
-      "GetReward_Busin_TouchPVEBook",
-      "GetReward_Busin_PVEBookSwipe"
+      "RewardsORG_Busin_TouchPVEBook",
+      "RewardsORG_Busin_PVEBookSwipe"
     ],
     "roi": [
       118,
@@ -932,12 +770,12 @@
     ],
     "doc": "识别活动游戏卡-上划"
   },
-  "GetReward_Busin_TouchPVEBook": {
+  "RewardsORG_Busin_TouchPVEBook": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "GetReward_Busin_FinBackMapPage",
-      "GetReward_Busin_TouchPVEBook"
+      "RewardsORG_Busin_FinBackMapPage",
+      "RewardsORG_Busin_TouchPVEBook"
     ],
     "post_delay": 5000,
     "focus": "PM.复位用卡带已找到",
@@ -952,12 +790,12 @@
     ],
     "doc": "点击PVE本子2"
   },
-  "GetReward_Busin_FinBackMapPage": {
+  "RewardsORG_Busin_FinBackMapPage": {
     "recognition": "TemplateMatch",
     "next": [
-      "GetReward_Busin_BackHomePage"
+      "RewardsORG_Busin_BackHomePage"
     ],
-    "focus": "PM.GetReward复位完成，结束~",
+    "focus": "PM.RewardsORG复位完成，结束~",
     "roi": [
       1122,
       646,
