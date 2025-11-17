@@ -593,7 +593,7 @@
 								"Battle_CollectMap_SwipLeft"
 							]
 						},
-						"Battle_CollectMapHangXianDoubleCk2No": {
+						"Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK": {
 							"interrupt": [
 								"Battle_CollectMap_SwipLeft"
 							]
@@ -603,10 +603,10 @@
 								"蜥蜴人祭坛"
 							],
 							"roi": [
-								255,
-								318,
-								423,
-								238
+								305,
+								367,
+								121,
+								59
 							],
 							"target_offset": [
 								5,
@@ -620,10 +620,10 @@
 								"蜥蜴人祭坛"
 							],
 							"roi": [
-								255,
-								318,
-								423,
-								238
+								305,
+								367,
+								121,
+								59
 							],
 							"target_offset": [
 								5,
@@ -639,7 +639,8 @@
 					"pipeline_override": {
 						"Battle_CollectMap": {
 							"next": [
-								"Battle_CollectMapHangXian1"
+								"Battle_CollectMapHangXian1",
+								"Battle_CollectMap"
 							]
 						},
 						"Battle_CollectMapHangXianDoubleCk1No": {}
@@ -763,7 +764,8 @@
 						},
 						"Battle_CollectMap": {
 							"next": [
-								"Battle_CollectMapHangXian1"
+								"Battle_CollectMapHangXian1",
+								"Battle_CollectMap"
 							]
 						},
 						"Battle_FastBattleMAXTouchHangxian": {
