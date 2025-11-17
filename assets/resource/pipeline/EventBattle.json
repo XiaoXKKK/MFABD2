@@ -1,17 +1,18 @@
 {
   "Event_HomePage": {
     "next": [
-      "Event_NormalBattle_Start"
+      "Event_GoinEvent"
     ],
     "interrupt": [
       "Global_ToHomePage"
     ]
   },
-  "Event_EnterEvent": {
+  "Event_GoinEvent": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Event_NormalBattle_Start"
+      "Event_NormalBattle_Start",
+      "Event_GoinEvent"
     ],
     "post_delay": 8000,
     "focus": "EM.从主页面进入活动",
@@ -35,7 +36,8 @@
   "Event_NormalBattle_Start": {
     "recognition": "OCR",
     "next": [
-      "Event_EnterNormalBattle"
+      "Event_EnterNormalBattle",
+      "Event_NormalBattle_Start"
     ],
     "roi": [
       69,
