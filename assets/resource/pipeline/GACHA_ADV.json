@@ -1616,10 +1616,6 @@
   "GachaADV_BackMapPage": {
     "recognition": "OCR",
     "action": "Click",
-    "next": [
-      "GachaADV_FinBackMapPage",
-      "GachaADV_BackMapPage"
-    ],
     "post_delay": 1000,
     "roi": [
       98,
@@ -1637,20 +1633,5 @@
       0
     ],
     "doc": "识别左下抽抽乐-返回地图页"
-  },
-  "GachaADV_FinBackMapPage": {
-    "recognition": "TemplateMatch",
-    "next": [],
-    "focus": "GA.退出抽卡成功",
-    "roi": [
-      1122,
-      646,
-      40,
-      38
-    ],
-    "template": [
-      "pin.png"
-    ],
-    "doc": "识别右下图钉-章节主页"
   }
 }
