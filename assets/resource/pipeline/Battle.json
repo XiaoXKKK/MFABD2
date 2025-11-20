@@ -135,9 +135,9 @@
     "recognition": "ColorMatch",
     "roi": [
       180,
-      13,
-      284,
-      75
+      14,
+      149,
+      66
     ],
     "lower": [
       130,
@@ -218,9 +218,9 @@
     "recognition": "ColorMatch",
     "roi": [
       180,
-      13,
-      284,
-      75
+      14,
+      149,
+      66
     ],
     "lower": [
       130,
@@ -430,9 +430,9 @@
     "recognition": "ColorMatch",
     "roi": [
       180,
-      13,
-      284,
-      75
+      14,
+      149,
+      66
     ],
     "lower": [
       130,
@@ -445,7 +445,7 @@
       209
     ],
     "method": 4,
-    "count": 100,
+    "count": 200,
     "action": "Click",
     "next": [
       "Battle_CollectMapDongXueCK",
@@ -947,6 +947,7 @@
   "Battle_TurnCharact_End": {
     "recognition": "TemplateMatch",
     "next": [
+      "Battle_NoAP_Torch",
       "Battle_FastBattleMAXTouchDongXue"
     ],
     "interrupt": [
