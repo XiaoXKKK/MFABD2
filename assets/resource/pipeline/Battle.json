@@ -58,8 +58,7 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Battle_CollectMapShouLie",
-      "Battle_CollectMap"
+      "Battle_CollectMapShouLie"
     ],
     "pre_wait_freezes": 1500,
     "focus": "BM.快速狩猎地图,默认位置",
