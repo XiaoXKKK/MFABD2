@@ -82,25 +82,9 @@ class HistoryManager:
             print(f"❌ 版本解析失败: {tag} - {e}")
             sys.exit(1)
     
-    def remove_duplicate_releases(self, releases: List[Dict]) -> List[Dict]:
-        """移除内容重复的Release"""
-        seen_bodies = set()
-        unique_releases = []
-        
-        for release in releases:
-            body = release.get('body', '') or ""
-            truncated_body = self.truncate_release_body(body)
-            body_hash = hash(truncated_body.strip())
-            
-            if body_hash in seen_bodies:
-                print(f"跳过重复内容版本: {release['tag_name']}")
-                continue
-            
-            seen_bodies.add(body_hash)
-            unique_releases.append(release)
-        
-        print(f"去重后剩余 {len(unique_releases)} 个版本")
-        return unique_releases
+def remove_duplicate_releases(self, releases: List[Dict]) -> List[Dict]:
+    print(f"保留所有 {len(releases)} 个版本（去重逻辑已禁用）")
+    return releases
 
     def get_minor_version_series(self, current_tag: str) -> List[Dict]:
         """获取同次版本的所有正式版Release"""
@@ -154,29 +138,44 @@ class HistoryManager:
         print(f"找到 {len(relevant_releases)} 个相关历史版本")
         return relevant_releases
     
-    def truncate_release_body(self, body: str) -> str:
-        """截断Release正文，移除构建信息等"""
-        if not body:
-            return ""
-        
-        body = body.strip()
-        
-        # 第一优先级：其他版本标题
-        other_version_match = re.search(r'\n##\s+v?\d+\.\d+\.\d+', body)
-        if other_version_match:
-            return body[:other_version_match.start()].strip()
-        
-        # 第二优先级：CDK链接处理
-        body = self.remove_duplicate_cdk_links(body)
-        
-        # 第三优先级：构建信息标记
-        build_info_pattern = r'\n\*\*构建信息\*\*:'
-        build_info_match = re.search(build_info_pattern, body)
-        if build_info_match:
-            return body[:build_info_match.start()].strip()
-        
-        # 保底策略：智能长度截断
-        return self.smart_length_truncate(body)
+def truncate_release_body(self, body: str) -> str:
+    """截断Release正文 - 修复版：基于CDK链接和构建信息"""
+    if not body:
+        return ""
+    
+    body = body.strip()
+    
+    # 第一优先级：CDK链接（用户内容结束标志）
+    cdk_patterns = [
+        r'\[已有 Mirror酱 CDK[^\]]*\]\([^)]+\)',
+        r'\[Mirror酱 CDK[^\]]*\]\([^)]+\)',
+    ]
+    
+    for pattern in cdk_patterns:
+        cdk_match = re.search(pattern, body)
+        if cdk_match:
+            truncated = body[:cdk_match.start()].strip()
+            print(f"使用CDK链接截断，长度: {len(truncated)}")
+            return truncated
+    
+    # 第二优先级：构建信息（自动化内容开始）
+    build_info_match = re.search(r'\*\*构建信息\*\*:', body)
+    if build_info_match:
+        truncated = body[:build_info_match.start()].strip()
+        print(f"使用构建信息截断，长度: {len(truncated)}")
+        return truncated
+    
+    # 第三优先级：历史版本标记（历史内容开始）
+    historical_marker = "## 历史版本更新内容"
+    marker_pos = body.find(historical_marker)
+    if marker_pos != -1:
+        truncated = body[:marker_pos].strip()
+        print(f"使用历史版本标记截断，长度: {len(truncated)}")
+        return truncated
+    
+    # 保底：返回完整内容
+    print(f"使用完整内容，长度: {len(body)}")
+    return body
     
     def remove_duplicate_cdk_links(self, body: str) -> str:
         """移除重复的CDK链接，只保留一个"""
