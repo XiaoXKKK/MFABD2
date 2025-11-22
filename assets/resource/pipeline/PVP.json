@@ -1,107 +1,158 @@
 {
-  "PVP_HomePage": {
+  "PVP_TaskStart": {
     "next": [
-      "PVP_PVPStart",
-      "PVP_HomePage2"
+      "PVP_Sandplay",
+      "PVP_PullUp_QuickCart"
     ],
     "interrupt": [
-      "Global_ToHomePage"
+      "Global_ToSandBox"
+    ],
+    "timeout": 5000,
+    "on_error": [
+      "PVP_WorkaroundIn_Start"
     ]
   },
-  "PVP_HomePage2": {
+  "PVP_PullUp_QuickCart": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "next": [
+      "PVP_PullUp_QuickCart_FastUI",
+      "PVP_PullUp_QuickCart"
+    ],
+    "post_delay": 1000,
+    "focus": "PCM.进入快速卡带",
+    "template": [
+      "QuickCartGeadai.png"
+    ],
+    "green_mask": true
+  },
+  "PVP_PullUp_QuickCart_FastUI": {
+    "recognition": "OCR",
+    "focus": "PCM.确认快速卡带",
+    "roi": [
+      32,
+      506,
+      306,
+      125
+    ],
+    "next": [
+      "PVP_PullUp_QuickCart_MC_Sort"
+    ],
+    "expected": [
+      "最近"
+    ]
+  },
+  "PVP_PullUp_QuickCart_MC_Sort": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "PVP_PVPBook",
-      "PVP_HomePageSwipe"
+      "PVP_PullUp_QuickCart_MC_Isenable",
+      "PVP_PullUp_QuickCart_MC_Sort"
     ],
-    "focus": "PM.主页面",
+    "post_delay": 2000,
+    "focus": "PCM.快速卡带类选择-玩法",
     "roi": [
-      98,
-      656,
-      66,
+      551,
+      534,
+      138,
+      48
+    ],
+    "expected": [
+      "玩法游戏卡"
+    ],
+    "doc": "分组正则待适配"
+  },
+  "PVP_PullUp_QuickCart_MC_Isenable": {
+    "recognition": "ColorMatch",
+    "next": [
+      "PVP_PullUp_QuickCart_PVP"
+    ],
+    "roi": [
+      551,
+      534,
+      138,
+      48
+    ],
+    "upper": [
+      255,
+      255,
+      255
+    ],
+    "lower": [
+      167,
+      167,
+      165
+    ],
+    "count": 500,
+    "focus": "PCM.玩法游戏卡确认"
+  },
+  "PVP_PullUp_QuickCart_PVP": {
+    "recognition": "TemplateMatch",
+    "action": "Click",
+    "next": [
+      "PVP_Sandplay",
+      "PVP_PullUp_QuickCart_PVP"
+    ],
+    "post_delay": 3000,
+    "timeout": 50000,
+    "focus": "PCM.PVP玩法卡带-点击",
+    "roi": [
+      51,
+      582,
+      873,
+      133
+    ],
+    "template": [
+      "QuickCart_PVP.png"
+    ],
+    "target_offset": [
+      -35,
+      25,
+      0,
+      0
+    ],
+    "doc": ""
+  },
+  "PVP_Sandplay": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "pvp_Medals.png"
+    ],
+    "roi": [
+      612,
+      29,
+      173,
       32
     ],
-    "expected": [
-      "抽抽乐"
-    ],
-    "target": [
-      1111,
-      650,
-      0,
-      0
-    ],
-    "doc": "识别左下抽抽乐-主页-点击选择章节"
-  },
-  "PVP_HomePageSwipe": {
-    "recognition": "OCR",
-    "action": "Swipe",
+    "focus": "PM.PVP箱庭确认",
+    "post_delay": 5000,
     "next": [
-      "PVP_PVPBook",
-      "PVP_HomePageSwipe"
+      "PVP_Sandplay_Again"
+    ]
+  },
+  "PVP_Sandplay_Again": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "pvp_Medals.png"
     ],
-    "pre_delay": 1000,
-    "focus": "PM.卡带界面垂直复位(一次性)",
     "roi": [
-      99,
-      78,
-      212,
-      630
+      612,
+      29,
+      173,
+      32
     ],
-    "expected": [
-      "角色游戏卡"
-    ],
-    "begin": [
-      70,
-      640,
-      0,
-      0
-    ],
-    "end": [
-      70,
-      270,
-      0,
-      0
-    ],
-    "duration": 500
-  },
-  "PVP_PVPBook": {
-    "recognition": "OCR",
-    "action": "Click",
     "next": [
-      "PVP_PVPBook",
-      "PVP_PVPMes",
-      "PVP_PVPMes2",
-      "PVP_PVPStart",
       "PVP_AutoBattle"
     ],
     "interrupt": [
+      "PVP_PerPetTask",
+      "PVP_PVPMes",
+      "PVP_PVPMes2",
       "PVP_PerOperationsMain_Error",
-      "PVP_InsandboxAndlocAbnormal"
+      "PVP_InsandboxAndlocAbnormal",
+      "PVP_PVPStart"
     ],
-    "on_error": [
-      "PVP_WorkaroundIn_Start"
-    ],
-    "post_delay": 4000,
-    "timeout": 50000,
-    "focus": "PM.PVP卡带",
-    "roi": [
-      122,
-      452,
-      179,
-      62
-    ],
-    "expected": [
-      "PvP"
-    ],
-    "threshold": 0.9,
-    "target_offset": [
-      0,
-      -100,
-      0,
-      0
-    ],
-    "doc": "点击PVP本子"
+    "focus": "PM.PVP箱庭确认-再次"
   },
   "PVP_InsandboxAndlocAbnormal": {
     "recognition": "TemplateMatch",
@@ -118,13 +169,6 @@
   "PVP_PVPMes": {
     "recognition": "OCR",
     "action": "Click",
-    "next": [
-      "PVP_PVPMes2",
-      "PVP_PVPStart"
-    ],
-    "on_error": [
-      "PVP_WorkaroundIn_Start"
-    ],
     "focus": "PM.PVP.防守分结算",
     "roi": [
       391,
@@ -140,13 +184,6 @@
   "PVP_PVPMes2": {
     "recognition": "OCR",
     "action": "Click",
-    "next": [
-      "PVP_PVPMes",
-      "PVP_PVPStart"
-    ],
-    "on_error": [
-      "PVP_WorkaroundIn_Start"
-    ],
     "roi": [
       815,
       582,
@@ -161,10 +198,6 @@
   "PVP_PVPStart": {
     "recognition": "TemplateMatch",
     "action": "Click",
-    "next": [
-      "PVP_PerPetTask",
-      "PVP_AutoBattle"
-    ],
     "post_delay": 3000,
     "focus": "PM.PVP.点击舞台物件",
     "roi": [
@@ -187,9 +220,6 @@
   "PVP_PerPetTask": {
     "recognition": "TemplateMatch",
     "action": "Click",
-    "next": [
-      "PVP_PVPStart"
-    ],
     "post_delay": 5000,
     "focus": "PM.宠物派遣",
     "roi": [
@@ -253,37 +283,18 @@
     ],
     "doc": "点击自动战斗"
   },
-  "PVP_AutoBattleButton": {
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "PVP_JustUseFree"
-    ],
-    "enabled": false,
-    "post_delay": 1000,
-    "roi": [
-      895,
-      619,
-      124,
-      73
-    ],
-    "expected": [
-      "自动战斗"
-    ],
-    "target_offset": [
-      30,
-      -30,
-      0,
-      0
-    ],
-    "doc": "点击按钮开关1"
-  },
   "PVP_JustUseFree": {
     "next": [
-      "PVP_JustUseFreeOK",
+      "PVP_JustUseFreeOK"
+    ],
+    "interrupt": [
       "PVP_JustUseFreeNO"
     ],
-    "focus": "PM.PVP.战前汇集节点"
+    "timeout": 8000,
+    "on_error": [
+      "PVP_JustUseFree2"
+    ],
+    "focus": "PM.PVP.开始验证免费鸡尾酒策略"
   },
   "PVP_JustUseFreeOK": {
     "recognition": "ColorMatch",
@@ -315,15 +326,6 @@
   "PVP_JustUseFreeNO": {
     "recognition": "ColorMatch",
     "action": "Click",
-    "next": [
-      "PVP_JustUseFreeOK"
-    ],
-    "timeout": 5000,
-    "on_error": [
-      "PVP_JustUseFree2"
-    ],
-    "inverse": false,
-    "enabled": true,
     "focus": "PM.PVP.免费AP未勾选！",
     "roi": [
       888,
@@ -341,43 +343,7 @@
       34,
       40
     ],
-    "doc": "识别是否仅用免费鸡尾酒"
-  },
-  "PVP_JustUseFreeReCk": {
-    "recognition": "ColorMatch",
-    "action": "Click",
-    "next": [
-      "PVP_JustUseFree"
-    ],
-    "timeout": 5000,
-    "on_error": [
-      "PVP_JustUseFree2"
-    ],
-    "inverse": true,
-    "enabled": true,
-    "roi": [
-      867,
-      239,
-      81,
-      50
-    ],
-    "lower": [
-      171,
-      131,
-      41
-    ],
-    "upper": [
-      171,
-      131,
-      41
-    ],
-    "target": [
-      867,
-      239,
-      81,
-      50
-    ],
-    "doc": "尝试开启免费鸡尾酒"
+    "doc": "识别灰黑色 | 识别是否仅用免费鸡尾酒"
   },
   "PVP_JustUseFree2": {
     "recognition": "OCR",
@@ -897,7 +863,7 @@
     "action": "Click",
     "next": [
       "Pass_WorkaroundIn_TyrFindButt_Find_Ocr",
-      "PVP_AutoBattle"
+      "PVP_Sandplay"
     ],
     "focus": "PWB.路径发现,点击-OCR"
   },
@@ -947,7 +913,7 @@
     "action": "Click",
     "next": [
       "Pass_WorkaroundIn_TyrFindButt_Find_Tmp",
-      "PVP_AutoBattle"
+      "PVP_Sandplay"
     ],
     "focus": "PWB.路径发现,点击-Tmp"
   },
