@@ -75,7 +75,7 @@
 		},
 		{
 			"name": "[执行]竞技场",
-			"entry": "PVP_HomePage",
+			"entry": "PVP_TaskStart",
 			"check": true,
 			"option": [
 				"竞技场战斗倍数"
@@ -997,25 +997,23 @@
 				{
 					"name": "Max",
 					"pipeline_override": {
-						"PVP_AutoBattleMAX": {
-							"target": [
-								865,
-								435,
-								0,
-								0
-							]
-						}
+						"PVP_Multiplier_Adjust_Set": {}
 					}
 				},
 				{
 					"name": "Min",
 					"pipeline_override": {
-						"PVP_AutoBattleMAX": {
+						"PVP_Multiplier_Verify": {
+							"expected": [
+								"1"
+							]
+						},
+						"PVP_Multiplier_Adjust_Set": {
 							"target": [
-								425,
-								435,
-								0,
-								0
+								458,
+								355,
+								20,
+								18
 							]
 						}
 					}
