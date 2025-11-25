@@ -1005,7 +1005,7 @@
 					"pipeline_override": {
 						"PVP_Multiplier_Verify": {
 							"expected": [
-								"1"
+								"^1$"
 							]
 						},
 						"PVP_Multiplier_Adjust_Set": {
