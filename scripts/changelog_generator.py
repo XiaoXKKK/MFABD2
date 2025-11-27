@@ -171,7 +171,9 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     # 获取 Main 分支已发布的功能黑名单
     # 如果是内测版/CI版 -> 过滤基准是 "main" (隐藏已正式发布的功能)
     # 如果是正式版     -> 过滤基准是 compare_base (隐藏上个版本以前的功能)
-    if '-beta' in current_tag or '-ci' in current_tag:
+    is_beta_or_ci = '-beta' in current_tag or '-ci' in current_tag
+    
+    if is_beta_or_ci:
         filter_ref = "main"
     else:
         # 再次检查 compare_base 是否存在，不存在也回退
@@ -183,7 +185,6 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     active_features = {} # {branch_name: description}
     
     # 定义反向合并的关键词前缀
-    # 但根据你的描述，这里是为了过滤 'dev v1.0' 这样的反向合并，所以保留
     IGNORE_PREFIXES = ['main', 'master', 'develop', 'release']
 
     for commit in merges:
@@ -192,8 +193,7 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
         if branch:
             branch_lower = branch.lower()
             
-            # === [修改点] 过滤1: 忽略反向合并 (改为前缀匹配) ===
-            # 现在可以识别 'main v3.0.0', 'develop v2' 等带后缀的名称
+            # 过滤1: 忽略反向合并 (前缀匹配)
             if any(branch_lower.startswith(prefix) for prefix in IGNORE_PREFIXES):
                 continue
             # 过滤2: 已发布则跳过 (自动消失逻辑)
@@ -206,12 +206,26 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     if not active_features:
         return ""
         
-    lines = ["### 🧬 正在测试的功能 (Beta Preview)\n"]
-    lines.append("> 下列功能已合并入测试版，将随下次正式版归档：\n")
+    lines = []
+    
+    if is_beta_or_ci:
+        # 🧪 内测版/开发版文案
+        lines.append("### 🧬 正在测试的功能 (Beta Preview)")
+        lines.append("> 下列功能已合并入测试版，重点关注是否存在Bug：")
+        lines.append("> 遇到问题请及时在 [Issue](https://github.com/sunyink/MFABD2/issues) 中反馈。有助于早日形成可靠的稳定版")
+    else:
+        # 🚀 正式版文案 (方案B)
+        lines.append("### 🚀 正式版-版本功能概览 (Feature Branches)")
+        lines.append("> 感谢参与`内测版`开发的各位，本次`正式版`更新包含以下‘转录’的功能分支：")
+
+    lines.append("") # 制造一个空行，隔开列表
+
     for branch, desc in active_features.items():
         lines.append(f"- {desc} `({branch})`")
-    lines.append("\n")
+    
+    lines.append("") # 结尾空行
     return "\n".join(lines)
+
 def generate_changelog_content(commits: List[Dict], current_tag: str, compare_base: str) -> str:
     """生成变更日志内容"""
     
