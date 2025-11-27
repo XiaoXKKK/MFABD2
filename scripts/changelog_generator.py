@@ -13,6 +13,7 @@ from version_rules import filter_valid_versions, sort_versions
 from history_manager import HistoryManager
 from version_analyzer import analyze_version_highlights
 from config import HISTORY_CONFIG, OUTPUT_CONFIG
+from git_operations import get_commit_list, get_merge_commits, get_released_branches_from_main, safe_get_commit_list
 
 def group_commits_by_type(commits: List[Dict]) -> Dict[str, List[Dict]]:
     """按提交类型分组（简化版本，后续可以改进）"""
@@ -135,6 +136,51 @@ def format_commit_message(commit: Dict) -> str:
 
     return f"- {breaking_marker}{highlight_marker}{cleaned_subject} @{author_display}"
 
+def parse_merge_subject(subject: str) -> tuple:
+    """解析合并提交标题，返回 (分支名, 描述)"""
+    # 格式: Merge:'分支名'| 描述
+    pattern = r"^Merge:'([^']+)'\|\s*(.+)"
+    match = re.search(pattern, subject)
+    if match:
+        return match.group(1), match.group(2).strip()
+    return None, None
+
+def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
+    """生成 Beta 功能预览板块"""
+    # 获取区间内的合并提交
+    merges = get_merge_commits(compare_base, current_tag)
+    if not merges:
+        return ""
+        
+    # 获取 Main 分支已发布的功能黑名单
+    released_branches = get_released_branches_from_main()
+    
+    active_features = {} # {branch_name: description}
+    
+    for commit in merges:
+        branch, desc = parse_merge_subject(commit['subject'])
+        
+        if branch:
+            # 过滤1: 忽略反向合并
+            if branch.lower() in ['main', 'master', 'develop', 'dev']:
+                continue
+            # 过滤2: 已发布则跳过 (自动消失逻辑)
+            if branch in released_branches:
+                continue
+            # 过滤3: 只保留最新的 (去重逻辑)
+            if branch not in active_features:
+                active_features[branch] = desc
+    
+    if not active_features:
+        return ""
+        
+    lines = ["### 🧬 正在测试的功能 (Beta Preview)\n"]
+    lines.append("> 下列功能已合并入测试版，将随下次正式版归档：\n")
+    for branch, desc in active_features.items():
+        lines.append(f"- {desc} `({branch})`")
+    lines.append("\n")
+    return "\n".join(lines)
+
 def generate_changelog_content(commits: List[Dict], current_tag: str, compare_base: str) -> str:
     """生成变更日志内容"""
     
@@ -146,7 +192,11 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
     # 构建变更日志
     changelog = f"# 更新日志\n\n"
     changelog += f"## {current_tag}\n\n"
-    
+    try:
+        changelog += get_beta_preview_content(compare_base, current_tag)
+    except Exception as e:
+        print(f"Beta预览生成忽略错误: {e}")
+    grouped_commits = group_commits_by_type(commits)
     # 定义分组标题
     group_titles = {
         'feat': '✨ 新功能',
@@ -167,9 +217,15 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
     for group_type, title in group_titles.items():
         group_commits = grouped_commits[group_type]
         if group_commits:
-            changelog += f"### {title}\n\n"
-            for commit in group_commits:
-                changelog += format_commit_message(commit) + "\n"
+            filtered_commits = [
+                c for c in group_commits 
+                if not c['subject'].startswith("Merge:'")
+            ]
+            
+            if filtered_commits:
+                changelog += f"### {title}\n\n"
+                for commit in filtered_commits:
+                    changelog += format_commit_message(commit) + "\n"
             changelog += "\n"
     
     changelog += "[已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=MFABD2)\n\n"
