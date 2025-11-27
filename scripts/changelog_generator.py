@@ -162,6 +162,7 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     if not ensure_reference_exists(target_ref):
         print(f"Beta预览: 引用 {target_ref} 不存在，自动回退到 HEAD")
         target_ref = "HEAD"
+        
     # 获取区间内的合并提交
     merges = get_merge_commits(compare_base, target_ref)
     if not merges:
@@ -181,12 +182,19 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     
     active_features = {} # {branch_name: description}
     
+    # 定义反向合并的关键词前缀
+    # 但根据你的描述，这里是为了过滤 'dev v1.0' 这样的反向合并，所以保留
+    IGNORE_PREFIXES = ['main', 'master', 'develop', 'release']
+
     for commit in merges:
         branch, desc = parse_merge_subject(commit['subject'])
         
         if branch:
-            # 过滤1: 忽略反向合并
-            if branch.lower() in ['main', 'master', 'develop', 'dev']:
+            branch_lower = branch.lower()
+            
+            # === [修改点] 过滤1: 忽略反向合并 (改为前缀匹配) ===
+            # 现在可以识别 'main v3.0.0', 'develop v2' 等带后缀的名称
+            if any(branch_lower.startswith(prefix) for prefix in IGNORE_PREFIXES):
                 continue
             # 过滤2: 已发布则跳过 (自动消失逻辑)
             if branch in released_branches:
@@ -204,7 +212,6 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
         lines.append(f"- {desc} `({branch})`")
     lines.append("\n")
     return "\n".join(lines)
-
 def generate_changelog_content(commits: List[Dict], current_tag: str, compare_base: str) -> str:
     """生成变更日志内容"""
     
