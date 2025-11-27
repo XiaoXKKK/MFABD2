@@ -211,8 +211,9 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     if is_beta_or_ci:
         # 🧪 内测版/开发版文案
         lines.append("### 🧬 正在测试的功能 (Beta Preview)")
+        lines.append("> 遇到问题请及时在 [Issue](https://github.com/sunyink/MFABD2/issues) 中反馈，有助于早日形成可靠的稳定版。")
+        lines.append("") # 制造一个空行，隔开列表
         lines.append("> 下列功能已合并入测试版，重点关注是否存在Bug：")
-        lines.append("> 遇到问题请及时在 [Issue](https://github.com/sunyink/MFABD2/issues) 中反馈。有助于早日形成可靠的稳定版")
     else:
         # 🚀 正式版文案 (方案B)
         lines.append("### 🚀 正式版-版本功能概览 (Feature Branches)")
