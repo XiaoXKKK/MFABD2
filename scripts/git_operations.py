@@ -233,6 +233,65 @@ def test_safe_operations():
     commits = safe_get_commit_list("main", "v2.3.5")
     print(f"安全操作提交数量: {len(commits)}")
 
+
+def get_merge_commits(from_ref: str, to_ref: str) -> List[Dict]:
+    """
+    【新增】专门获取合并提交列表，用于生成 Beta 功能预览
+    """
+    # 使用 --merges 只看合并，--topo-order 保证父子顺序
+    log_output = run_git_command([
+        "log", 
+        f"{from_ref}..{to_ref}",
+        "--oneline",
+        "--merges",
+        "--topo-order"
+    ])
+    
+    commits = []
+    for line in log_output.split('\n'):
+        if line.strip():
+            # 解析: "hash 提交信息"
+            parts = line.split(' ', 1)
+            if len(parts) == 2:
+                commits.append({
+                    'hash': parts[0],
+                    'subject': parts[1]
+                })
+    return commits
+
+def get_released_branches_from_main(limit: int = 200) -> set:
+    """
+    【新增】扫描 Main 分支最近的合并记录，提取已发布的分支名
+    """
+    log_output = run_git_command([
+        "log",
+        "main", 
+        "-n", str(limit),
+        "--oneline",
+        "--merges"
+    ])
+    
+    released = set()
+    import re
+    # 匹配新格式: Merge:'分支名'|...
+    pattern_new = r"Merge:'([^']+)'\|"
+    # 匹配旧格式: Merge branch '分支名'
+    pattern_old = r"Merge branch '([^']+)'"
+    
+    for line in log_output.split('\n'):
+        # 优先新格式
+        match = re.search(pattern_new, line)
+        if match:
+            released.add(match.group(1))
+            continue
+        # 兼容旧格式
+        match = re.search(pattern_old, line)
+        if match:
+            released.add(match.group(1))
+            
+    return released
+
+
 if __name__ == "__main__":
     test_git_operations_simple()
     test_specific_range()
