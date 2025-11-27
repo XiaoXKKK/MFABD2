@@ -13,7 +13,7 @@ from version_rules import filter_valid_versions, sort_versions
 from history_manager import HistoryManager
 from version_analyzer import analyze_version_highlights
 from config import HISTORY_CONFIG, OUTPUT_CONFIG
-from git_operations import get_commit_list, get_merge_commits, get_released_branches_from_main, safe_get_commit_list
+from git_operations import get_commit_list, get_merge_commits, get_released_branches_from_main, safe_get_commit_list, ensure_reference_exists
 
 def group_commits_by_type(commits: List[Dict]) -> Dict[str, List[Dict]]:
     """按提交类型分组（简化版本，后续可以改进）"""
@@ -138,22 +138,46 @@ def format_commit_message(commit: Dict) -> str:
 
 def parse_merge_subject(subject: str) -> tuple:
     """解析合并提交标题，返回 (分支名, 描述)"""
-    # 格式: Merge:'分支名'| 描述
-    pattern = r"^Merge:'([^']+)'\|\s*(.+)"
-    match = re.search(pattern, subject)
+    # 1. 优先尝试新格式
+    pattern_new = r"^Merge:'([^']+)'\|\s*(.+)"
+    match = re.search(pattern_new, subject)
     if match:
         return match.group(1), match.group(2).strip()
+        
+    # 2. 兼容 Git 默认格式 (防止旧合并丢失)
+    pattern_old = r"Merge branch '([^']+)'"
+    match = re.search(pattern_old, subject)
+    if match:
+        branch_name = match.group(1)
+        # 简单生成描述
+        desc = f"合并分支 {branch_name}"
+        return branch_name, desc
+        
     return None, None
 
 def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     """生成 Beta 功能预览板块"""
+    # 标签不存在时的自动回退
+    target_ref = current_tag
+    if not ensure_reference_exists(target_ref):
+        print(f"Beta预览: 引用 {target_ref} 不存在，自动回退到 HEAD")
+        target_ref = "HEAD"
     # 获取区间内的合并提交
-    merges = get_merge_commits(compare_base, current_tag)
+    merges = get_merge_commits(compare_base, target_ref)
     if not merges:
         return ""
         
     # 获取 Main 分支已发布的功能黑名单
-    released_branches = get_released_branches_from_main()
+    # 如果是内测版/CI版 -> 过滤基准是 "main" (隐藏已正式发布的功能)
+    # 如果是正式版     -> 过滤基准是 compare_base (隐藏上个版本以前的功能)
+    if '-beta' in current_tag or '-ci' in current_tag:
+        filter_ref = "main"
+    else:
+        # 再次检查 compare_base 是否存在，不存在也回退
+        filter_ref = compare_base if ensure_reference_exists(compare_base) else "HEAD"
+        
+    print(f"Beta预览过滤基准: {filter_ref}")
+    released_branches = get_released_branches_from_main(ref=filter_ref)
     
     active_features = {} # {branch_name: description}
     
