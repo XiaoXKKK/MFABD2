@@ -241,6 +241,7 @@ jobs:
           files: artifacts/release_assets/*.zip
           tag_name: ${{ needs.meta.outputs.tag }}
           name: "MFABD2 ${{ needs.meta.outputs.tag }}"
+          target_commitish: ${{ github.sha }}
           body: |
             ${{ contains(needs.changelog.outputs.release_body, '## ') && needs.changelog.outputs.release_body || '### 无显著变更' }}
             
