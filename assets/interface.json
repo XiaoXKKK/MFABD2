@@ -126,7 +126,7 @@
 		{
 			"name": "[领取]活动页奖励",
 			"check": true,
-			"entry": "Activities_HomePage",
+			"entry": "Activities_Start",
 			"option": [
 				"进入前先领取邮件"
 			],

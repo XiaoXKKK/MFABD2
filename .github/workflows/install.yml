@@ -127,7 +127,9 @@ jobs:
         with:
           repository: MaaXYZ/MaaFramework
           fileName: "MAA-${{ matrix.os }}-${{ matrix.arch }}*"
-          latest: true
+          # latest: true
+          # 指定MFA旧稳定版
+          tag: "v4.5.6"
           out-file-path: "deps"
           extract: true
 
@@ -239,6 +241,7 @@ jobs:
           files: artifacts/release_assets/*.zip
           tag_name: ${{ needs.meta.outputs.tag }}
           name: "MFABD2 ${{ needs.meta.outputs.tag }}"
+          target_commitish: ${{ github.sha }}
           body: |
             ${{ contains(needs.changelog.outputs.release_body, '## ') && needs.changelog.outputs.release_body || '### 无显著变更' }}
             
