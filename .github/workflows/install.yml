@@ -266,7 +266,7 @@ jobs:
 
   notify:
     needs: [meta, install]
-    if: always() && needs.install.result == 'success'
+    if: always() && needs.install.result == 'success' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Extract commit info 
