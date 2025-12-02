@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: sunyink/MFABD2-Assets
-          ref: main
+          ref: master
           path: assets/MaaCommonAssets
           fetch-depth: 1
       - name: Check Resource
