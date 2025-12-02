@@ -146,6 +146,15 @@ jobs:
           out-file-path: "MFA"
           extract: true
 
+      - name: Restore Assets (Clone from Resource Repo)
+        uses: actions/checkout@v4
+        with:
+          repository: sunyink/MFABD2-Assets
+          ref: main 
+          path: assets/MaaCommonAssets 
+          fetch-depth: 1
+
+          
       - name: Clean up MFAAvalonia archive
         if: matrix.os != 'android'
         shell: bash
