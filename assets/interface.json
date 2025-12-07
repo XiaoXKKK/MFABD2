@@ -615,8 +615,10 @@
 							]
 						},
 						"Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK": {
-							"interrupt": [
-								"Battle_CollectMap_SwipLeft"
+							"next": [
+								"Battle_NoAP_Rice",
+								"Battle_CollectMapShouLieR2",
+								"[JumpBack]Battle_CollectMap_SwipLeft"
 							]
 						},
 						"Battle_CollectMapShouLie": {
