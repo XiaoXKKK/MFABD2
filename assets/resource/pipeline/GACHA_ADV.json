@@ -1426,7 +1426,8 @@
     "next": [
       "GachaADV_5XResuNew",
       "GachaADV_5X",
-      "GachaADV_GachaResultBack"
+      "GachaADV_GachaResultBack",
+      "GachaADV_5XBug_LightningBall"
     ],
     "focus": "GA.5☆角色！(✧◡✧)",
     "roi": [
@@ -1452,7 +1453,8 @@
     "next": [
       "GachaADV_5XResuNew",
       "GachaADV_5X2",
-      "GachaADV_GachaResultBack"
+      "GachaADV_GachaResultBack",
+      "GachaADV_5XBug_LightningBall"
     ],
     "focus": "GA.5☆UR武器！(✧◡✧)",
     "roi": [
@@ -1506,6 +1508,24 @@
       46,
       0,
       0
+    ]
+  },
+  "GachaADV_5XBug_LightningBall": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "Chaga_ProductNext.png"
+    ],
+    "action": "Click",
+    "next": [
+      "GachaADV_GachaResultBack",
+      "GachaADV_5XBug_LightningBall"
+    ],
+    "post_delay": 1000,
+    "roi": [
+      1103,
+      21,
+      123,
+      55
     ]
   },
   "GachaADV_GachaResultBack": {
