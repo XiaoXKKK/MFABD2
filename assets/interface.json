@@ -32,13 +32,13 @@
 				"战斗次数分配",
 				"冒险航线-圣石洞穴属性"
 			],
-			"doc": "**快速狩猎扫荡**：旧称`地图扫荡`。消耗每日免费的米饭、火把刷取资源。  \n\n**注意：这里每一个选项都是重要的必选项。**\n\n**选项讲解：**\n\n前4项米饭相关，依次为\n\n①主线狩猎场选择——目前支持`主线9`、`主线7`、`主线2`\n\n②冒险航线双倍图策略：(详见选项说明)\n\n③冒险航线资源策略：资源倾向(详见选项说明)\n\n④狩猎场与冒险航线之间次数分配——一定打完免费米饭。\n\n\n\n第5项为圣石洞穴策略：全打某属性or均匀属性每种打2次，一定用完免费火把。"
+			"doc": "**快速狩猎扫荡**：旧称`地图扫荡`。消耗每日免费的米饭、火把刷取资源。  \n\n**注意：这里每一个选项都是重要的必选项。请在狩猎场`1.野猪洞穴`已打完的基础上，确保目标狩猎场已通关**\n\n**选项讲解：**\n\n前4项米饭相关，依次为\n\n①主线狩猎场选择——目前支持`主线9`、`主线7`、`主线2`\n\n②冒险航线双倍图策略：(详见选项说明)\n\n③冒险航线资源策略：资源倾向(详见选项说明)\n\n④狩猎场与冒险航线之间次数分配——一定打完免费米饭。\n\n\n\n第5项为圣石洞穴策略：全打某属性or均匀属性每种打2次，一定用完免费火把。"
 		},
 		{
 			"name": "[执行]地图采集",
 			"entry": "Collect_StartGame_HomePage",
 			"check": true,
-			"doc": "**地图采集**：进入卡带，对有传送阵地图进行`探查`、`吸取`、`召集`。请根据技能数量与等级合理决定每日吸取卡带数量。\n\n**采集方案:**\n\n**快速(快速卡带列表)：**从箱庭点击卡带图标后从左选取x张卡带采集（通过卡带右上图钉实现自定义排序，进而自定义选刷）,剧情游戏卡和角色游戏卡分开选择（二者可改变先后顺序）,合计不宜大于每日技能吸取数量。\n\n**固定：**旧逻辑，不能自定义卡带，作为备案保留。\n\n**举例：**目标先刷主线7+8+9+13，再刷火片。设置为，剧情卡带只标记这4张图给置顶，只标记角色卡的火片给置顶；采集方案=快速：1#剧情卡→2#角色卡；剧情卡带-刷取张数=4、角色卡带-刷取张数=1。看不全下拉菜单可选项上悬停1秒或调大MFA窗口。",
+			"doc": "**地图采集**：进入卡带，对有传送阵地图进行`探查`、`吸取`、`召集`。请根据技能数量与等级合理决定每日吸取卡带数量。\n\n**采集方案:**\n\n**快速(快速卡带列表)：**从箱庭点击卡带图标后从左选取x张卡带采集（通过卡带右上图钉实现自定义排序，进而自定义选刷）,剧情游戏卡和角色游戏卡分开选择（二者可改变先后顺序）,合计不宜大于每日技能吸取数量。\n\n**固定：**旧逻辑，不能自定义卡带，作为备案保留。\n\n**举例：**目标先刷主线7+8+9+13，再刷火片。设置为，剧情卡带只标记这4张图给置顶，只标记角色卡的火片给置顶；采集方案=快速：1#剧情卡→2#角色卡；剧情卡带-刷取张数=4、角色卡带-刷取张数=1。看不全下拉菜单可选项上悬停1秒或调大MFA窗口。\n\n**注意:**应当先将传送阵激活，并探明周围箱庭迷雾，使得区域地图上能完整显示明亮的传送阵图标。",
 			"option": [
 				"采集方案",
 				"快速卡带-剧情卡带-刷取张数",
@@ -66,7 +66,8 @@
 			"entry": "Gacha_HomePage",
 			"check": true,
 			"option": [
-				"付费钻-总开关"
+				"付费钻-总开关",
+				"抽卡v2版开关-按需|强制"
 			],
 			"advanced": [
 				"90付费抽目标卡池"
@@ -75,12 +76,12 @@
 		},
 		{
 			"name": "[执行]竞技场",
-			"entry": "PVP_HomePage",
+			"entry": "PVP_TaskStart",
 			"check": true,
 			"option": [
 				"竞技场战斗倍数"
 			],
-			"doc": "**竞技场：**进入竞技场卡带，打完每日免费鸡尾酒。\n\n**战斗倍数：**系奖牌倍率。\n\n排位分按每一场胜负计算无关倍率；奖牌则会x倍率。\n\nMax为10倍，每天打4场x10倍鸡尾酒，计4场排位分，4x10倍奖牌。"
+			"doc": "**竞技场：**进入竞技场卡带，打完每日免费鸡尾酒。\n\n**战斗倍数：**Max 或 Min \n\n关于计分：排位分按每一场胜负计算无关倍率、奖牌则会x倍率。\n\n如：Max为10倍，每天打4场x10倍鸡尾酒，计4场排位分，4x10倍奖牌。"
 		},
 		{
 			"name": "[执行]赛季活动快速战斗",
@@ -109,18 +110,24 @@
 			"doc": "**每周独立周常：**每周奖励3项：依次打1轮`末日之书`、`我的小屋`随机点赞4次、访问`街机页面`。\n\n正常运作可以拿完全部`每周任务`奖励。\n\n周触发器开发烂尾中...欢迎协助←(･ω･)ﾉ。 "
 		},
 		{
-			"name": "[领取]公会签到/餐馆每日",
+			"name": "[领取]公会签到/餐馆",
 			"check": true,
-			"entry": "GetReward_HomePage",
+			"entry": "RewardsORG_HomePage",
 			"option": [
 				"公会奖励"
 			],
-			"doc": "**日常奖励：**依次领取`公会每日签到`、`餐馆-格鲁费之星`，进入`餐馆`领取每日`常客圣石`，切出卡带到`主线2`，领取`每日/周任务奖励`。\n\n**无公会请关闭公会奖励开关。**"
+			"doc": "**日常奖励：**依次领取`公会每日签到`、`餐馆-格鲁费之星`，进入`餐馆`领取每日`常客圣石`，切出卡带到`主线2`。\n\n**无公会请关闭公会奖励开关。**"
+		},
+		{
+			"name": "[领取]任务页(每日/每周)",
+			"check": true,
+			"entry": "RewardsDaily_Start",
+			"doc": "**日常奖励：**专指`主界面`下，`任务`按钮内的奖励。。"
 		},
 		{
 			"name": "[领取]活动页奖励",
 			"check": true,
-			"entry": "Activities_HomePage",
+			"entry": "Activities_Start",
 			"option": [
 				"进入前先领取邮件"
 			],
@@ -172,10 +179,16 @@
 								"Collect_QuickCart_QR_Sort"
 							]
 						},
+						"Collect_QuickCart_QR_Fin": {
+							"next": "Collect_QuickCart_Switch"
+						},
 						"Collect_QuickCart_Switch": {
 							"next": [
 								"Collect_QuickCart_QC_Sort"
 							]
+						},
+						"Collect_QuickCart_QC_Fin": {
+							"next": "Collect_QuickCart_Fin"
 						},
 						"Collect_QuickCart_QC_Out": {
 							"next": [
@@ -291,7 +304,7 @@
 				{
 					"name": "3",
 					"pipeline_override": {
-						"Collect_QuickCart_QC3": {
+						"Collect_QuickCart_QC3_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -311,7 +324,7 @@
 				{
 					"name": "1",
 					"pipeline_override": {
-						"Collect_QuickCart_QC1": {
+						"Collect_QuickCart_QC1_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -321,7 +334,7 @@
 				{
 					"name": "2",
 					"pipeline_override": {
-						"Collect_QuickCart_QC2": {
+						"Collect_QuickCart_QC2_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -331,7 +344,7 @@
 				{
 					"name": "4",
 					"pipeline_override": {
-						"Collect_QuickCart_QC4": {
+						"Collect_QuickCart_QC4_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -341,7 +354,7 @@
 				{
 					"name": "5",
 					"pipeline_override": {
-						"Collect_QuickCart_QC5": {
+						"Collect_QuickCart_QC5_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -351,7 +364,7 @@
 				{
 					"name": "6",
 					"pipeline_override": {
-						"Collect_QuickCart_QC6": {
+						"Collect_QuickCart_QC6_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -361,7 +374,7 @@
 				{
 					"name": "7",
 					"pipeline_override": {
-						"Collect_QuickCart_QC7": {
+						"Collect_QuickCart_QC7_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -371,7 +384,7 @@
 				{
 					"name": "8",
 					"pipeline_override": {
-						"Collect_QuickCart_QC8": {
+						"Collect_QuickCart_QC8_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -381,7 +394,7 @@
 				{
 					"name": "9",
 					"pipeline_override": {
-						"Collect_QuickCart_QC9": {
+						"Collect_QuickCart_QC9_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -391,7 +404,7 @@
 				{
 					"name": "10",
 					"pipeline_override": {
-						"Collect_QuickCart_QC10": {
+						"Collect_QuickCart_QC10_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -401,7 +414,7 @@
 				{
 					"name": "11",
 					"pipeline_override": {
-						"Collect_QuickCart_QC11": {
+						"Collect_QuickCart_QC11_Post": {
 							"next": [
 								"Collect_QuickCart_QC_Fin"
 							]
@@ -430,7 +443,7 @@
 				{
 					"name": "1",
 					"pipeline_override": {
-						"Collect_QuickCart_QR1": {
+						"Collect_QuickCart_QR1_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -440,7 +453,7 @@
 				{
 					"name": "2",
 					"pipeline_override": {
-						"Collect_QuickCart_QR2": {
+						"Collect_QuickCart_QR2_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -450,7 +463,7 @@
 				{
 					"name": "3",
 					"pipeline_override": {
-						"Collect_QuickCart_QR3": {
+						"Collect_QuickCart_QR3_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -460,7 +473,7 @@
 				{
 					"name": "4",
 					"pipeline_override": {
-						"Collect_QuickCart_QR4": {
+						"Collect_QuickCart_QR4_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -470,7 +483,7 @@
 				{
 					"name": "5",
 					"pipeline_override": {
-						"Collect_QuickCart_QR5": {
+						"Collect_QuickCart_QR5_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -480,7 +493,7 @@
 				{
 					"name": "6",
 					"pipeline_override": {
-						"Collect_QuickCart_QR6": {
+						"Collect_QuickCart_QR6_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -488,9 +501,9 @@
 					}
 				},
 				{
-					"name": "7",
+					"name": "7（截止合约之战共7张）",
 					"pipeline_override": {
-						"Collect_QuickCart_QR7": {
+						"Collect_QuickCart_QR7_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -500,7 +513,7 @@
 				{
 					"name": "8",
 					"pipeline_override": {
-						"Collect_QuickCart_QR8": {
+						"Collect_QuickCart_QR8_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -510,7 +523,7 @@
 				{
 					"name": "9",
 					"pipeline_override": {
-						"Collect_QuickCart_QR9": {
+						"Collect_QuickCart_QR9_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -520,7 +533,7 @@
 				{
 					"name": "10",
 					"pipeline_override": {
-						"Collect_QuickCart_QR10": {
+						"Collect_QuickCart_QR10_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -530,7 +543,7 @@
 				{
 					"name": "11",
 					"pipeline_override": {
-						"Collect_QuickCart_QR11": {
+						"Collect_QuickCart_QR11_Post": {
 							"next": [
 								"Collect_QuickCart_QR_Fin"
 							]
@@ -585,7 +598,7 @@
 								"Battle_CollectMap_SwipLeft"
 							]
 						},
-						"Battle_CollectMapHangXianDoubleCk2No": {
+						"Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK": {
 							"interrupt": [
 								"Battle_CollectMap_SwipLeft"
 							]
@@ -595,10 +608,10 @@
 								"蜥蜴人祭坛"
 							],
 							"roi": [
-								255,
-								318,
-								423,
-								238
+								305,
+								367,
+								121,
+								59
 							],
 							"target_offset": [
 								5,
@@ -612,10 +625,10 @@
 								"蜥蜴人祭坛"
 							],
 							"roi": [
-								255,
-								318,
-								423,
-								238
+								305,
+								367,
+								121,
+								59
 							],
 							"target_offset": [
 								5,
@@ -631,7 +644,8 @@
 					"pipeline_override": {
 						"Battle_CollectMap": {
 							"next": [
-								"Battle_CollectMapHangXian1"
+								"Battle_CollectMapHangXian1",
+								"Battle_CollectMap"
 							]
 						},
 						"Battle_CollectMapHangXianDoubleCk1No": {}
@@ -755,12 +769,13 @@
 						},
 						"Battle_CollectMap": {
 							"next": [
-								"Battle_CollectMapHangXian1"
+								"Battle_CollectMapHangXian1",
+								"Battle_CollectMap"
 							]
 						},
 						"Battle_FastBattleMAXTouchHangxian": {
 							"next": [
-								"Battle_CollectMapShouLieR2"
+								"Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK"
 							]
 						}
 					}
@@ -985,27 +1000,25 @@
 		"竞技场战斗倍数": {
 			"cases": [
 				{
-					"name": "战斗一次",
+					"name": "Max",
 					"pipeline_override": {
-						"PVP_AutoBattleMAX": {
-							"target": [
-								425,
-								435,
-								0,
-								0
-							]
-						}
+						"PVP_Multiplier_Adjust_Set": {}
 					}
 				},
 				{
-					"name": "Max",
+					"name": "Min",
 					"pipeline_override": {
-						"PVP_AutoBattleMAX": {
+						"PVP_Multiplier_Verify": {
+							"expected": [
+								"^1$"
+							]
+						},
+						"PVP_Multiplier_Adjust_Set": {
 							"target": [
-								865,
-								435,
-								0,
-								0
+								458,
+								355,
+								20,
+								18
 							]
 						}
 					}
@@ -1156,9 +1169,9 @@
 				{
 					"name": "No",
 					"pipeline_override": {
-						"GetReward_EnterUnion": {
+						"RewardsORG_EnterUnion": {
 							"next": [
-								"GetReward_BusinReward"
+								"RewardsORG_BusinReward"
 							],
 							"roi": [
 								98,
@@ -1188,6 +1201,25 @@
 							"next": [
 								"Gacha_PaidDiamond_CustomField",
 								"Gacha_TouchFreeGacha"
+							]
+						}
+					}
+				}
+			]
+		},
+		"抽卡v2版开关-按需|强制": {
+			"doc": "一套更严谨的抽卡流程。\n\n可应对抽抽乐点数达到200，但想保留机会不立即兑换的情况。\n\n按需：默认流程检测到问题，则启用v2版抽卡\n\n强制：从一开始就调用V2版抽卡。",
+			"cases": [
+				{
+					"name": "No",
+					"pipeline_override": {}
+				},
+				{
+					"name": "Yes",
+					"pipeline_override": {
+						"Gacha_HomePage": {
+							"next": [
+								"GachaADV_Start"
 							]
 						}
 					}
@@ -1261,6 +1293,46 @@
 						"{目标池3}",
 						"{目标池4}"
 					]
+				},
+				"GachaADV_Location1_90LotPost": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
+				},
+				"GachaADV_Location2_90LotPost": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
+				},
+				"GachaADV_Location3_90LotPost": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
+				},
+				"GachaADV_Location4_90LotPost": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
+				},
+				"GachaADV_Location5_90LotPost": {
+					"expected": [
+						"{目标池1}",
+						"{目标池2}",
+						"{目标池3}",
+						"{目标池4}"
+					]
 				}
 			}
 		},
@@ -1279,17 +1351,15 @@
 			],
 			"pipeline_override": {
 				"Collect_TargetMap3": {
-					"post_delay": [
-						"{等待时间(ms)}"
-					]
+					"post_delay": "{第三次采集额外等待时间(ms)}"
 				}
 			}
 		}
 	},
 	"name": "MFABD2",
-	"custom_title": "MFABD2 | 棕色尘埃2自动化助手(sunyink/MFABD2)v0.0.5 | 游戏版本：20251023 (Halloween Night)",
+	"custom_title": "MFABD2 | 棕色尘埃2自动化助手(sunyink/MFABD2)v0.0.12 | 游戏版本：20251120 (Crossroads)",
 	"url": "https://github.com/sunyink/MFABD2",
 	"mirrorchyan_rid": "MFABD2",
 	"mirrorchyan_multiplatform": false,
-	"version": "v0.0.4"
+	"version": "v0.0.12"
 }

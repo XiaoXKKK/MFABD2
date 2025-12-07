@@ -18,6 +18,15 @@ on:
       - "assets/**"
       - "**.py"
   workflow_dispatch:
+    inputs:
+      deploy_beta:
+        type: boolean
+        description: '发布内测版'
+        default: false  # 默认不勾选，避免误触
+      ci_as_stable:
+        type: boolean
+        description: 'CI版本作为正式发布（非预发布）'
+        default: false
 
 jobs:
   meta:
@@ -34,32 +43,59 @@ jobs:
             is_tag_push=true
           fi
           
+          # 获取提交信息（用于检测 [deploy-beta]）
+          commit_message="${{ github.event.head_commit.message }}"
+          
           if [ "$is_tag_push" = true ]; then
-            # 从环境变量提取标签名
+            # 正式标签：直接使用标签名
             tag="${GITHUB_REF#refs/tags/}"
+            version_type="release"
           else
-            # 非标签推送：生成开发版本号
-            latest_tag=$(git describe --tags --match "v*" --abbrev=0 2>/dev/null || echo "v0.0.0")
+            # 获取最新的正式版本标签（只匹配纯粹的正式版，不包含-beta或-ci）
+            base_tag=$(git tag -l "v*" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+            
+            # 如果没有找到纯版本号标签，使用默认值
+            if [ -z "$base_tag" ] || [[ "$base_tag" != v*.*.* ]]; then
+              base_tag="v0.0.0"
+            fi
+            
             commit_short=$(git rev-parse --short HEAD)
             date_suffix=$(date +"%y%m%d")
-            tag="${latest_tag}-ci.${date_suffix}-${commit_short}"
+            
+            # 判断版本类型
+            if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ github.event.inputs.deploy_beta }}" = "true" ]; then
+              # 内测版：在基础版本上增加补丁版本号
+              incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
+              tag="${incremented_tag}-beta.${date_suffix}.${commit_short}"
+              version_type="beta"
+            elif echo "$commit_message" | tail -n1 | grep -q "\[deploy-beta\]"; then
+              # 内测版：在基础版本上增加补丁版本号
+              incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
+              tag="${incremented_tag}-beta.${date_suffix}.${commit_short}"
+              version_type="beta"
+            else
+              # 开发版：使用基础版本号，不增加补丁版本
+              tag="${base_tag}-ci.${date_suffix}.${commit_short}"
+              version_type="ci"
+            fi
           fi
           
-          # 设置开发版本标识
-          if [ "$is_tag_push" = true ]; then
-            is_dev_version=false
-          else
-            is_dev_version=true
-          fi
-
-          # 输出变量
+          # 添加调试信息
+          echo "Base tag: $base_tag"
+          echo "Generated tag: $tag"
+          echo "Commit short: $commit_short"
+          echo "Date suffix: $date_suffix"
+          echo "Version type: $version_type"
+          
           echo "tag=$tag" | tee -a $GITHUB_OUTPUT
           echo "is_tag_push=$is_tag_push" | tee -a $GITHUB_OUTPUT
-          echo "is_dev_version=$is_dev_version" | tee -a $GITHUB_OUTPUT
+          echo "is_dev_version=$([ "$version_type" = "ci" ] && echo "true" || echo "false")" | tee -a $GITHUB_OUTPUT
+          echo "version_type=$version_type" | tee -a $GITHUB_OUTPUT
     outputs:
       tag: ${{ steps.set_tag.outputs.tag }}
       is_tag_push: ${{ steps.set_tag.outputs.is_tag_push }}
       is_dev_version: ${{ steps.set_tag.outputs.is_dev_version }}
+      version_type: ${{ steps.set_tag.outputs.version_type }}
 
   install:
     needs: meta
@@ -75,12 +111,25 @@ jobs:
         with:
           submodules: true
 
+      # 新增：设置 Python 环境
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # 新增：安装 Python 依赖
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       - name: Download MaaFramework
         uses: robinraju/release-downloader@v1
         with:
           repository: MaaXYZ/MaaFramework
           fileName: "MAA-${{ matrix.os }}-${{ matrix.arch }}*"
-          latest: true
+          # latest: true
+          # 指定MFA旧稳定版
+          tag: "v4.5.6"
           out-file-path: "deps"
           extract: true
 
@@ -91,10 +140,38 @@ jobs:
         with:
           repository: SweetSmellFox/MFAAvalonia
           fileName: "MFAAvalonia-*-${{ (matrix.os == 'win' && 'win') || (matrix.os == 'macos' && 'osx') || (matrix.os == 'linux' && 'linux') }}-${{ (matrix.arch == 'x86_64' && 'x64') || (matrix.arch == 'aarch64' && 'arm64') }}*"
-          latest: true
+          # latest: true
+          # 指定MFA旧稳定版,2.0以后MFAAvalonia自带MFA v5.1
+          tag: "v1.8.9"
           out-file-path: "MFA"
           extract: true
 
+      - name: Restore Assets (Clone from Resource Repo)
+        uses: actions/checkout@v4
+        with:
+          repository: sunyink/MFABD2-Assets
+          ref: master
+          path: temp_assets
+          fetch-depth: 1
+      
+      - name: Merge Assets
+        shell: bash
+        run: |
+          # 创建目标目录结构（如果不存在）
+          mkdir -p assets/MaaCommonAssets
+          
+          # 将临时目录里的 MaaCommonAssets 里的内容，移动到主仓库的 assets/MaaCommonAssets 下
+          # 这样就解开了 "MaaCommonAssets/MaaCommonAssets" 的套娃
+          cp -r temp_assets/MaaCommonAssets/* assets/MaaCommonAssets/
+          
+          # 清理临时目录
+          rm -rf temp_assets
+          
+          # 验证
+          echo "✅ 资源合并完成，当前 assets 目录结构："
+          ls -R assets/
+
+          
       - name: Clean up MFAAvalonia archive
         if: matrix.os != 'android'
         shell: bash
@@ -116,32 +193,53 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ needs.meta.outputs.is_dev_version == 'true' && format('MFABD2-{0}-{1}-{2}', needs.meta.outputs.tag, matrix.os, matrix.arch) || format('MFABD2-{0}-{1}', matrix.os, matrix.arch) }}
+          name: MFABD2-${{ needs.meta.outputs.tag }}-${{ matrix.os }}-${{ matrix.arch }}
           path: "install"
 
   changelog:
     name: Generate changelog
     runs-on: ubuntu-latest
+    needs: meta
     outputs:
-      release_body: ${{ steps.git-cliff.outputs.content }}
+      release_body: ${{ steps.set_release_body.outputs.content }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Generate a changelog
-        uses: orhun/git-cliff-action@v4
-        id: git-cliff
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          config: .github/cliff.toml
-          args: -vv --latest --strip header
+          python-version: '3.x'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      # ✅ 使用新系统替换git-cliff
+      - name: Generate comprehensive changelog
+        id: merge_changelog
+        run: |
+          cd scripts
+          python changelog_generator.py
         env:
-          OUTPUT: CHANGES.md
-          GITHUB_REPO: ${{ github.repository }}
+          CURRENT_TAG: ${{ needs.meta.outputs.tag }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+
+      - name: Set release body
+        id: set_release_body
+        run: |
+          content=$(cat CHANGES.md)
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$content" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
   release:
-    if: (needs.meta.outputs.is_tag_push == 'true') || (github.event_name == 'workflow_dispatch' && needs.meta.outputs.is_dev_version == 'true')
+    if: (needs.meta.outputs.is_tag_push == 'true') || contains(needs.meta.outputs.tag, '-beta') || (github.event_name == 'workflow_dispatch' && contains(needs.meta.outputs.tag, '-ci'))
     needs: [meta, install, changelog]
     runs-on: ubuntu-latest
     steps:
@@ -158,9 +256,8 @@ jobs:
           cd artifacts
           mkdir -p release_assets
           for dir in *; do
-            # 提取平台信息
-            platform=${dir#MFABD2-}
-            zip_name="MFABD2-${{ needs.meta.outputs.tag }}-${platform}.zip"
+            # 直接使用目录名作为 zip 文件名
+            zip_name="${dir}.zip"
             
             # 创建压缩包
             (cd "$dir" && zip -r "../release_assets/$zip_name" .)
@@ -172,41 +269,105 @@ jobs:
           files: artifacts/release_assets/*.zip
           tag_name: ${{ needs.meta.outputs.tag }}
           name: "MFABD2 ${{ needs.meta.outputs.tag }}"
+          target_commitish: ${{ github.sha }}
           body: |
             ${{ contains(needs.changelog.outputs.release_body, '## ') && needs.changelog.outputs.release_body || '### 无显著变更' }}
             
-            **构建信息**:
-            - 版本: `${{ needs.meta.outputs.tag }}`
-            - 类型: ${{ needs.meta.outputs.is_tag_push == 'true' && '正式版' || '开发版' }}
-            - 构建时间: ${{ steps.get_time.outputs.time }}
           draft: false
-          prerelease: ${{ needs.meta.outputs.is_dev_version == 'true' }}
+          prerelease: ${{ contains(needs.meta.outputs.tag, '-beta') || (contains(needs.meta.outputs.tag, '-ci') && !(github.event_name == 'workflow_dispatch' && github.event.inputs.ci_as_stable == 'true')) }}
         env:  # 添加环境变量以支持高限额API调用
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - name: Trigger MirrorChyanUploading
-        if: github.repository_owner == 'sunyink' && ((needs.meta.outputs.is_tag_push == 'true') || (github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && needs.meta.outputs.is_dev_version == 'true'))
-        run: |
-          echo "安全触发镜像服务: 分支=${{ github.base_ref || github.ref }}"
-          gh workflow run mirrorchyan
-          gh workflow run mirrorchyan_release_note
+        if: github.repository_owner == 'sunyink' && ((needs.meta.outputs.is_tag_push == 'true') || contains(needs.meta.outputs.tag, '-beta'))
+        shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ needs.meta.outputs.tag }}
+            body: ${{ needs.changelog.outputs.release_body }}
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "安全触发镜像服务: 版本=$tag"
+          # 触发包发布流程
+          gh workflow run --repo $GITHUB_REPOSITORY --ref ${{ github.ref }} mirrorchyan.yml -f tag=$tag
+          # 触发更新信息推送流程
+          gh workflow run --repo $GITHUB_REPOSITORY --ref ${{ github.ref }} mirrorchyan_release_note.yml -f tag=$tag -f body="$body"
 
   notify:
     needs: [meta, install]
-    if: always() && needs.install.result == 'success'
-    uses: ./.github/workflows/sanm.yml
-    with:
-      build_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      tag: ${{ needs.meta.outputs.tag }}
-      is_dev_version: ${{ needs.meta.outputs.is_dev_version }}
-      commit_sha: ${{ github.sha }}
-      commit_message: ${{ github.event.head_commit.message }}
-      commit_timestamp: ${{ github.event.head_commit.timestamp }}
-    secrets: inherit
+    if: always() && needs.install.result == 'success' && github.event_name != 'pull_request' && !(github.ref_name == 'main' && needs.meta.outputs.version_type == 'ci')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract commit info 
+        id: commit-info
+        run: |
+          # 调试：显示所有可用参数
+          echo "=== 调试信息 ==="
+          echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+          echo "HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}"
+          echo "HEAD_COMMIT_TIMESTAMP: ${{ github.event.head_commit.timestamp }}"
+          echo "GITHUB_SHA: $GITHUB_SHA"
+          
+          # 设置默认值
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          if [ -z "$COMMIT_MSG" ]; then
+            COMMIT_MSG="手动触发工作流"
+          fi
+          
+          COMMIT_TIMESTAMP="${{ github.event.head_commit.timestamp }}"
+          if [ -z "$COMMIT_TIMESTAMP" ]; then
+            COMMIT_TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          fi
+          
+          COMMIT_SHA="${{ github.sha }}"
+          if [ -z "$COMMIT_SHA" ]; then
+            COMMIT_SHA="unknown"
+          fi
+          
+          # 提取第一行作为摘要
+          SUBJECT=$(echo "$COMMIT_MSG" | head -n 1)
+          
+          # 简化描述处理
+          if [ $(echo "$COMMIT_MSG" | wc -l) -gt 1 ]; then
+            BODY=$(echo "$COMMIT_MSG" | tail -n +2 | head -c 100 | tr -d '\n')
+            if [ ${#BODY} -eq 100 ]; then
+              BODY="$BODY..."
+            fi
+          else
+            BODY=""
+          fi
+          
+          # 格式化时间戳为东八区时间
+          TIME=$(TZ='Asia/Shanghai' date -d "$COMMIT_TIMESTAMP" +"%Y-%m-%d %H:%M:%S")
+          
+          SHORT_SHA=$(echo "$COMMIT_SHA" | cut -c1-7)
+
+          # 输出变量
+          echo "subject=$SUBJECT" >> $GITHUB_OUTPUT
+          echo "body=$BODY" >> $GITHUB_OUTPUT
+          echo "time=$TIME" >> $GITHUB_OUTPUT
+          echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
+          
+          echo "=== 处理结果 ==="
+          echo "Subject: $SUBJECT"
+          echo "Body: $BODY" 
+          echo "Time: $TIME"
+          echo "Short SHA: $SHORT_SHA"
+      
+      - name: Send Notification
+        uses: Y2Nk4/qmsg-action@master
+        with:
+          qq: ${{ secrets.QMSG_NOTIFY_QQ }}
+          groups: ${{ secrets.QMSG_NOTIFY_GROUPS }}
+          key: ${{ secrets.QMSG_KEY }}
+          message: |
+            🏗️ [${{ github.repository }}] 构建完成
+            👤 提交者: ${{ github.actor }}
+            🌿 分支: ${{ github.ref_name }}
+            🏷️ 版本: ${{ needs.meta.outputs.tag }}
+            📦 类型: ${{ contains(needs.meta.outputs.tag, '-beta') && '内测版' || (contains(needs.meta.outputs.tag, '-ci') && '开发版' || '正式版') }}
+            🆔 提交哈希: ${{ steps.commit-info.outputs.short_sha }}
+            ⏱️ 提交时间: ${{ steps.commit-info.outputs.time }}
+            📝 摘要: ${{ steps.commit-info.outputs.subject }}
+            ${{ steps.commit-info.outputs.body != '' && format('📖 描述: {0}', steps.commit-info.outputs.body) || '📖 描述: 无' }}
+            🔗 查看提交: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+            🔨 构建下载: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

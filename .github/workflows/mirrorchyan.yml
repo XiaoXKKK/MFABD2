@@ -2,29 +2,31 @@ name: mirrorchyan
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: '目标版本号'
+        required: true
+        type: string
 
 jobs:
   mirrorchyan:
     runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [win]
-        arch: [x86_64]
     steps:
       - id: uploading
         uses: MirrorChyan/uploading-action@v1
         with:
           filetype: latest-release
-          filename: "MFABD2*-${{ matrix.os }}-${{ matrix.arch }}*.zip"
+          tag: ${{ inputs.tag }}
+          filename: "MFABD2-*-win-x86_64.zip"
+
           mirrorchyan_rid: MFABD2
 
           owner: sunyink
           repo: MFABD2
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           upload_token: ${{ secrets.MirrorChyanUploadToken }}
-          os: ${{ matrix.os }}
-          arch: ${{ matrix.arch }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          os: win
+          arch: x86_64
 
   mirrorchyan_res:
     runs-on: macos-latest
@@ -33,12 +35,14 @@ jobs:
         uses: MirrorChyan/uploading-action@v1
         with:
           filetype: latest-release
-          filename: "MFABD2*-win-x86_64*.zip"
+          tag: ${{ inputs.tag }}
+          filename: "MFABD2-*-win-x86_64.zip"
           pick_files: '["resource", "interface.json"]'
           exclude_files: '["resource/model/ocr/**"]'
+
           mirrorchyan_rid: MFABD2
 
           owner: sunyink
           repo: MFABD2
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           upload_token: ${{ secrets.MirrorChyanUploadToken }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

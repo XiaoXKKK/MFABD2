@@ -128,10 +128,10 @@
     "timeout": 50000,
     "post_delay": 60000,
     "roi": [
-      127,
+      33,
       89,
-      951,
-      333
+      1047,
+      331
     ],
     "expected": [
       "Update",
@@ -863,22 +863,40 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
+      "StartGame_Linkdwon_TouchCk",
       "StartGame_Logo"
     ],
     "roi": [
-      495,
-      259,
-      315,
-      100
+      489,
+      217,
+      343,
+      295
     ],
     "expected": [
-      "与服务器断开连接"
+      "与服务器断开连接",
+      "检查网络"
     ],
     "target": [
       638,
       443,
       0,
       0
+    ]
+  },
+  "StartGame_Linkdwon_TouchCk": {
+    "recognition": "OCR",
+    "next": [
+      "StartGame_Logo"
+    ],
+    "action": "Click",
+    "roi": [
+      405,
+      146,
+      433,
+      557
+    ],
+    "expected": [
+      "确认"
     ]
   }
 }

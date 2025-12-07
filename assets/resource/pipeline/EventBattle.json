@@ -1,116 +1,18 @@
 {
   "Event_HomePage": {
     "next": [
-      "Event_HomePageHub",
-      "Event_HomePageHub1",
-      "Event_HomePageHub2"
+      "Event_GoinEvent"
+    ],
+    "interrupt": [
+      "Global_ToHomePage"
     ]
   },
-  "Event_HomePageHub": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "Event_EnterEvent",
-      "Event_HomePageHub",
-      "Event_HomePageHub1"
-    ],
-    "post_delay": 2000,
-    "focus": "G=0.页面预期内，普通启动。M.箱庭地图run已确认",
-    "roi": [
-      1047,
-      516,
-      107,
-      110
-    ],
-    "template": [
-      "Run.png"
-    ],
-    "green_mask": true,
-    "target": [
-      1186,
-      46,
-      0,
-      0
-    ],
-    "doc": "找到run-点击返回主页"
-  },
-  "Event_HomePageHub1": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "Event_EnterEvent",
-      "Event_HomePageHub",
-      "Event_HomePageHub1"
-    ],
-    "post_delay": 2000,
-    "focus": "G=0.页面预期内，普通启动。BM.箱庭地图pin已确认",
-    "roi": [
-      1108,
-      637,
-      65,
-      57
-    ],
-    "template": [
-      "pin.png"
-    ],
-    "target": [
-      1186,
-      46,
-      0,
-      0
-    ]
-  },
-  "Event_HomePageHub2": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "Event_HomePageHub",
-      "Event_HomePageHub1",
-      "Event_HomePageHub2"
-    ],
-    "post_delay": 2000,
-    "focus": "G=1.页面非预期，点击返回按钮",
-    "roi": [
-      1,
-      1,
-      231,
-      124
-    ],
-    "template": [
-      "BackButGe.png",
-      "BackButGe2.png"
-    ],
-    "green_mask": true,
-    "doc": "其他页面，返回按钮"
-  },
-  "Event_BackHomePage": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "Event_EnterEvent"
-    ],
-    "roi": [
-      1122,
-      646,
-      40,
-      38
-    ],
-    "template": [
-      "pin.png"
-    ],
-    "target": [
-      1186,
-      46,
-      0,
-      0
-    ],
-    "doc": "找到图钉-点击返回主页（弃用）"
-  },
-  "Event_EnterEvent": {
+  "Event_GoinEvent": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "Event_NormalBattle_Start"
+      "Event_NormalBattle_Start",
+      "Event_GoinEvent"
     ],
     "post_delay": 8000,
     "focus": "EM.从主页面进入活动",
@@ -134,7 +36,8 @@
   "Event_NormalBattle_Start": {
     "recognition": "OCR",
     "next": [
-      "Event_EnterNormalBattle"
+      "Event_EnterNormalBattle",
+      "Event_NormalBattle_Start"
     ],
     "roi": [
       69,
@@ -326,7 +229,7 @@
       38
     ],
     "expected": [
-      "点击画面即可返回"
+      "^(?=.*[点击画面])(?=.*[即可])(?=.*[返回]).{4,12}$"
     ],
     "target": [
       40,
@@ -779,10 +682,10 @@
     ],
     "focus": "EM.EM.魔兽血量0-色核通过",
     "roi": [
-      711,
-      130,
-      34,
-      43
+      718,
+      136,
+      9,
+      28
     ],
     "lower": [
       216,

@@ -1,9 +1,18 @@
 from pathlib import Path
 import shutil
 import sys
-import json
 import re
 import os
+
+try:
+    import jsonc
+except ImportError as e:
+    print("❌ 缺少依赖: json-with-comments")
+    print("请运行以下命令安装:")
+    print("  pip install json-with-comments")
+    print("或")
+    print("  pip install -r requirements.txt")
+    sys.exit(1)
 
 from configure import configure_ocr_model
 
@@ -69,6 +78,22 @@ def process_markdown_files(directory):
                         success = False
     return success
 
+def process_json_files(directory):
+    """递归处理目录中的所有 JSON 文件"""
+    success = True
+    if directory.exists():
+        print(f"处理 JSON 文件: {directory}")
+        # 遍历目录中的所有文件
+        for root, _, files in os.walk(directory):
+            for file in files:
+                file_path = Path(root) / file
+                if file_path.suffix.lower() == '.json':  # 只处理 JSON 文件
+                    if convert_line_endings(file_path):
+                        print(f"已转换: {file_path}")
+                    else:
+                        success = False
+    return success
+
 def install_resource():
     configure_ocr_model()
 
@@ -79,15 +104,20 @@ def install_resource():
         dirs_exist_ok=True,
     )
     
-    # 处理所有 Markdown 文件
+    # 分别处理 MD 和 JSON 文件换行符
     all_success = True
     
-    # 1. 处理公告文件夹
+    # 1. 处理公告文件夹的 Markdown 文件
     announcement_dir = install_path / "resource" / "Announcement"
     if not process_markdown_files(announcement_dir):
         all_success = False
     
-    # 2. 处理 Changelog.md 文件（放在更合理的位置）
+    # 2. 处理 pipeline 文件夹的 JSON 文件
+    pipeline_dir = install_path / "resource" / "pipeline"
+    if not process_json_files(pipeline_dir):
+        all_success = False
+    
+    # 3. 处理 Changelog.md 文件
     changelog_path = install_path / "resource" / "Changelog.md"
     if changelog_path.exists():
         print(f"处理更新日志文件: {changelog_path}")
@@ -106,9 +136,9 @@ def install_resource():
     )
 
     with open(install_path / "interface.json", "r", encoding="utf-8") as f:
-        interface = json.load(f)
+        interface = jsonc.load(f)
     
-    # 1. 更新根版本字段
+    # 1. 更新根版本字段（保持 CI 原始格式）
     interface["version"] = version
     
     # 2. 动态更新 custom_title 中的版本号
@@ -116,8 +146,8 @@ def install_resource():
         # 匹配 "MFABD2)" 后到 " | 游戏版本" 前的所有内容
         pattern = r"(?<=MFABD2\))(.*?)(?=\s*\|\s*游戏版本：)"
         
-        # 确保有v前缀和空格
-        display_version = f"v{version.lstrip('v')} "
+        # 使用原始版本号，不修改格式
+        display_version = f"{version} "
         
         # 执行替换
         new_title = re.sub(
@@ -128,7 +158,7 @@ def install_resource():
         interface["custom_title"] = new_title
 
     with open(install_path / "interface.json", "w", encoding="utf-8") as f:
-        json.dump(interface, f, ensure_ascii=False, indent=4)
+        jsonc.dump(interface, f, ensure_ascii=False, indent=4)
 
 def install_chores():
     shutil.copy2(working_dir / "README.md", install_path)

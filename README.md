@@ -1,11 +1,11 @@
 <!-- markdownlint-disable MD033 MD041 -->
 <div align="center">
-  <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/Fast/ReadMe/logo.png" width="180" height="180" />
+  <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/main/ReadMe/logo.png" width="180" height="180" />
 
 
 # MaaBD2-棕色尘埃2自动化助手
 [![License](https://img.shields.io/badge/License-MIT%2FApache--2.0-blue)](./LICENSE)
-[![.NET Version](https://img.shields.io/badge/.NET-≥%208-512BD4?logo=csharp)](https://dotnet.microsoft.com/download/dotnet/8.0)
+[![.NET Version](https://img.shields.io/badge/.NET-≥%2010-512BD4?logo=csharp)](https://dotnet.microsoft.com/download/dotnet/10.0)
 [![月提交](https://img.shields.io/github/commit-activity/m/sunyink/MFABD2?label=开发活跃度&color=blue)](https://github.com/sunyink/MFABD2/commits/main)
 [![给项目点赞](https://img.shields.io/github/stars/sunyink/MFABD2?style=social&label=给项目点赞)](https://github.com/sunyink/MFABD2)
 <br>
@@ -65,8 +65,8 @@
 > 
 - 人物技能请按图中设置
 
- > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/Fast/ReadMe/IT-2511.jpg"  width="600px"/>
- > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/Fast/ReadMe/3.png"  width="400px"/>
+ > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/main/ReadMe/IT-2511.jpg"  width="600px"/>
+ > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/main/ReadMe/3.png"  width="400px"/>
 
 ## 功能一览
 
@@ -133,10 +133,12 @@
 - [maa-support-extension](https://github.com/neko-para/maa-support-extension) VSCode扩展
 - [SHA](SHA地址)跑商功能初始一整套完整代码，系**京墨**佬倾情提供，感谢他的付出与支持`←注1`
 ### 规范
-> 如果要参与开发，可以参考文档。必须先本地测试通过再合并。
+> 如果要参与开发，可以参考文档。必须先本地测试通过再合并，请使用非快速合并-no-ff参数。
 
-- [Pipeline协议规范](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/1.1-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B.md)
+- [Pipeline协议规范](https://maafw.xyz/docs/1.1-QuickStarted)
 - [帮助](/开发帮助.txt)
+- [工具]制作了发布用Hook,运行`git config core.hooksPath scripts/hooks`,后直接`git commit`可以打开提交信息辅助。帮助快速享用发版系统。
+
 
 ## 鸣谢
 
