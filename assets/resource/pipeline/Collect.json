@@ -9,10 +9,8 @@
   "Collect_HomePageHub": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_QuickCart_Menu_Ocr"
-    ],
-    "interrupt": [
-      "Global_QuickCart_MenuReset"
+      "Collect_QuickCart_Menu_Ocr",
+      "[JumpBack]Global_QuickCart_MenuReset"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内，箱庭确认",
@@ -37,10 +35,8 @@
   "Collect_HomePageHub1": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_QuickCart_Menu_Ocr"
-    ],
-    "interrupt": [
-      "Global_QuickCart_MenuReset"
+      "Collect_QuickCart_Menu_Ocr",
+      "[JumpBack]Global_QuickCart_MenuReset"
     ],
     "post_delay": 2000,
     "focus": "G=0.页面预期内。BM.箱庭地图pin已确认",
@@ -114,10 +110,8 @@
   "Collect_StartGameType2": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_QuickCart_Menu_Ocr"
-    ],
-    "interrupt": [
-      "Global_QuickCart_MenuReset"
+      "Collect_QuickCart_Menu_Ocr",
+      "[JumpBack]Global_QuickCart_MenuReset"
     ],
     "post_delay": 2000,
     "focus": "CM.StartGameType2",
@@ -400,11 +394,9 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_ChapterSelection2"
-    ],
-    "interrupt": [
-      "Collect_PetTask",
-      "Collect_OperationsMain_Sandplay"
+      "Collect_ChapterSelection2",
+      "[JumpBack]Collect_PetTask",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "timeout": 30000,
     "on_error": [
@@ -428,10 +420,8 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_ChapterSelection3"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_ChapterSelection3",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "timeout": 30000,
     "on_error": [
@@ -455,10 +445,8 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "Collect_ChapterSelectionEnd"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_ChapterSelectionEnd",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "timeout": 30000,
     "on_error": [
@@ -535,14 +523,12 @@
   "Collect_OperationsMain_Sandplay": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_OperationsMain_ToAreaMap"
-    ],
-    "interrupt": [
-      "Collect_Special_EP6",
-      "Collect_Special_QR7-CW",
-      "Collect_FindPickupCat",
-      "Collect_FindTeleporCircle0.9",
-      "Collect_FindTeleporCircle"
+      "Collect_OperationsMain_ToAreaMap",
+      "[JumpBack]Collect_Special_EP6",
+      "[JumpBack]Collect_Special_QR7-CW",
+      "[JumpBack]Collect_FindPickupCat",
+      "[JumpBack]Collect_FindTeleporCircle0.9",
+      "[JumpBack]Collect_FindTeleporCircle"
     ],
     "timeout": 8000,
     "on_error": [
@@ -653,10 +639,8 @@
   "Collect_OperationsMain_ToAreaMap": {
     "recognition": "OCR",
     "next": [
-      "Collect_TargetMap1-1"
-    ],
-    "interrupt": [
-      "Collect_MapLift"
+      "Collect_TargetMap1-1",
+      "[JumpBack]Collect_MapLift"
     ],
     "roi": [
       183,
@@ -709,12 +693,10 @@
       "Collect_TargetMap1_Special_Right",
       "Collect_TargetMap2",
       "Collect_TargetMap3",
-      "Collect_TargetMap4"
-    ],
-    "interrupt": [
-      "Collect_ClickTeleporCircleMap",
-      "Collect_ClickBackOnSecureMap",
-      "Collect_TeleporNotFind"
+      "Collect_TargetMap4",
+      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_ClickBackOnSecureMap",
+      "[JumpBack]Collect_TeleporNotFind"
     ],
     "focus": "确认区域地图tp1",
     "roi": [
@@ -754,12 +736,10 @@
       "Collect_TargetMap3",
       "Collect_TargetMap4",
       "Collect_QuickCart_TargetMapEnd",
-      "Collect_Architecture_Underlying_Logic_Protection"
-    ],
-    "interrupt": [
-      "Collect_ClickTeleporCircleMap",
-      "Collect_Protection_ReturnToAreaMap",
-      "Collect_TeleporNotFind"
+      "Collect_Architecture_Underlying_Logic_Protection",
+      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_Protection_ReturnToAreaMap",
+      "[JumpBack]Collect_TeleporNotFind"
     ],
     "focus": "确认区域地图tp2",
     "roi": [
@@ -805,12 +785,10 @@
       "Collect_TargetMap4",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI",
-      "Collect_Architecture_Underlying_Logic_Protection"
-    ],
-    "interrupt": [
-      "Collect_ClickTeleporCircleMap",
-      "Collect_Protection_ReturnToAreaMap",
-      "Collect_TeleporNotFind"
+      "Collect_Architecture_Underlying_Logic_Protection",
+      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_Protection_ReturnToAreaMap",
+      "[JumpBack]Collect_TeleporNotFind"
     ],
     "timeout": 3000,
     "on_error": [
@@ -861,12 +839,10 @@
     "next": [
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI",
-      "Collect_Architecture_Underlying_Logic_Protection"
-    ],
-    "interrupt": [
-      "Collect_ClickTeleporCircleMap",
-      "Collect_Protection_ReturnToAreaMap",
-      "Collect_TeleporNotFind"
+      "Collect_Architecture_Underlying_Logic_Protection",
+      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_Protection_ReturnToAreaMap",
+      "[JumpBack]Collect_TeleporNotFind"
     ],
     "timeout": 3000,
     "on_error": [
@@ -981,10 +957,8 @@
   "Collect_TargetMapEnd": {
     "recognition": "OCR",
     "next": [
-      "Collect_OperationsMain_PVEChapterIden2#"
-    ],
-    "interrupt": [
-      "Collect_HomePageSwipeInitialize_BackHomePage"
+      "Collect_OperationsMain_PVEChapterIden2#",
+      "[JumpBack]Collect_HomePageSwipeInitialize_BackHomePage"
     ],
     "focus": "CB.卡带内流程进入END环节",
     "roi": [
@@ -1035,7 +1009,7 @@
   "Collect_Architecture_Underlying_Logic_Protection": {
     "recognition": "OCR",
     "focus": "CM-P.[WRN]状态机底层逻辑防护被触发",
-    "next": "Collect_QuickCart_HomePageHub2",
+    "next": ["Collect_QuickCart_HomePageHub2"],
     "roi": [
       408,
       622,
@@ -1139,10 +1113,8 @@
   "Collect_TeleporNotFind_NORight": {
     "recognition": "TemplateMatch",
     "next": [
-      "Global_QuickCart_MenuReset"
-    ],
-    "interrupt": [
-      "Global_BackPageHub_Once"
+      "Global_QuickCart_MenuReset",
+      "[JumpBack]Global_BackPageHub_Once"
     ],
     "post_delay": 1000,
     "focus": "CBB.[WRN]特殊换页-不存在右换页-方案2",
@@ -1309,10 +1281,8 @@
     "recognition": "OCR",
     "next": [
       "Collect_MapRight",
-      "Collect_OperationsEnd_NORight"
-    ],
-    "interrupt": [
-      "Collect_FindTeleporCircle"
+      "Collect_OperationsEnd_NORight",
+      "[JumpBack]Collect_FindTeleporCircle"
     ],
     "timeout": 3000,
     "roi": [
@@ -1517,10 +1487,8 @@
     "recognition": "ColorMatch",
     "next": [
       "Collect_ForceTeleporCircleClick2.1",
-      "Collect_ForceTeleporCircleClick2.14"
-    ],
-    "interrupt": [
-      "Collect_ForceTeleporCircleClick2.05"
+      "Collect_ForceTeleporCircleClick2.14",
+      "[JumpBack]Collect_ForceTeleporCircleClick2.05"
     ],
     "post_delay": 1500,
     "action": "Click",
@@ -1552,10 +1520,8 @@
     "action": "Click",
     "next": [
       "Collect_ForceTeleporCircleClick2.1",
-      "Collect_ForceTeleporCircleClick2.14"
-    ],
-    "interrupt": [
-      "Collect_ForceTeleporCircleClick2.05"
+      "Collect_ForceTeleporCircleClick2.14",
+      "[JumpBack]Collect_ForceTeleporCircleClick2.05"
     ],
     "post_delay": 5000,
     "target": [
@@ -1730,10 +1696,8 @@
     "recognition": "ColorMatch",
     "next": [
       "Collect_QC_SafeArea_Clr",
-      "Collect_QC_NoSafeArea_Clr"
-    ],
-    "interrupt": [
-      "Collect_QuickCart_NOHavePointer_Swip"
+      "Collect_QC_NoSafeArea_Clr",
+      "[JumpBack]Collect_QuickCart_NOHavePointer_Swip"
     ],
     "roi": [
       214,
@@ -1966,10 +1930,8 @@
     "recognition": "ColorMatch",
     "next": [
       "Collect_QR_SafeArea_Clr",
-      "Collect_QR_NoSafeArea_Clr"
-    ],
-    "interrupt": [
-      "Collect_QuickCart_NOHavePointer_Swip"
+      "Collect_QR_NoSafeArea_Clr",
+      "[JumpBack]Collect_QuickCart_NOHavePointer_Swip"
     ],
     "roi": [
       392,
@@ -2227,7 +2189,6 @@
     "next": [
       "Collect_QuickCart_QC1"
     ],
-    "interrupt": [],
     "roi": [
       214,
       536,
@@ -2659,10 +2620,8 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QC_Fin"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC_Fin",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"
@@ -2705,10 +2664,8 @@
   },
   "Collect_QuickCart_QC1_Post": {
     "next": [
-      "Collect_QuickCart_QC2_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC2_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -2741,10 +2698,8 @@
   },
   "Collect_QuickCart_QC2_Post": {
     "next": [
-      "Collect_QuickCart_QC3_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC3_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -2777,10 +2732,8 @@
   },
   "Collect_QuickCart_QC3_Post": {
     "next": [
-      "Collect_QuickCart_QC4_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC4_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -2813,10 +2766,8 @@
   },
   "Collect_QuickCart_QC4_Post": {
     "next": [
-      "Collect_QuickCart_QC5_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC5_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -2849,10 +2800,8 @@
   },
   "Collect_QuickCart_QC5_Post": {
     "next": [
-      "Collect_QuickCart_QC6_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC6_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -2885,10 +2834,8 @@
   },
   "Collect_QuickCart_QC6_Post": {
     "next": [
-      "Collect_QuickCart_QC7_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC7_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -2921,10 +2868,8 @@
   },
   "Collect_QuickCart_QC7_Post": {
     "next": [
-      "Collect_QuickCart_QC8_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC8_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -2957,10 +2902,8 @@
   },
   "Collect_QuickCart_QC8_Post": {
     "next": [
-      "Collect_QuickCart_QC9_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC9_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -2993,10 +2936,8 @@
   },
   "Collect_QuickCart_QC9_Post": {
     "next": [
-      "Collect_QuickCart_QC10_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC10_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3029,10 +2970,8 @@
   },
   "Collect_QuickCart_QC10_Post": {
     "next": [
-      "Collect_QuickCart_QC11_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC11_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3065,10 +3004,8 @@
   },
   "Collect_QuickCart_QC11_Post": {
     "next": [
-      "Collect_QuickCart_QC12_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QC12_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3101,10 +3038,8 @@
   },
   "Collect_QuickCart_QR1_Post": {
     "next": [
-      "Collect_QuickCart_QR2_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR2_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3137,10 +3072,8 @@
   },
   "Collect_QuickCart_QR2_Post": {
     "next": [
-      "Collect_QuickCart_QR3_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR3_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3173,10 +3106,8 @@
   },
   "Collect_QuickCart_QR3_Post": {
     "next": [
-      "Collect_QuickCart_QR4_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR4_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3209,10 +3140,8 @@
   },
   "Collect_QuickCart_QR4_Post": {
     "next": [
-      "Collect_QuickCart_QR5_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR5_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3245,10 +3174,8 @@
   },
   "Collect_QuickCart_QR5_Post": {
     "next": [
-      "Collect_QuickCart_QR6_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR6_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3281,10 +3208,8 @@
   },
   "Collect_QuickCart_QR6_Post": {
     "next": [
-      "Collect_QuickCart_QR7_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR7_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3317,10 +3242,8 @@
   },
   "Collect_QuickCart_QR7_Post": {
     "next": [
-      "Collect_QuickCart_QR8_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR8_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3353,10 +3276,8 @@
   },
   "Collect_QuickCart_QR8_Post": {
     "next": [
-      "Collect_QuickCart_QR9_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR9_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3389,10 +3310,8 @@
   },
   "Collect_QuickCart_QR9_Post": {
     "next": [
-      "Collect_QuickCart_QR10_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR10_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3425,10 +3344,8 @@
   },
   "Collect_QuickCart_QR10_Post": {
     "next": [
-      "Collect_QuickCart_QR11_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR11_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3461,10 +3378,8 @@
   },
   "Collect_QuickCart_QR11_Post": {
     "next": [
-      "Collect_QuickCart_QR12_pre"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR12_pre",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "recognition": "TemplateMatch",
     "roi": [
@@ -3498,11 +3413,9 @@
   "Collect_QuickCart_Switch": {
     "focus": "CM.剧情/角色卡带切换节点",
     "next": [
-      "Collect_QuickCart_QR_Sort"
-    ],
-    "interrupt": [
-      "Global_QuickCart_MenuReset",
-      "Global_BackPageHub_Once"
+      "Collect_QuickCart_QR_Sort",
+      "[JumpBack]Global_QuickCart_MenuReset",
+      "[JumpBack]Global_BackPageHub_Once"
     ]
   },
   "Collect_QuickCart_QR_Sort": {
@@ -3532,7 +3445,6 @@
     "next": [
       "Collect_QuickCart_QR1"
     ],
-    "interrupt": [],
     "roi": [
       382,
       537,
@@ -3963,10 +3875,8 @@
       19
     ],
     "next": [
-      "Collect_QuickCart_QR_Fin"
-    ],
-    "interrupt": [
-      "Collect_OperationsMain_Sandplay"
+      "Collect_QuickCart_QR_Fin",
+      "[JumpBack]Collect_OperationsMain_Sandplay"
     ],
     "on_error": [
       "Collect_ChapterSelectionError"

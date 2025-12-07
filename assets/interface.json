@@ -184,7 +184,9 @@
 						},
 						"Collect_QuickCart_Switch": {
 							"next": [
-								"Collect_QuickCart_QC_Sort"
+								"Collect_QuickCart_QC_Sort",
+								"[JumpBack]Global_QuickCart_MenuReset",
+								"[JumpBack]Global_BackPageHub_Once"
 							]
 						},
 						"Collect_QuickCart_QC_Fin": {
@@ -208,32 +210,29 @@
 						"Collect_HomePageHub": {
 							"next": [
 								"Collect_PerPetTask",
-								"Collect_PVEChapterIden2#"
-							],
-							"interrupt": [
-								"Collect_HomePageSwipeInitialize_BackHomePage"
+								"Collect_PVEChapterIden2#",
+								"[JumpBack]Collect_HomePageSwipeInitialize_BackHomePage"
 							]
 						},
 						"Collect_HomePageHub1": {
 							"next": [
 								"Collect_PerPetTask",
-								"Collect_PVEChapterIden2#"
-							],
-							"interrupt": [
-								"Collect_HomePageSwipeInitialize_BackHomePage"
+								"Collect_PVEChapterIden2#",
+								"[JumpBack]Collect_HomePageSwipeInitialize_BackHomePage"
 							]
 						},
 						"Collect_StartGameType2": {
 							"next": [
-								"Collect_PVEChapterIden2#"
-							],
-							"interrupt": [
-								"Collect_HomePageSwipeInitialize_BackHomePage"
+								"Collect_PVEChapterIden2#",
+								"[JumpBack]Collect_HomePageSwipeInitialize_BackHomePage"
 							]
 						},
 						"Collect_TargetMap3": {
 							"next": [
-								"Collect_TargetMapEnd"
+								"Collect_TargetMapEnd",
+								"[JumpBack]Collect_ClickTeleporCircleMap",
+								"[JumpBack]Collect_Protection_ReturnToAreaMap",
+								"[JumpBack]Collect_TeleporNotFind"
 							]
 						},
 						"Collect_TeleporNotFind": {
@@ -251,32 +250,29 @@
 						"Collect_HomePageHub": {
 							"next": [
 								"Collect_PerPetTask",
-								"Collect_PVEChapterIden2#"
-							],
-							"interrupt": [
-								"Collect_HomePageSwipeInitialize_BackHomePage"
+								"Collect_PVEChapterIden2#",
+								"[JumpBack]Collect_HomePageSwipeInitialize_BackHomePage"
 							]
 						},
 						"Collect_HomePageHub1": {
 							"next": [
 								"Collect_PerPetTask",
-								"Collect_PVEChapterIden2#"
-							],
-							"interrupt": [
-								"Collect_HomePageSwipeInitialize_BackHomePage"
+								"Collect_PVEChapterIden2#",
+								"[JumpBack]Collect_HomePageSwipeInitialize_BackHomePage"
 							]
 						},
 						"Collect_StartGameType2": {
 							"next": [
-								"Collect_PVEChapterIden2#"
-							],
-							"interrupt": [
-								"Collect_HomePageSwipeInitialize_BackHomePage"
+								"Collect_PVEChapterIden2#",
+								"[JumpBack]Collect_HomePageSwipeInitialize_BackHomePage"
 							]
 						},
 						"Collect_TargetMap3": {
 							"next": [
-								"Collect_TargetMapEnd"
+								"Collect_TargetMapEnd",
+								"[JumpBack]Collect_ClickTeleporCircleMap",
+								"[JumpBack]Collect_Protection_ReturnToAreaMap",
+								"[JumpBack]Collect_TeleporNotFind"
 							]
 						},
 						"Collect_TeleporNotFind": {
@@ -288,7 +284,9 @@
 						},
 						"Collect_ChapterSelection1": {
 							"next": [
-								"Collect_ChapterSelectionEnd"
+								"Collect_ChapterSelectionEnd",
+								"[JumpBack]Collect_PetTask",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							],
 							"template": [
 								"pve2b.png"
@@ -306,7 +304,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC3_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -326,7 +325,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC1_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -336,7 +336,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC2_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -346,7 +347,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC4_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -356,7 +358,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC5_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -366,7 +369,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC6_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -376,7 +380,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC7_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -386,7 +391,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC8_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -396,7 +402,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC9_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -406,7 +413,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC10_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -416,7 +424,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QC11_Post": {
 							"next": [
-								"Collect_QuickCart_QC_Fin"
+								"Collect_QuickCart_QC_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -445,7 +454,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR1_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -455,7 +465,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR2_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -465,7 +476,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR3_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -475,7 +487,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR4_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -485,7 +498,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR5_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -495,7 +509,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR6_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -505,7 +520,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR7_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -515,7 +531,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR8_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -525,7 +542,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR9_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -535,7 +553,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR10_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -545,7 +564,8 @@
 					"pipeline_override": {
 						"Collect_QuickCart_QR11_Post": {
 							"next": [
-								"Collect_QuickCart_QR_Fin"
+								"Collect_QuickCart_QR_Fin",
+								"[JumpBack]Collect_OperationsMain_Sandplay"
 							]
 						}
 					}
@@ -594,13 +614,16 @@
 					"name": "矿石-章节7",
 					"pipeline_override": {
 						"Battle_CollectMap": {
-							"interrupt": [
-								"Battle_CollectMap_SwipLeft"
+							"next": [
+								"Battle_CollectMapShouLie",
+								"[JumpBack]Battle_CollectMap_SwipLeft"
 							]
 						},
 						"Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK": {
-							"interrupt": [
-								"Battle_CollectMap_SwipLeft"
+							"next": [
+								"Battle_NoAP_Rice",
+								"Battle_CollectMapShouLieR2",
+								"[JumpBack]Battle_CollectMap_SwipLeft"
 							]
 						},
 						"Battle_CollectMapShouLie": {
@@ -665,10 +688,8 @@
 					"pipeline_override": {
 						"Battle_CollectMapHangXianDoubleCk1No": {
 							"next": [
-								"Battle_CollectMapHangXianDoubleCk2No_ToCentral"
-							],
-							"interrupt": [
-								"Battle_CollectMapInitialize"
+								"Battle_CollectMapHangXianDoubleCk2No_ToCentral",
+								"[JumpBack]Battle_CollectMapInitialize"
 							]
 						}
 					}
@@ -694,7 +715,8 @@
 					"pipeline_override": {
 						"Battle_FastBattleMAXTouchShouLie": {
 							"next": [
-								"Battle_CollectMapDongXue"
+								"Battle_CollectMapDongXue",
+								"[JumpBack]Battle_FastBattleStart"
 							],
 							"target": [
 								800,
@@ -775,7 +797,8 @@
 						},
 						"Battle_FastBattleMAXTouchHangxian": {
 							"next": [
-								"Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK"
+								"Battle_CollectMapHangXianDoubleCk2No_ToCentral_CK",
+								"[JumpBack]Battle_FastBattleStart"
 							]
 						}
 					}
@@ -854,7 +877,8 @@
 					"pipeline_override": {
 						"Battle_FastBattleTouch_StoneSelect": {
 							"next": [
-								"Battle_TurnCharact_Start"
+								"Battle_TurnCharact_Start",
+								"[JumpBack]Battle_QuickBattleButton"
 							]
 						}
 					}
@@ -1113,7 +1137,10 @@
 					"pipeline_override": {
 						"Weekly_LastNight_Start": {
 							"next": [
-								"Weekly_LastNight_End"
+								"Weekly_LastNight_End",
+								"[JumpBack]Weekly_HomePageHub",
+								"[JumpBack]Weekly_HomePageHub2",
+								"[JumpBack]Weekly_HomePageHub1"
 							]
 						}
 					}
