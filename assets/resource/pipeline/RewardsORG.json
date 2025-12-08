@@ -10,8 +10,8 @@
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "RewardsORG_EnterUnion",
       "RewardsORG_EnterUnion_img",
+      "RewardsORG_EnterUnion",
       "RewardsORG_HomePageHub",
       "RewardsORG_HomePageHub1",
       "RewardsORG_HomePageHub2"
@@ -311,8 +311,8 @@
   "RewardsORG_GetBusinRewardBack": {
     "action": "Click",
     "next": [
-      "RewardsORG_Busin_In",
       "RewardsORG_Busin_In_img",
+      "RewardsORG_Busin_In",
       "[JumpBack]RewardsORG_ClickOnce"
     ],
     "on_error": [],
@@ -354,6 +354,7 @@
   "RewardsORG_Busin_In": {
     "recognition": "OCR",
     "action": "Click",
+    "post_delay": 400,
     "post_wait_freezes": 800,
     "next": [
       "RewardsORG_Busin_InBusin",
@@ -361,13 +362,19 @@
     ],
     "focus": "GOM.餐馆常客属性石ocr",
     "roi": [
-      72,
+      73,
       179,
-      122,
-      96
+      105,
+      84
+    ],
+    "target_offset": [
+      0,
+      -10,
+      0,
+      0
     ],
     "expected": [
-      "餐馆"
+      "^(?=.*[餐馆])(?=.*[营业额]).{3,}$"
     ],
     "doc": "流程：进入餐馆。领取每日常客水晶。"
   },
