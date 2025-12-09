@@ -457,7 +457,11 @@
       205
     ],
     "count": 500,
-    "focus": "PM.MAX确认"
+    "focus": "PM.MAX确认",
+    "timeout": 4000,
+    "on_error": [
+      "PVP_Multiplier_Adjust_Gomenu"
+    ]
   },
   "PVP_Multiplier_Verify": {
     "recognition": "OCR",
@@ -478,10 +482,6 @@
     ],
     "next": [
       "PVP_AutoBattleStart"
-    ],
-    "timeout": 3000,
-    "on_error": [
-      "PVP_Multiplier_Adjust_Gomenu"
     ]
   },
   "PVP_Multiplier_Adjust_Gomenu": {
@@ -492,7 +492,7 @@
       0,
       0
     ],
-    "focus": "PM.倍率检查不通过,调整旁路启用",
+    "focus": "PM.[WRN]倍率检查不通过,调整旁路启用",
     "next": [
       "PVP_Multiplier_Adjust_Set"
     ],
