@@ -98,8 +98,7 @@
         ],
         "action": "DoNothing",
         "post_delay": 3000,
-        "focus": "CB.技能传送门.进入流程",
-        "doc": "CLR识别传送技能亮起| onerror,放弃这个卡带[未完成]",
+        "focus": "CFB.传送技能亮-尝试",
         "next": [
             "Collect_Skill3_1"
         ]
@@ -116,7 +115,7 @@
             "Skill-Nothing.png"
         ],
         "action": "DoNothing",
-        "focus": "CSB.无技能被设置，栏位3-1",
+        "focus": "CFB.[ERR]传送技能，栏位3-1",
         "doc": "放弃这个卡带[未完成]",
         "next": [
             "Collect_Skill3_1_Unable"
@@ -159,8 +158,7 @@
         ],
         "action": "DoNothing",
         "post_delay": 3000,
-        "focus": "CB.技能传送门.进入流程",
-        "doc": "CLR识别传送技能亮起| onerror,放弃这个卡带[未完成]",
+        "focus": "CFB.技能技能灰色",
         "next": [
             "Collect_TeleporCircle_OnFoot_Start"
         ]
@@ -177,7 +175,7 @@
             "Skill3-1.png"
         ],
         "action": "Click",
-        "focus": "CSB.技能'传送'已配置，栏位1-1",
+        "focus": "CFB.技能'传送'已配置，栏位3-1",
         "timeout": 5000,
         "post_wait_freezes": 800,
         "next": [
@@ -206,7 +204,7 @@
     "Collect_Skill3_1_Unable": {
         "recognition": "DirectHit",
         "action": "DoNothing",
-        "focus": "CSB.[WRM]'传送'技能,运作错误",
+        "focus": "CTB.[WRM]'传送'技能,运作错误",
         "next": [
             "Collect_TeleporCircle_OnFoot_Start"
         ]
@@ -282,16 +280,15 @@
         ],
         "post_delay": 5000,
         "doc": "点击Pin1快捷技能栏恢复正常",
-        "next": [
-            "Collect_OperationsMain_Sandplay"
-        ]
+        "focus": "CTB.通过传送阵归位结束"
     },
     "Collect_TeleporCircle_OnFoot_Start": {
         "recognition": "DirectHit",
         "action": "DoNothing",
         "next": [
             "Collect_TeleporCircle_OnFoot_1"
-        ]
+        ],
+        "focus": "CTOB.徒步前往传送阵"
     },
     "Collect_TeleporCircle_OnFoot_1": {
         "recognition": "DirectHit",
@@ -326,8 +323,8 @@
         "focus": "确认导航地图界面打开",
         "next": [
             "Collect_TeleporCircle_OnFoot_3",
-            "Collect_TeleporCircle_OnFoot_5",
-            "[JumpBack]Collect_TeleporCircle_OnFoot_4"
+            "[JumpBack]Collect_TeleporCircle_OnFoot_4",
+            "Collect_TeleporCircle_OnFoot_5"
         ]
     },
     "Collect_TeleporCircle_OnFoot_4": {
@@ -452,7 +449,7 @@
         "green_mask": true,
         "action": "Click",
         "post_delay": 3000,
-        "focus": "CB.导航地图.tp1.找到传送阵图标",
+        "focus": "CTOB.导航地图.tp1.找到传送阵图标",
         "doc": "寻找当前页面传送阵图标",
         "next": [
             "Collect_TeleporCircle_OnFoot_TPIcoCk_IntSubMenu",
@@ -474,7 +471,8 @@
         "post_delay": 800,
         "next": [
             "Collect_TeleporCircle_OnFoot_TPIcoCk"
-        ]
+        ],
+        "doc": "图标过多,堆叠的子菜单"
     },
     "Collect_TeleporCircle_OnFoot_TPIcoCk": {
         "recognition": "OCR",
@@ -490,13 +488,9 @@
         ],
         "action": "Click",
         "next": [
-            "Collect_TeleporCircle_OnFoot_SandHub"
-        ]
-    },
-    "Collect_TeleporCircle_OnFoot_SandHub": {
-        "next": [
             "Collect_OnFoot_Skill3_1"
-        ]
+        ],
+        "focus": "CTOB.传送阵目标确认"
     },
     "Collect_OnFoot_Skill3_1": {
         "recognition": "TemplateMatch",
@@ -517,11 +511,11 @@
             8
         ],
         "next": [
-            "Collect_TeleporCircle_OnFoot_LoopFoot",
             "Collect_TeleporCircle_OnFoot_Skirmish",
             "Collect_ForceTelepor_IsEffect",
             "Collect_ForceTelepor_FindTeleporCircle",
-            "Collect_FindTeleporCircle0.9"
+            "Collect_OnFoot_Skill3_1",
+            "[JumpBack]Collect_TeleporCircle_OnFoot_LoopFoot"
         ]
     },
     "Collect_TeleporCircle_OnFoot_LoopFoot": {
@@ -537,9 +531,28 @@
         ],
         "action": "DoNothing",
         "post_delay": 5000,
-        "doc": "如果进入了战斗怎么办,识别一个战斗页面图标",
         "next": [
-            "Collect_TeleporCircle_OnFoot_SandHub"
+            "Collect_OnFoot_Skill3_1_Again"
+        ],
+        "timeout": 2000
+    },
+    "Collect_OnFoot_Skill3_1_Again": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            963,
+            607,
+            80,
+            85
+        ],
+        "template": [
+            "Skill3-1.png"
+        ],
+        "action": "Click",
+        "target": [
+            998,
+            649,
+            16,
+            8
         ]
     },
     "Collect_TeleporCircle_OnFoot_Skirmish": {
@@ -553,7 +566,7 @@
             50,
             73
         ],
-        "focus": "进入战斗界面",
+        "focus": "CTOB.进入战斗界面",
         "next": [
             "Collect_TeleporCircle_OnFoot_Skirmish_Tpause"
         ]
@@ -567,8 +580,10 @@
             17
         ],
         "next": [
-            "Collect_TeleporCircle_OnFoot_Skirmish_TRun"
+            "Collect_TeleporCircle_OnFoot_Skirmish_TRun",
+            "Collect_TeleporCircle_OnFoot_Skirmish_Tpause"
         ],
+        "post_delay": 1000,
         "post_wait_freezes": 600
     },
     "Collect_TeleporCircle_OnFoot_Skirmish_TRun": {
@@ -600,7 +615,7 @@
         "expected": [
             "逃跑"
         ],
-        "focus": "逃离战斗",
+        "focus": "CTOB.逃离战斗",
         "action": "Click",
         "post_wait_freezes": 800,
         "next": [
@@ -622,9 +637,6 @@
         "next": [
             "Collect_ForceTelepor_IsEffect_ResetFoot",
             "[JumpBack]Global_BackPageHub_Once"
-        ],
-        "on_error": [
-            "Collect_FindTeleporCircle0.9"
         ]
     },
     "Collect_ForceTelepor_IsEffect_ResetFoot": {
@@ -641,13 +653,15 @@
         "action": "Click",
         "post_delay": 5000,
         "next": [
+            "Collect_ForceTelepor_IsEffect_ResetFoot",
             "Collect_Skill3_1"
-        ]
+        ],
+        "focus": "CTOB.停止自动寻路,施放传送技能"
     },
     "Collect_ForceTelepor_FindTeleporCircle": {
         "recognition": "TemplateMatch",
         "action": "Click",
-        "focus": "CB.箱庭地图内找到传送阵-按钮标",
+        "focus": "CTOB.到达传送阵-按钮标",
         "roi": [
             828,
             519,
@@ -659,9 +673,6 @@
         ],
         "threshold": 0.9,
         "green_mask": true,
-        "doc": "步行到终点",
-        "next": [
-            "Collect_OperationsMain_Sandplay"
-        ]
+        "doc": "步行到终点"
     }
 }

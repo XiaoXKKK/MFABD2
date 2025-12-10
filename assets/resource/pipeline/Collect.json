@@ -523,15 +523,13 @@
   "Collect_OperationsMain_Sandplay": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_OperationsMain_ToAreaMap"
-    ],
-    "interrupt": [
-      "Collect_Special_EP6",
-      "Collect_Special_QR7-CW",
-      "Collect_FindPickupCat",
-      "Collect_FindTeleporCircle0.9",
-      "Collect_FindTeleporCircle",
-      "Collect_Tab3_Switch"
+      "Collect_OperationsMain_ToAreaMap",
+      "[JumpBack]Collect_Special_EP6",
+      "[JumpBack]Collect_Special_QR7-CW",
+      "[JumpBack]Collect_FindPickupCat",
+      "[JumpBack]Collect_FindTeleporCircle0.9",
+      "[JumpBack]Collect_FindTeleporCircle",
+      "[JumpBack]Collect_Tab3_Switch"
     ],
     "timeout": 8000,
     "on_error": [
@@ -697,7 +695,8 @@
       "Collect_TargetMap2",
       "Collect_TargetMap3",
       "Collect_TargetMap4",
-      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_ClickTelepor_ButNotActive",
+      "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_ClickBackOnSecureMap",
       "[JumpBack]Collect_TeleporNotFind"
     ],
@@ -740,7 +739,8 @@
       "Collect_TargetMap4",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_Architecture_Underlying_Logic_Protection",
-      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_ClickTelepor_ButNotActive",
+      "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
       "[JumpBack]Collect_TeleporNotFind"
     ],
@@ -789,7 +789,8 @@
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI",
       "Collect_Architecture_Underlying_Logic_Protection",
-      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_ClickTelepor_ButNotActive",
+      "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
       "[JumpBack]Collect_TeleporNotFind"
     ],
@@ -843,7 +844,8 @@
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI",
       "Collect_Architecture_Underlying_Logic_Protection",
-      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_ClickTelepor_ButNotActive",
+      "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
       "[JumpBack]Collect_TeleporNotFind"
     ],
@@ -1092,7 +1094,7 @@
     "action": "Click",
     "next": [
       "Collect_QuickCart_TargetMapEnd_End",
-      "Collect_ClickTeleporCircleMap",
+      "Collect_ClickTeleporCircleIco",
       "Collect_TeleporNotFind"
     ],
     "post_delay": 1000,
@@ -1216,13 +1218,73 @@
     ],
     "doc": "点击PVE本子2"
   },
-  "Collect_ClickTeleporCircleMap": {
+  "Collect_ClickTeleporCircleIco": {
     "recognition": "TemplateMatch",
-    "action": "Click",
     "next": [
-      "Collect_ClickTelepor_ButNotActive",
+      "Collect_ClickTelepor_TargetClass_Purple",
+      "Collect_ClickTelepor_TargetClass_White"
+    ],
+    "post_delay": 5000,
+    "focus": "CB.区域地图.tp1.找到传送阵图标",
+    "roi": [
+      100,
+      71,
+      1133,
+      534
+    ],
+    "template": [
+      "TpCircleMap.png"
+    ],
+    "doc": "详细地图内传送阵选择"
+  },
+  "Collect_ClickTelepor_TargetClass_Purple": {
+    "recognition": "ColorMatch",
+    "roi": "Collect_ClickTeleporCircleIco",
+    "lower": [
+      119,
+      90,
+      145
+    ],
+    "upper": [
+      210,
+      144,
+      255
+    ],
+    "count": 1,
+    "next": [
+      "Collect_ClickTelepor_TargetClass_PurpleProcess"
+    ],
+    "timeout": 3000,
+    "on_error": [
+      "Collect_ClickTelepor_TargetClass_White"
+    ],
+    "focus": "CTB.[WRN]识别到紫色技能传送阵,尝试规避",
+    "doc": "紫色传送阵,点一次就消失了,留下一个位置异常"
+  },
+  "Collect_ClickTelepor_TargetClass_PurpleProcess": {
+    "recognition": "TemplateMatch",
+    "next": [
       "Collect_Skill_Start",
-      "Collect_ClickTeleporCircleMap"
+      "Collect_ClickTelepor_TargetClass_PurpleProcess"
+    ],
+    "post_delay": 5000,
+    "focus": "CB.区域地图.tp1.找到传送阵图标",
+    "roi": [
+      100,
+      71,
+      1133,
+      534
+    ],
+    "template": [
+      "TpCircleMap.png"
+    ],
+    "index": 1
+  },
+  "Collect_ClickTelepor_TargetClass_White": {
+    "recognition": "TemplateMatch",
+    "next": [
+      "Collect_Skill_Start",
+      "Collect_ClickTelepor_TargetClass_White"
     ],
     "post_delay": 5000,
     "focus": "CB.区域地图.tp1.找到传送阵图标",
@@ -1249,7 +1311,8 @@
       262,
       47
     ],
-    "expected": "没有已激活的魔法阵"
+    "expected": "^(?=.*[没有])(?=.*[已激活的])(?=.*[魔法阵]).{6,}$",
+    "focus": "CB.[WRN]区域地图传送阵没有激活!"
   },
   "Collect_ClickBackOnSecureMap": {
     "recognition": "OCR",
