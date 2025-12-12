@@ -776,6 +776,12 @@
   "RewardsORG_Busin_TouchPVEBook": {
     "recognition": "TemplateMatch",
     "action": "Click",
+    "target_offset": [
+      -20,
+      25,
+      0,
+      0
+    ],
     "next": [
       "RewardsORG_Busin_FinBackMapPage",
       "RewardsORG_Busin_TouchPVEBook"
