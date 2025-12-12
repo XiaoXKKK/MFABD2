@@ -594,6 +594,12 @@
   "Redemption_TouchPVEBook": {
     "recognition": "TemplateMatch",
     "action": "Click",
+    "target_offset": [
+      -20,
+      25,
+      0,
+      0
+    ],
     "next": [
       "Redemption_FinBackMapPage",
       "Redemption_TouchPVEBook"
