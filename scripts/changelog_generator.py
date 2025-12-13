@@ -169,7 +169,7 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
         return ""
         
     # 获取 Main 分支已发布的功能黑名单
-    # 如果是内测版/CI版 -> 过滤基准是 "main" (隐藏已正式发布的功能)
+    # 如果是公测版/CI版 -> 过滤基准是 "main" (隐藏已正式发布的功能)
     # 如果是正式版     -> 过滤基准是 compare_base (隐藏上个版本以前的功能)
     is_beta_or_ci = '-beta' in current_tag or '-ci' in current_tag
     
@@ -209,7 +209,7 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     lines = []
     
     if is_beta_or_ci:
-        # 🧪 内测版/开发版文案
+        # 🧪 公测版/开发版文案
         lines.append("### 🧬 正在测试的功能 (Beta Preview)")
         lines.append("> 遇到问题请及时在 [Issue](https://github.com/sunyink/MFABD2/issues) 中反馈，有助于早日形成可靠的稳定版。")
         lines.append("") # 制造一个空行，隔开列表
@@ -217,7 +217,7 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     else:
         # 🚀 正式版文案 (方案B)
         lines.append("### 🚀 正式版-版本功能概览 (Feature Branches)")
-        lines.append("> 感谢参与`内测版`开发的各位，本次`正式版`更新包含以下‘转录’的功能分支：")
+        lines.append("> 感谢参与`公测版`开发的各位，本次`正式版`更新包含以下‘转录’的功能分支：")
 
     lines.append("") # 制造一个空行，隔开列表
 
@@ -283,7 +283,7 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
     
     # 动态获取版本类型
     if '-beta' in current_tag:
-        version_type = "内测版"
+        version_type = "公测版"
     elif '-ci' in current_tag:
         version_type = "开发版"
     else:
