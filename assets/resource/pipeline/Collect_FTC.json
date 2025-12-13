@@ -1,0 +1,793 @@
+{
+    "Collect_Tab3": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Collect_Tab3_Ck",
+            "[JumpBack]Collect_Tab3_Switch"
+        ],
+        "roi": [
+            1108,
+            637,
+            65,
+            57
+        ],
+        "template": [
+            "pin.png"
+        ]
+    },
+    "Collect_Tab3_Switch": {
+        "recognition": "ColorMatch",
+        "roi": [
+            1189,
+            649,
+            32,
+            32
+        ],
+        "count": 200,
+        "lower": [
+            121,
+            121,
+            121
+        ],
+        "upper": [
+            126,
+            126,
+            126
+        ],
+        "action": "Click",
+        "target": [
+            1203,
+            664,
+            0,
+            0
+        ],
+        "focus": "CFB.切换技能Tab3",
+        "doc": "检查tab3,并切换,为传送阵可用状态做准备"
+    },
+    "Collect_Tab3_Ck": {
+        "recognition": "ColorMatch",
+        "roi": [
+            1189,
+            649,
+            32,
+            32
+        ],
+        "count": 200,
+        "lower": [
+            192,
+            141,
+            23
+        ],
+        "upper": [
+            223,
+            194,
+            129
+        ],
+        "action": "Click",
+        "target": [
+            1203,
+            664,
+            0,
+            0
+        ],
+        "doc": "检查tab3,并切换,为传送阵可用状态做准备",
+        "next": [
+            "Collect_ForceTeleporCircle",
+            "Collect_Skill3_1_Nothing",
+            "Collect_ForceTeleporCircle_No"
+        ]
+    },
+    "Collect_ForceTeleporCircle": {
+        "recognition": "ColorMatch",
+        "roi": [
+            998,
+            635,
+            13,
+            3
+        ],
+        "count": 15,
+        "lower": [
+            253,
+            253,
+            252
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "action": "DoNothing",
+        "post_delay": 3000,
+        "focus": "CFB.传送技能亮-尝试",
+        "next": [
+            "Collect_Skill3_1"
+        ]
+    },
+    "Collect_Skill3_1_Nothing": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            963,
+            607,
+            80,
+            85
+        ],
+        "template": [
+            "Skill-Nothing.png"
+        ],
+        "action": "DoNothing",
+        "focus": "CFB.[ERR]传送技能，栏位3-1",
+        "doc": "放弃这个卡带[未完成]",
+        "next": [
+            "Collect_Skill3_1_Unable"
+        ]
+    },
+    "Collect_ForceTelepor_MapCk": {
+        "recognition": "OCR",
+        "expected": [
+            "移动魔法阵"
+        ],
+        "roi": [
+            195,
+            15,
+            141,
+            49
+        ],
+        "action": "DoNothing",
+        "next": [
+            "Collect_ForceTeleporCircleClick2.14"
+        ]
+    },
+    "Collect_ForceTeleporCircle_No": {
+        "recognition": "ColorMatch",
+        "roi": [
+            998,
+            635,
+            13,
+            3
+        ],
+        "count": 15,
+        "lower": [
+            114,
+            113,
+            118
+        ],
+        "upper": [
+            186,
+            201,
+            202
+        ],
+        "action": "DoNothing",
+        "post_delay": 3000,
+        "focus": "CFB.技能技能灰色",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_Start"
+        ]
+    },
+    "Collect_Skill3_1": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            963,
+            607,
+            80,
+            85
+        ],
+        "template": [
+            "Skill3-1.png"
+        ],
+        "action": "Click",
+        "focus": "CFB.技能'传送'已配置，栏位3-1",
+        "timeout": 5000,
+        "post_wait_freezes": 800,
+        "next": [
+            "Collect_ForceTelepor_MapCk",
+            "Collect_Skill3_1_ERR_TooClose",
+            "Collect_Skill3_1"
+        ]
+    },
+    "Collect_Skill3_1_ERR_TooClose": {
+        "recognition": "OCR",
+        "roi": [
+            486,
+            55,
+            290,
+            128
+        ],
+        "expected": [
+            "^(?=.*[无法在])(?=.*[魔法阵附近])(?=.*[天赋技能]).{8,}$",
+            "^(?=.*[无法在])(?=.*[该地点])(?=.*[天赋技能]).{8,}$"
+        ],
+        "action": "DoNothing",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_Start"
+        ]
+    },
+    "Collect_Skill3_1_Unable": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "focus": "CTB.[WRM]'传送'技能,运作错误",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_Start"
+        ]
+    },
+    "Collect_ForceTeleporCircleClick2.14": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            209,
+            82,
+            912,
+            487
+        ],
+        "template": [
+            "TpCircleMapGE.png"
+        ],
+        "green_mask": true,
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "Collect_ForceTeleporCircleClick2.15"
+        ]
+    },
+    "Collect_ForceTeleporCircleClick2.15": {
+        "recognition": "OCR",
+        "roi": [
+            680,
+            427,
+            60,
+            33
+        ],
+        "expected": [
+            "生成"
+        ],
+        "action": "Click",
+        "post_delay": 5000,
+        "next": [
+            "Collect_ForceTeleporCircleClick2.2",
+            "Collect_ForceTeleporCircleClick2.15"
+        ]
+    },
+    "Collect_ForceTeleporCircleClick2.2": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "pin.png"
+        ],
+        "roi": [
+            1108,
+            637,
+            65,
+            57
+        ],
+        "action": "DoNothing",
+        "target": [
+            1012,
+            648,
+            0,
+            0
+        ],
+        "post_delay": 5000,
+        "doc": "",
+        "next": [
+            "Collect_ForceTeleporCircleClick3"
+        ]
+    },
+    "Collect_ForceTeleporCircleClick3": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            1080,
+            665,
+            0,
+            0
+        ],
+        "post_delay": 5000,
+        "doc": "点击Pin1快捷技能栏恢复正常",
+        "focus": "CTB.通过传送阵归位结束"
+    },
+    "Collect_TeleporCircle_OnFoot_Start": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_GoinNviMap"
+        ],
+        "focus": "CTOB.徒步前往传送阵"
+    },
+    "Collect_TeleporCircle_OnFoot_GoinNviMap": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            148,
+            119,
+            34,
+            38
+        ],
+        "focus": "CTOB.打开导航地图",
+        "doc": "点击左上地图",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_NviMap",
+            "Collect_TeleporCircle_OnFoot_GoinNviMap"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_NviMap": {
+        "recognition": "OCR",
+        "roi": [
+            538,
+            600,
+            656,
+            105
+        ],
+        "expected": [
+            "在战场中查看",
+            "探索",
+            "世界地图"
+        ],
+        "action": "DoNothing",
+        "focus": "CTOB.确认导航地图界面打开",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_TPIco",
+            "Collect_TeleporCircle_OnFoot_StateResolGroup_Step1_Lift",
+            "Collect_TeleporCircle_OnFoot_StateResolGroup_Step1_Right"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_StateResolGroup_Step1_Lift": {
+        "doc": "两层级的导航地图箭头状态识别,来判断最左/中间/最右 ;+地图安全/危险来辅助操作 | Step2_Right下面为判定为最右",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_StateResolGroup_Step2_Right",
+            "Collect_TeleporCircle_OnFoot_NviMap_IsBattleArea",
+            "Collect_TeleporCircle_OnFoot_NviMap_IsSafeArea"
+        ],
+        "recognition": "TemplateMatch",
+        "roi": [
+            123,
+            299,
+            108,
+            94
+        ],
+        "template": [
+            "Nvimap_Butt_left.png"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_StateResolGroup_Step1_Right": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            615,
+            300,
+            136,
+            98
+        ],
+        "template": [
+            "Nvimap_Butt_right.png"
+        ],
+        "focus": "CTOB.导航地图判定为最左",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_TPIco",
+            "Collect_TeleporCircle_OnFoot_NviMap_GoHotel",
+            "[JumpBack]Collect_TeleporCircle_OnFoot__NviMapChange_Right"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_StateResolGroup_Step2_Right": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            615,
+            300,
+            136,
+            98
+        ],
+        "template": [
+            "Nvimap_Butt_right.png"
+        ],
+        "focus": "CTOB.导航地图判定为中部",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_TPIco",
+            "Collect_TeleporCircle_OnFoot_NviMap_IsSafeArea_NotHotel",
+            "[JumpBack]Collect_TeleporCircle_OnFoot_NviMapChange_Lift"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_NviMap_GoHotel": {
+        "recognition": "OCR",
+        "expected": [
+            "达雷普旅馆",
+            "雷瓦汀基地救护站",
+            "拉勒凯旅馆",
+            "罗戴夫旅馆",
+            "旅馆",
+            "救护站"
+        ],
+        "roi": [
+            171,
+            15,
+            555,
+            48
+        ],
+        "action": "DoNothing",
+        "doc": "找到旅馆",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_TPIco"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_NviMap_IsSafeArea": {
+        "recognition": "OCR",
+        "expected": [
+            "达普雷镇",
+            "雷瓦汀基地",
+            "拉勒凯镇",
+            "罗戴夫镇",
+            "科库托斯圣域",
+            "安全"
+        ],
+        "roi": [
+            171,
+            15,
+            555,
+            48
+        ],
+        "action": "DoNothing",
+        "doc": "最右判定,是非主城的安全区。 | 管道思路:直接找到传送阵=旅店，点过去。找不到说明是主城隐式子图，再次同样识别一次切到新节点_NotHotel",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_TPIco",
+            "Collect_TeleporCircle_OnFoot_NviMap_IsSafeArea_NotHotel"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_NviMap_IsSafeArea_NotHotel": {
+        "recognition": "OCR",
+        "expected": [
+            "达普雷镇",
+            "雷瓦汀基地",
+            "拉勒凯镇",
+            "罗戴夫镇",
+            "科库托斯圣域",
+            "安全"
+        ],
+        "roi": [
+            171,
+            15,
+            555,
+            48
+        ],
+        "action": "DoNothing",
+        "doc": "最右判定,是非主城的安全区 | 管道思路:商店等隐藏图，移动到最左/左按钮消失=主城。排错：主城找不到传送图标，向右1并找传送阵",
+        "next": [
+            "[JumpBack]Collect_TeleporCircle_OnFoot_NviMapChange_Lift",
+            "Collect_TeleporCircle_OnFoot_TPIco"
+        ],
+        "timeout": 5000,
+        "on_error": [
+            "Collect_TeleporCircle_OnFoot_TPIco_Mirror",
+            "[JumpBack]Collect_TeleporCircle_OnFoot__NviMapChange_Right"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_NviMap_IsBattleArea": {
+        "recognition": "OCR",
+        "expected": [
+            "^战斗"
+        ],
+        "roi": [
+            171,
+            15,
+            555,
+            48
+        ],
+        "action": "DoNothing",
+        "doc": "最右判定,是狩猎场",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_NviMap_IsBattleArea_FakeSecurity",
+            "Collect_TeleporCircle_OnFoot_TPIco",
+            "[JumpBack]Collect_TeleporCircle_OnFoot_NviMapChange_Lift"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_NviMap_IsBattleArea_FakeSecurity": {
+        "recognition": "OCR",
+        "expected": [
+            "^安全"
+        ],
+        "roi": [
+            171,
+            15,
+            555,
+            48
+        ],
+        "action": "DoNothing",
+        "doc": "狩猎场左边是旅店,而我们的目标是最近的战斗图。管道思路:察觉到是安全则手动做一次跳过，返回_IsBattleArea。| 当_FakeSecurity在主城，会找不到左按钮也不符合战斗图，用error返回正确状态",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_NviMap_IsBattleArea",
+            "[JumpBack]Collect_TeleporCircle_OnFoot_NviMapChange_Lift"
+        ],
+        "timeout": 5000,
+        "on_error": [
+            "Collect_TeleporCircle_OnFoot_TPIco",
+            "[JumpBack]Collect_TeleporCircle_OnFoot__NviMapChange_Right"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_NviMapChange_Lift": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            123,
+            299,
+            108,
+            94
+        ],
+        "template": [
+            "Nvimap_Butt_left.png"
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "focus": "CTOB.导航地图左移1次"
+    },
+    "Collect_TeleporCircle_OnFoot__NviMapChange_Right": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            615,
+            300,
+            136,
+            98
+        ],
+        "template": [
+            "Nvimap_Butt_right.png"
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "focus": "CTOB.导航地图右移1次"
+    },
+    "Collect_TeleporCircle_OnFoot_TPIco": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            197,
+            76,
+            440,
+            535
+        ],
+        "template": [
+            "Nvi_TpCircleMap.png"
+        ],
+        "green_mask": true,
+        "action": "Click",
+        "post_delay": 3000,
+        "focus": "CTOB.导航地图.tp1.找到传送阵图标",
+        "doc": "寻找当前页面传送阵图标",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_TPIcoCk_IntSubMenu",
+            "Collect_TeleporCircle_OnFoot_TPIcoCk",
+            "Collect_TeleporCircle_OnFoot_TPIco"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_TPIco_Mirror": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            197,
+            76,
+            440,
+            535
+        ],
+        "template": [
+            "Nvi_TpCircleMap.png"
+        ],
+        "green_mask": true,
+        "action": "Click",
+        "post_delay": 3000,
+        "focus": "CTOB.导航地图.异常恢复-找到传送阵图标",
+        "doc": "_TPIco的同等镜像节点,用于某些Error管路,使用其他中断方法恢复到next同样节点冲突",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_TPIcoCk_IntSubMenu",
+            "Collect_TeleporCircle_OnFoot_TPIcoCk",
+            "Collect_TeleporCircle_OnFoot_TPIco"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_TPIcoCk_IntSubMenu": {
+        "recognition": "OCR",
+        "expected": [
+            "魔法阵"
+        ],
+        "roi": [
+            134,
+            88,
+            513,
+            494
+        ],
+        "action": "Click",
+        "post_delay": 800,
+        "next": [
+            "Collect_TeleporCircle_OnFoot_TPIcoCk"
+        ],
+        "doc": "图标过多,堆叠的子菜单"
+    },
+    "Collect_TeleporCircle_OnFoot_TPIcoCk": {
+        "recognition": "OCR",
+        "expected": [
+            "生成",
+            "确认"
+        ],
+        "roi": [
+            623,
+            352,
+            198,
+            173
+        ],
+        "action": "Click",
+        "next": [
+            "Collect_OnFoot_Skill3_1"
+        ],
+        "focus": "CTOB.传送阵目标确认"
+    },
+    "Collect_OnFoot_Skill3_1": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            963,
+            607,
+            80,
+            85
+        ],
+        "template": [
+            "Skill3-1.png"
+        ],
+        "action": "Click",
+        "target": [
+            998,
+            649,
+            16,
+            8
+        ],
+        "next": [
+            "Collect_TeleporCircle_OnFoot_Skirmish",
+            "Collect_ForceTelepor_IsEffect",
+            "Collect_ForceTelepor_FindTeleporCircle",
+            "[JumpBack]Collect_TeleporCircle_OnFoot_LoopFoot"
+        ],
+        "doc": "跑路过程中不断尝试能否使用传送阵提前结束过程,可以设置IF开关启停"
+    },
+    "Collect_TeleporCircle_OnFoot_LoopFoot": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "AutoNvi_ico.png"
+        ],
+        "roi": [
+            619,
+            623,
+            41,
+            41
+        ],
+        "action": "DoNothing",
+        "post_delay": 5000,
+        "next": [
+            "Collect_OnFoot_Skill3_1_Again"
+        ],
+        "focus": "COTB.行路中...",
+        "timeout": 2000
+    },
+    "Collect_OnFoot_Skill3_1_Again": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            963,
+            607,
+            80,
+            85
+        ],
+        "template": [
+            "Skill3-1.png"
+        ],
+        "action": "Click",
+        "target": [
+            998,
+            649,
+            16,
+            8
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_Skirmish": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "Onfight.png"
+        ],
+        "roi": [
+            172,
+            89,
+            50,
+            73
+        ],
+        "focus": "CTOB.进入战斗界面",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_Skirmish_Tpause"
+        ]
+    },
+    "Collect_TeleporCircle_OnFoot_Skirmish_Tpause": {
+        "action": "Click",
+        "target": [
+            1178,
+            40,
+            19,
+            17
+        ],
+        "next": [
+            "Collect_TeleporCircle_OnFoot_Skirmish_TRun",
+            "Collect_TeleporCircle_OnFoot_Skirmish_Tpause"
+        ],
+        "post_delay": 1000,
+        "post_wait_freezes": 600
+    },
+    "Collect_TeleporCircle_OnFoot_Skirmish_TRun": {
+        "recognition": "OCR",
+        "roi": [
+            471,
+            644,
+            85,
+            32
+        ],
+        "expected": [
+            "逃跑"
+        ],
+        "action": "Click",
+        "next": [
+            "Collect_TeleporCircle_OnFoot_Skirmish_TRun_Ty2",
+            "Collect_TeleporCircle_OnFoot_Skirmish_TRun"
+        ],
+        "post_delay": 2000
+    },
+    "Collect_TeleporCircle_OnFoot_Skirmish_TRun_Ty2": {
+        "recognition": "OCR",
+        "roi": [
+            682,
+            418,
+            81,
+            31
+        ],
+        "expected": [
+            "逃跑"
+        ],
+        "focus": "CTOB.逃离战斗",
+        "action": "Click",
+        "post_wait_freezes": 800,
+        "next": [
+            "Collect_TeleporCircle_OnFoot_GoinNviMap"
+        ]
+    },
+    "Collect_ForceTelepor_IsEffect": {
+        "recognition": "OCR",
+        "expected": [
+            "移动魔法阵"
+        ],
+        "roi": [
+            195,
+            15,
+            141,
+            49
+        ],
+        "action": "DoNothing",
+        "next": [
+            "Collect_ForceTelepor_IsEffect_ResetFoot",
+            "[JumpBack]Global_BackPageHub_Once"
+        ]
+    },
+    "Collect_ForceTelepor_IsEffect_ResetFoot": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "AutoNvi_ico.png"
+        ],
+        "roi": [
+            619,
+            623,
+            41,
+            41
+        ],
+        "action": "Click",
+        "post_delay": 5000,
+        "next": [
+            "Collect_ForceTelepor_IsEffect_ResetFoot",
+            "Collect_Skill3_1"
+        ],
+        "focus": "CTOB.停止自动寻路,施放传送技能"
+    },
+    "Collect_ForceTelepor_FindTeleporCircle": {
+        "recognition": "TemplateMatch",
+        "action": "Click",
+        "focus": "CTOB.到达传送阵-按钮标",
+        "roi": [
+            828,
+            519,
+            91,
+            90
+        ],
+        "template": [
+            "IcoHand.png"
+        ],
+        "threshold": 0.9,
+        "green_mask": true,
+        "doc": "步行到终点"
+    }
+}

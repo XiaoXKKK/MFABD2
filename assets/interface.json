@@ -225,7 +225,7 @@
 						"Collect_TargetMap3": {
 							"next": [
 								"Collect_TargetMapEnd",
-								"[JumpBack]Collect_ClickTeleporCircleMap",
+								"[JumpBack]Collect_ClickTeleporCircleIco",
 								"[JumpBack]Collect_Protection_ReturnToAreaMap",
 								"[JumpBack]Collect_TeleporNotFind"
 							]
@@ -233,7 +233,7 @@
 						"Collect_TeleporNotFind": {
 							"next": [
 								"Collect_TargetMapEnd_End",
-								"Collect_ClickTeleporCircleMap",
+								"Collect_ClickTeleporCircleIco",
 								"Collect_TeleporNotFind"
 							]
 						}
@@ -265,7 +265,7 @@
 						"Collect_TargetMap3": {
 							"next": [
 								"Collect_TargetMapEnd",
-								"[JumpBack]Collect_ClickTeleporCircleMap",
+								"[JumpBack]Collect_ClickTeleporCircleIco",
 								"[JumpBack]Collect_Protection_ReturnToAreaMap",
 								"[JumpBack]Collect_TeleporNotFind"
 							]
@@ -273,7 +273,7 @@
 						"Collect_TeleporNotFind": {
 							"next": [
 								"Collect_TargetMapEnd_End",
-								"Collect_ClickTeleporCircleMap",
+								"Collect_ClickTeleporCircleIco",
 								"Collect_TeleporNotFind"
 							]
 						},
