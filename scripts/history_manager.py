@@ -23,7 +23,7 @@ class HistoryManager:
         }
 
     def parse_version(self, tag: str) -> tuple:
-        """解析版本号，带错误处理（支持内测版/开发版）"""
+        """解析版本号，带错误处理（支持公测版/开发版）"""
         try:
             # 提取基础版本号部分
             # v2.3.7-beta.251112.cf64235 → v2.3.7 → (2, 3, 7)
@@ -78,7 +78,7 @@ class HistoryManager:
             current_major, current_minor, _ = self.parse_version(current_tag)
             print(f"当前版本: v{current_major}.{current_minor}.x 系列")
         except SystemExit:
-            # 如果版本解析失败（比如当前是内测版），使用最新正式版作为基准
+            # 如果版本解析失败（比如当前是公测版），使用最新正式版作为基准
             print(f"当前标签 {current_tag} 不是正式版，使用最新正式版作为历史基准")
             all_releases = self.fetch_all_releases()
             formal_releases = [r for r in all_releases if is_valid_formal_version(r['tag_name'])]
