@@ -528,12 +528,11 @@
       "[JumpBack]Collect_Special_QR7-CW",
       "[JumpBack]Collect_FindPickupCat",
       "[JumpBack]Collect_FindTeleporCircle0.9",
-      "[JumpBack]Collect_FindTeleporCircle",
-      "[JumpBack]Collect_Tab3_Switch"
+      "[JumpBack]Collect_FindTeleporCircle"
     ],
     "timeout": 5000,
     "on_error": [
-      "Collect_Tab3"
+      "[JumpBack]Collect_Tab3"
     ],
     "post_delay": 1000,
     "focus": "CB.箱庭模块启动",
@@ -696,9 +695,10 @@
       "Collect_TargetMap3",
       "Collect_TargetMap4",
       "[JumpBack]Collect_ClickTelepor_ButNotActive",
-      "[JumpBack]Collect_ClickBackOnSecureMap",
       "[JumpBack]Collect_ClickTeleporCircleIco",
+      "[JumpBack]Collect_ClickBackOnSecureMap",
       "[JumpBack]Collect_ClickTelepor_Abnormal_Overlap",
+      "Collect_QuickCart_FastUI",
       "[JumpBack]Collect_TeleporNotFind"
     ],
     "focus": "确认区域地图tp1",
@@ -744,6 +744,7 @@
       "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
       "[JumpBack]Collect_ClickTelepor_Abnormal_Overlap",
+      "Collect_QuickCart_FastUI",
       "[JumpBack]Collect_TeleporNotFind"
     ],
     "focus": "确认区域地图tp2",
@@ -789,12 +790,12 @@
     "next": [
       "Collect_TargetMap4",
       "Collect_QuickCart_TargetMapEnd",
-      "Collect_QuickCart_FastUI",
       "Collect_Architecture_Underlying_Logic_Protection",
       "[JumpBack]Collect_ClickTelepor_ButNotActive",
       "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
       "[JumpBack]Collect_ClickTelepor_Abnormal_Overlap",
+      "Collect_QuickCart_FastUI",
       "[JumpBack]Collect_TeleporNotFind"
     ],
     "timeout": 3000,
@@ -1417,6 +1418,9 @@
       "MapOlayLeftButt.png"
     ],
     "green_mask": true,
+    "next": [
+      "Collect_QuickCart_HomePageHub2"
+    ],
     "doc": "防止识别不到右键/且能误识别FindTeleporCircle的离谱情况."
   },
   "Collect_MapRight": {
