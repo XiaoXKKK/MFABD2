@@ -1,0 +1,467 @@
+{
+    "Arbitrage_Start": {
+        "next": [
+            "Arbitrage_HomePageOldCardMenu_Goin",
+            "[JumpBack]Global_ToHomePage"
+        ]
+    },
+    "Arbitrage_HomePageOldCardMenu_Goin": {
+        "recognition": "OCR",
+        "action": "Click",
+        "next": [
+            "Arbitrage_HomePageOldCardMenu_Ck&Top",
+            "Arbitrage_HomePageOldCardMenu_Goin"
+        ],
+        "post_delay": 2000,
+        "roi": [
+            98,
+            656,
+            66,
+            32
+        ],
+        "expected": [
+            "抽抽乐"
+        ],
+        "target": [
+            1111,
+            650,
+            0,
+            0
+        ],
+        "doc": "进入卡带界面"
+    },
+    "Arbitrage_HomePageOldCardMenu_Ck&Top": {
+        "recognition": "OCR",
+        "action": "Swipe",
+        "next": [
+            "Arbitrage_HomePageOldCardMenu_ResetLift"
+        ],
+        "post_delay": 1000,
+        "roi": [
+            99,
+            78,
+            212,
+            630
+        ],
+        "expected": [
+            "角色游戏卡",
+            "玩法游戏卡带"
+        ],
+        "begin": [
+            70,
+            270,
+            0,
+            0
+        ],
+        "end": [
+            70,
+            640,
+            0,
+            0
+        ],
+        "duration": 500,
+        "doc": "卡带界面复位拖动1，最上"
+    },
+    "Arbitrage_HomePageOldCardMenu_ResetLift": {
+        "recognition": "OCR",
+        "action": "Swipe",
+        "next": [
+            "Arbitrage_HomePageOldCardMenu_CheakReset"
+        ],
+        "post_delay": 1000,
+        "post_wait_freezes": 800,
+        "roi": [
+            103,
+            82,
+            207,
+            65
+        ],
+        "expected": [
+            "剧情游戏卡"
+        ],
+        "begin": [
+            145,
+            200,
+            0,
+            0
+        ],
+        "end": [
+            1200,
+            200,
+            0,
+            0
+        ],
+        "duration": 500,
+        "doc": "卡带界面复位拖动2，最左"
+    },
+    "Arbitrage_HomePageOldCardMenu_CheakReset": {
+        "recognition": "TemplateMatch",
+        "focus": "CB.卡带已复位",
+        "roi": [
+            108,
+            128,
+            696,
+            174
+        ],
+        "template": [
+            "pve2b.png"
+        ],
+        "next": [
+            "Arbitrage_Card5#_Goin"
+        ],
+        "doc": "判定已复位到最左"
+    },
+    "Arbitrage_Card5#_Goin": {
+        "recognition": "TemplateMatch",
+        "action": "Click",
+        "target_offset": [
+            -20,
+            25,
+            0,
+            0
+        ],
+        "next": [
+            "Arbitrage_OperationsMain_Sandplay"
+        ],
+        "roi": [
+            1029,
+            150,
+            181,
+            128
+        ],
+        "template": [
+            "pve5.png"
+        ],
+        "threshold": 0.95,
+        "doc": "点击PVE本子5"
+    },
+    "Arbitrage_OperationsMain_Sandplay": {
+        "recognition": "TemplateMatch",
+        "next": [
+            "Arbitrage_Merchant_Ico",
+            "Arbitrage_Sandplay_SeeMerchant",
+            "[JumpBack]Collect_FindTeleporCircle0.9",
+            "[JumpBack]Collect_FindTeleporCircle",
+            "[JumpBack]Collect_ForceTeleporCircle"
+        ],
+        "post_delay": 1000,
+        "focus": "箱庭模块启动",
+        "roi": [
+            1122,
+            646,
+            40,
+            38
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "doc": "中断：章节内主要操作开始。找到图钉，确认进入箱庭"
+    },
+    "Arbitrage_Sandplay_SeeMerchant": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "Map_Merchant.png"
+        ],
+        "roi": [
+            163,
+            142,
+            129,
+            115
+        ],
+        "focus": "小地图发现商人",
+        "next": [
+            "Arbitrage_NviGuide_Butt"
+        ]
+    },
+    "Arbitrage_NviGuide_Butt": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "Nvi_SandGuideButt.png"
+        ],
+        "roi": [
+            208,
+            72,
+            138,
+            43
+        ],
+        "action": "Click",
+        "focus": "点击小地图导航按钮",
+        "next": [
+            "Arbitrage_NviGuide_Merchant_Ocr",
+            "Arbitrage_NviGuide_Butt"
+        ]
+    },
+    "Arbitrage_NviGuide_Merchant_Ocr": {
+        "recognition": "OCR",
+        "expected": [
+            "商店"
+        ],
+        "roi": [
+            256,
+            64,
+            291,
+            300
+        ],
+        "action": "Click",
+        "focus": "点击商店",
+        "next": [
+            "Arbitrage_NviGuide_CKMsgBox_Ocr",
+            "Arbitrage_NviGuide_Merchant_Ocr"
+        ]
+    },
+    "Arbitrage_NviGuide_CKMsgBox_Ocr": {
+        "recognition": "OCR",
+        "expected": [
+            "确认"
+        ],
+        "roi": [
+            690,
+            436,
+            93,
+            32
+        ],
+        "action": "Click",
+        "next": [
+            "[JumpBack]Arbitrage_NviGuide_Onfoot_Loop",
+            "Arbitrage_Merchant_Ico",
+            "Arbitrage_NviGuide_CKMsgBox_Ocr"
+        ]
+    },
+    "Arbitrage_NviGuide_Onfoot_Loop": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "AutoNvi_ico.png"
+        ],
+        "roi": [
+            619,
+            623,
+            41,
+            41
+        ],
+        "post_delay": 5000,
+        "focus": "行路中..."
+    },
+    "Arbitrage_Merchant_Ico": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "Merchant_IcoGE.png"
+        ],
+        "roi": [
+            838,
+            534,
+            71,
+            69
+        ],
+        "green_mask": true,
+        "action": "Click",
+        "post_delay": 2000,
+        "focus": "商店已到位...",
+        "next": [
+            "Arbitrage_Merchant_Dialog",
+            "Arbitrage_Merchant_Ico"
+        ]
+    },
+    "Arbitrage_Merchant_Dialog": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "Mer_Dialog_TalMed.png"
+        ],
+        "roi": [
+            963,
+            32,
+            224,
+            31
+        ],
+        "next": [
+            "[Anchor]PractiseBargaining_Per",
+            "Arbitrage_Bargaining_SkillList"
+        ],
+        "doc": "右上角天赋药图标,已在对话界面"
+    },
+    "Arbitrage_Bargaining_SkillList": {
+        "recognition": "OCR",
+        "expected": [
+            "砍价"
+        ],
+        "roi": [
+            108,
+            582,
+            857,
+            51
+        ],
+        "action": "Click",
+        "next": [
+            "Arbitrage_Bargaining_Msgbox_NoMedicine",
+            "Arbitrage_Bargaining_Msgbox_Ck",
+            "Arbitrage_Bargaining_SkillList"
+        ],
+        "post_delay": 500,
+        "post_wait_freezes": 500
+    },
+    "Arbitrage_Bargaining_Msgbox_Ck": {
+        "recognition": "OCR",
+        "expected": [
+            "砍价"
+        ],
+        "roi": [
+            648,
+            407,
+            137,
+            82
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "focus": "使用技能砍价,进入商店",
+        "next": [
+            "Arbitrage_Merchant_Menu",
+            "Arbitrage_Bargaining_Msgbox_Ck",
+            "[JumpBack]Arbitrage_Bargaining_SkipAm"
+        ]
+    },
+    "Arbitrage_Bargaining_SkipAm": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "Mer_Dialog_TalMed.png"
+        ],
+        "roi": [
+            963,
+            32,
+            224,
+            31
+        ],
+        "inverse": true,
+        "action": "Click",
+        "target": [
+            130,
+            447,
+            0,
+            0
+        ],
+        "post_delay": 400,
+        "rate_limit": 500
+    },
+    "Arbitrage_Bargaining_Msgbox_NoMedicine": {
+        "recognition": "ColorMatch",
+        "lower": [
+            241,
+            0,
+            0
+        ],
+        "upper": [
+            255,
+            139,
+            133
+        ],
+        "count": 40,
+        "roi": [
+            649,
+            421,
+            122,
+            29
+        ],
+        "focus": "天赋神药不足！",
+        "doc": "云书写,没有测试过"
+    },
+    "Arbitrage_Merchant_Menu": {
+        "recognition": "OCR",
+        "expected": [
+            "购买",
+            "出售"
+        ],
+        "roi": [
+            110,
+            92,
+            51,
+            149
+        ],
+        "next": [
+            "[Anchor]PractiseBargaining_Per"
+        ]
+    },
+    "Arbitrage_Select_QC1": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "血骑士"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        }
+    },
+    "Arbitrage_Select_QC1_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC1",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter1Shop"
+        ]
+    },
+    "Arbitrage_Merchant_BuyMsg": {
+        "action": "Click",
+        "post_wait_freezes": 500,
+        "next": [
+            "Arbitrage_Merchant_BuyMsg_Clr",
+            "Arbitrage_Merchant_BuyMsg"
+        ],
+        "recognition": "OCR",
+        "expected": "MAX",
+        "roi": [
+            563,
+            490,
+            62,
+            32
+        ]
+    },
+    "Arbitrage_Merchant_BuyMsg_Clr": {
+        "recognition": "ColorMatch",
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "lower": [
+            244,
+            244,
+            243
+        ],
+        "roi": [
+            572,
+            449,
+            7,
+            23
+        ],
+        "next": [
+            "Arbitrage_Merchant_BuyMsg_Button"
+        ]
+    },
+    "Arbitrage_Merchant_BuyMsg_Button": {
+        "action": "Click",
+        "pre_delay": 500,
+        "recognition": "OCR",
+        "roi": [
+            884,
+            486,
+            81,
+            48
+        ],
+        "expected": [
+            "购买"
+        ]
+    }
+}
