@@ -149,11 +149,9 @@
         "roi" : [25,589,1231,84],
         "action": "DoNothing",
         "threshold":0.9,
-        "next":[
-            "MerchantClickeight"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClickeight",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -176,11 +174,9 @@
         "roi" : [25,589,1231,84],
         "action": "DoNothing",
         "threshold":0.985,
-        "next":[
-            "MerchantClickten"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClickten",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -203,11 +199,9 @@
         "action": "DoNothing",
         "threshold":0.95,
         "roi" : [25,589,1231,84],
-        "next":[
-            "MerchantClickeleven"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClickeleven",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -230,11 +224,9 @@
         "roi" : [25,589,1231,84],
         "threshold":0.9,
         "action": "DoNothing",
-        "next":[
-            "MerchantClicktwelve"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClicktwelve",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -257,11 +249,9 @@
         "threshold":0.95,
         "roi" : [25,589,1231,84],
         "action": "DoNothing",
-        "next":[
-            "MerchantClickthirteen"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClickthirteen",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -271,13 +261,11 @@
         "action": "Click",
         "post_delay": 10000,
         "roi" : [25,589,1231,84],
-        "next":[
+        "next": [
             "MerchantMagic",
             "MerchantOpenmap",
-            "MerchantClickthirteen"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+            "MerchantClickthirteen",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -287,11 +275,9 @@
         "roi" : [25,589,1231,84],
         "threshold":0.9,
         "action": "DoNothing",
-        "next":[
-            "MerchantClickfourteen"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClickfourteen",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -314,11 +300,9 @@
         "roi" : [25,589,1231,84],
         "threshold":0.9,
         "action": "DoNothing",
-        "next":[
-            "MerchantClickfifteen"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClickfifteen",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -341,11 +325,9 @@
         "roi" : [25,589,1231,84],
         "threshold":0.9,
         "action": "DoNothing",
-        "next":[
-            "MerchantClicksixteen"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClicksixteen",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -369,11 +351,9 @@
         "roi" : [25,589,1231,84],
         "action": "DoNothing",
         "threshold":0.95,
-        "next":[
-            "MerchantClickseventeen"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClickseventeen",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
@@ -396,11 +376,9 @@
         "action": "DoNothing",
         "roi" : [25,589,1231,84],
         "threshold":0.95,
-        "next":[
-            "MerchantClickeighteen"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+        "next": [
+            "MerchantClickeighteen",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
     "MerchantClickeighteen":{

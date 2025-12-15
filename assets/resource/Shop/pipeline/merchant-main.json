@@ -132,7 +132,7 @@
         "expected":"安全",
         "action": "DoNothing",
         "roi" : [431,596,184,85],
-        "next":"MerchantExitMagic"
+        "next": ["MerchantExitMagic"]
     },
 
     "MerchantExitMagic":{
@@ -257,7 +257,7 @@
         "expected":"剧情游戏卡",
         "action": "DoNothing",
         "roi" : [36,530,845,65],
-        "next":[
+        "next": [
             "MerchantOnetoTwo",
             "MerchantTwotoThree",
             "MerchantThreetofour",
@@ -274,10 +274,8 @@
             "Merchantfifteentosixteen",
             "Merchantsixteentoseventeen",
             "Merchantseventeentoeighteen",
-            "Merchantswitch"
-        ],
-        "interrupt":[
-            "MErchantswipeswitch"
+            "Merchantswitch",
+            "[JumpBack]MErchantswipeswitch"
         ]
     },
 
