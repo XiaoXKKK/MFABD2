@@ -150,6 +150,13 @@
 			"entry": "Close_HomePage"
 		},
 		{
+			"name": "[全局]生活技能刷级",
+			"entry": "Practise_Start",
+			"option": [
+				"选择要刷取的技能"
+			]
+		},
+		{
 			"name": "[特殊]半自动操作（常闭！单开！）",
 			"entry": "SemiAuto_HomePage",
 			"option": [
@@ -1279,6 +1286,24 @@
 								"Activities_BackMapPage",
 								"Activities_HomePageHub",
 								"Activities_HomePageHub1"
+							]
+						}
+					}
+				}
+			]
+		},
+		"选择要刷取的技能": {
+			"cases": [
+				{
+					"name": "不刷",
+					"pipeline_override": {}
+				},
+				{
+					"name": "砍价",
+					"pipeline_override": {
+						"Practise_Start": {
+							"next": [
+								"Practise_Skill_Bargaining"
 							]
 						}
 					}
