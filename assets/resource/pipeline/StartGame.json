@@ -160,10 +160,10 @@
     "timeout": 40000,
     "post_wait_freezes": 1000,
     "roi": [
-      127,
+      33,
       89,
-      951,
-      333
+      1047,
+      331
     ],
     "expected": [
       "Play",
@@ -235,6 +235,7 @@
     "expected": [
       "正在下载"
     ],
+    "timeout": 8000,
     "doc": "下载数据中"
   },
   "StartGame_Loading": {
