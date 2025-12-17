@@ -530,9 +530,9 @@
       "[JumpBack]Collect_FindTeleporCircle0.9",
       "[JumpBack]Collect_FindTeleporCircle"
     ],
-    "timeout": 8000,
+    "timeout": 5000,
     "on_error": [
-      "Collect_ForceTeleporCircle"
+      "[JumpBack]Collect_Tab3"
     ],
     "post_delay": 1000,
     "focus": "CB.箱庭模块启动",
@@ -694,8 +694,12 @@
       "Collect_TargetMap2",
       "Collect_TargetMap3",
       "Collect_TargetMap4",
+      "[JumpBack]Collect_ClickTelepor_ButNotActive",
+      "[JumpBack]Collect_TargetMap_Special_ClickTpCircleIco",
       "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_ClickBackOnSecureMap",
+      "[JumpBack]Collect_ClickTelepor_Abnormal_Overlap",
+      "Collect_QuickCart_FastUI",
       "[JumpBack]Collect_TeleporNotFind"
     ],
     "focus": "确认区域地图tp1",
@@ -711,6 +715,7 @@
       "拉勒凯镇",
       "罗戴夫镇",
       "科库托斯圣域",
+      "学校1楼",
       "安全"
     ],
     "replace": [
@@ -735,10 +740,14 @@
       "Collect_TargetMap2_Special_Right",
       "Collect_TargetMap3",
       "Collect_TargetMap4",
+      "[JumpBack]Collect_TargetMap_Special_ClickTpCircleIco",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_Architecture_Underlying_Logic_Protection",
+      "[JumpBack]Collect_ClickTelepor_ButNotActive",
       "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
+      "[JumpBack]Collect_ClickTelepor_Abnormal_Overlap",
+      "Collect_QuickCart_FastUI",
       "[JumpBack]Collect_TeleporNotFind"
     ],
     "focus": "确认区域地图tp2",
@@ -758,6 +767,7 @@
       "童话镇旅馆",
       "儿童房",
       "官邸地",
+      "学校2楼",
       "战斗I",
       "战斗 I",
       "战斗\\s*[1IⅠ!！](?!I)(?!Ⅰ)(?!！)(?!!)",
@@ -783,11 +793,14 @@
     "recognition": "OCR",
     "next": [
       "Collect_TargetMap4",
+      "[JumpBack]Collect_TargetMap_Special_ClickTpCircleIco",
       "Collect_QuickCart_TargetMapEnd",
-      "Collect_QuickCart_FastUI",
       "Collect_Architecture_Underlying_Logic_Protection",
+      "[JumpBack]Collect_ClickTelepor_ButNotActive",
       "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
+      "[JumpBack]Collect_ClickTelepor_Abnormal_Overlap",
+      "Collect_QuickCart_FastUI",
       "[JumpBack]Collect_TeleporNotFind"
     ],
     "timeout": 3000,
@@ -811,6 +824,7 @@
       "剑之神殿右侧回廊",
       "童话镇旅馆",
       "第一记忆空间",
+      "学校3楼",
       "战斗II",
       "战斗Ⅱ",
       "战斗 II",
@@ -837,11 +851,14 @@
   "Collect_TargetMap4": {
     "recognition": "OCR",
     "next": [
+      "[JumpBack]Collect_TargetMap_Special_ClickTpCircleIco",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI",
       "Collect_Architecture_Underlying_Logic_Protection",
+      "[JumpBack]Collect_ClickTelepor_ButNotActive",
       "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
+      "[JumpBack]Collect_ClickTelepor_Abnormal_Overlap",
       "[JumpBack]Collect_TeleporNotFind"
     ],
     "timeout": 3000,
@@ -857,7 +874,8 @@
     ],
     "expected": [
       "商场1楼",
-      "妖怪镇"
+      "妖怪镇",
+      "学校地下"
     ],
     "doc": "详细地图确定位置3"
   },
@@ -996,7 +1014,8 @@
       "雷瓦汀基地救护站",
       "拉勒凯旅馆",
       "罗戴夫旅馆",
-      "安全"
+      "安全",
+      "^禁闭室"
     ],
     "target": [
       120,
@@ -1045,10 +1064,30 @@
     ],
     "doc": "维护点C06.切图状态机如果OCR识别出错,可能导致脚本停留在图1,但实际已执行到图2,最后过量切图到旅店后面,会循环卡住。定性为状态机思维框架底层bug，难修危害大。此节点作为额外守护，放入next中。直接结束卡带内流程，最多断臂卡带内剩下资源，但不会全部卡死。"
   },
+  "Collect_TargetMap_Special_ClickTpCircleIco": {
+    "focus": "CB.特殊选中触发",
+    "doc": "此节点置于'TargetMapEnd'之前，对需要吸取的安全节点做单独适配，否则会提前结束吸取。起因：杰登之门卡带有3张安全图。",
+    "next": [
+      "Collect_ClickTeleporCircleIco"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "学校1楼",
+      "学校2楼",
+      "学校3楼"
+    ]
+  },
   "Collect_Protection_ReturnToAreaMap": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_FindTeleporCircle0.9"
+      "Collect_FindTeleporCircle0.9",
+      "Collect_ClickTelepor_ButNotActive"
     ],
     "focus": "CM-P.[WRN]状态机守护被触发-切图环节-恢复到区域地图界面",
     "roi": [
@@ -1215,11 +1254,51 @@
   },
   "Collect_ClickTeleporCircleIco": {
     "recognition": "TemplateMatch",
-    "action": "Click",
     "next": [
-      "Collect_ClickTelepor_ButNotActive",
+      "Collect_ClickTelepor_TargetClass_Purple",
+      "Collect_ClickTelepor_TargetClass_White"
+    ],
+    "focus": "CB.区域地图.tp1.找到传送阵图标",
+    "roi": [
+      100,
+      71,
+      1133,
+      534
+    ],
+    "template": [
+      "TpCircleMap.png"
+    ],
+    "doc": "详细地图内传送阵选择"
+  },
+  "Collect_ClickTelepor_TargetClass_Purple": {
+    "recognition": "ColorMatch",
+    "roi": "Collect_ClickTeleporCircleIco",
+    "lower": [
+      119,
+      90,
+      145
+    ],
+    "upper": [
+      210,
+      144,
+      255
+    ],
+    "count": 1,
+    "next": [
+      "Collect_ClickTelepor_TargetClass_PurpleProcess"
+    ],
+    "timeout": 3000,
+    "on_error": [
+      "Collect_ClickTelepor_TargetClass_White"
+    ],
+    "focus": "CTB.[WRN]识别到紫色技能传送阵,尝试规避",
+    "doc": "紫色传送阵,点一次就消失了,留下一个位置异常"
+  },
+  "Collect_ClickTelepor_TargetClass_PurpleProcess": {
+    "recognition": "TemplateMatch",
+    "next": [
       "Collect_Skill_Start",
-      "Collect_ClickTeleporCircleIco"
+      "Collect_ClickTelepor_TargetClass_PurpleProcess"
     ],
     "post_delay": 5000,
     "focus": "CB.区域地图.tp1.找到传送阵图标",
@@ -1232,6 +1311,27 @@
     "template": [
       "TpCircleMap.png"
     ],
+    "index": 1,
+    "action": "Click"
+  },
+  "Collect_ClickTelepor_TargetClass_White": {
+    "recognition": "TemplateMatch",
+    "next": [
+      "Collect_Skill_Start",
+      "Collect_ClickTelepor_TargetClass_White"
+    ],
+    "post_delay": 5000,
+    "focus": "CB.区域地图.tp1.找到传送阵图标",
+    "roi": [
+      100,
+      71,
+      1133,
+      534
+    ],
+    "template": [
+      "TpCircleMap.png"
+    ],
+    "action": "Click",
     "doc": "详细地图内传送阵选择"
   },
   "Collect_ClickTelepor_ButNotActive": {
@@ -1246,12 +1346,45 @@
       262,
       47
     ],
-    "expected": "没有已激活的魔法阵"
+    "expected": "^(?=.*[没有])(?=.*[已激活的])(?=.*[魔法阵]).{6,}$",
+    "focus": "CB.[WRN]区域地图传送阵没有激活!"
+  },
+  "Collect_ClickTelepor_Abnormal_Overlap": {
+    "doc": "当传送阵地图中存在重叠时的处理,找三角(无法处理紫色情况) | 注意:特征太泛,少用",
+    "recognition": "TemplateMatch",
+    "next": [
+      "Collect_Skill_Start",
+      "Collect_ClickTelepor_TargetClass_White"
+    ],
+    "post_delay": 5000,
+    "focus": "CB.区域地图.tp1.找到传送阵图标",
+    "roi": [
+      100,
+      71,
+      1133,
+      534
+    ],
+    "template": [
+      "map_tcArrowGE.png"
+    ],
+    "green_mask": true,
+    "threshold": [
+      0.82
+    ],
+    "order_by": "Score",
+    "action": "Click",
+    "target_offset": [
+      0,
+      28,
+      0,
+      0
+    ]
   },
   "Collect_ClickBackOnSecureMap": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
+      "Collect_ClickBackOnSecureMap",
       "Collect_Skill_Start"
     ],
     "focus": "CB.区域地图.tp1.已正确",
@@ -1268,6 +1401,7 @@
       "罗戴夫镇",
       "安全"
     ],
+    "post_delay": 800,
     "target": [
       120,
       35,
@@ -1313,6 +1447,9 @@
       "MapOlayLeftButt.png"
     ],
     "green_mask": true,
+    "next": [
+      "Collect_QuickCart_HomePageHub2"
+    ],
     "doc": "防止识别不到右键/且能误识别FindTeleporCircle的离谱情况."
   },
   "Collect_MapRight": {
@@ -1390,240 +1527,6 @@
     "green_mask": true,
     "doc": "场景地图内传送阵选择"
   },
-  "Collect_ForceTeleporCircle": {
-    "recognition": "TemplateMatch",
-    "next": [
-      "Collect_ForceTeleporCircleClick1"
-    ],
-    "post_delay": 3000,
-    "focus": "CB.技能传送门.进入流程",
-    "roi": [
-      1122,
-      646,
-      40,
-      38
-    ],
-    "template": [
-      "pin.png"
-    ],
-    "doc": "寻找传送阵，使用技能召唤传送阵"
-  },
-  "Collect_ForceTeleporCircleClick1": {
-    "action": "Click",
-    "next": [
-      "Collect_Skill_Tap3_clr",
-      "Collect_ForceTeleporCircleClick1"
-    ],
-    "post_delay": 800,
-    "target": [
-      1200,
-      665,
-      0,
-      0
-    ],
-    "doc": "点击Pin3快捷技能栏"
-  },
-  "Collect_Skill_Tap3_clr": {
-    "recognition": "ColorMatch",
-    "next": [
-      "Collect_Skill3_1_Nothing",
-      "Collect_Skill3_1",
-      "Collect_Skill3_1_Unable"
-    ],
-    "focus": "CSB.技能页3-色核通过",
-    "roi": [
-      1181,
-      641,
-      46,
-      48
-    ],
-    "count": 200,
-    "lower": [
-      192,
-      141,
-      23
-    ],
-    "upper": [
-      223,
-      194,
-      129
-    ],
-    "doc": "技能页3"
-  },
-  "Collect_Skill3_1_Nothing": {
-    "recognition": "TemplateMatch",
-    "next": [
-      "Collect_Skill3_1_Unable"
-    ],
-    "focus": "CSB.无技能被设置，栏位3-1",
-    "roi": [
-      963,
-      607,
-      80,
-      85
-    ],
-    "template": [
-      "Skill-Nothing.png"
-    ]
-  },
-  "Collect_Skill3_1": {
-    "recognition": "TemplateMatch",
-    "next": [
-      "Collect_Skill3_1_perClr",
-      "Collect_Skill2_1~5_Unable"
-    ],
-    "focus": "CSB.技能'吸取'已配置，栏位1-1",
-    "timeout": 5000,
-    "on_error": [],
-    "roi": [
-      963,
-      607,
-      80,
-      85
-    ],
-    "template": [
-      "Skill3-1.png"
-    ]
-  },
-  "Collect_Skill3_1_perClr": {
-    "recognition": "ColorMatch",
-    "next": [
-      "Collect_ForceTeleporCircleClick2.1",
-      "Collect_ForceTeleporCircleClick2.14",
-      "[JumpBack]Collect_ForceTeleporCircleClick2.05"
-    ],
-    "post_delay": 1500,
-    "action": "Click",
-    "focus": "CSB.施放'召唤传送阵'技能,栏位3-1",
-    "roi": [
-      963,
-      607,
-      80,
-      85
-    ],
-    "count": 480,
-    "lower": [
-      178,
-      178,
-      177
-    ],
-    "upper": [
-      255,
-      255,
-      255
-    ],
-    "doc": "当3/3左边捕获与右边相同时,必定用完次数,跳过,否则进入色核,最后图像核对."
-  },
-  "Collect_Skill3_1_Unable": {
-    "focus": "CSB.[WRM]'传送'技能,运作错误",
-    "next": []
-  },
-  "Collect_ForceTeleporCircleClick2": {
-    "action": "Click",
-    "next": [
-      "Collect_ForceTeleporCircleClick2.1",
-      "Collect_ForceTeleporCircleClick2.14",
-      "[JumpBack]Collect_ForceTeleporCircleClick2.05"
-    ],
-    "post_delay": 5000,
-    "target": [
-      1140,
-      665,
-      0,
-      0
-    ],
-    "doc": "[废弃]点击Pin3快捷技能栏中的传送技能"
-  },
-  "Collect_ForceTeleporCircleClick2.05": {
-    "action": "Click",
-    "post_delay": 5000,
-    "target": [
-      1012,
-      648,
-      0,
-      0
-    ],
-    "doc": "点击Pin3快捷技能栏中的传送技能"
-  },
-  "Collect_ForceTeleporCircleClick2.1": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "Collect_ForceTeleporCircleClick2.14"
-    ],
-    "post_delay": 2000,
-    "roi": [
-      270,
-      317,
-      68,
-      54
-    ],
-    "template": [
-      "TpMapLeft.png"
-    ],
-    "green_mask": true,
-    "doc": "存在左键就不停点击，否则下一步找传送门"
-  },
-  "Collect_ForceTeleporCircleClick2.14": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "Collect_ForceTeleporCircleClick2.15"
-    ],
-    "post_delay": 1000,
-    "roi": [
-      209,
-      82,
-      912,
-      487
-    ],
-    "template": [
-      "TpCircleMapGE.png"
-    ],
-    "green_mask": true
-  },
-  "Collect_ForceTeleporCircleClick2.15": {
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "Collect_ForceTeleporCircleClick2.2",
-      "Collect_ForceTeleporCircleClick2.15"
-    ],
-    "post_delay": 5000,
-    "roi": [
-      680,
-      427,
-      60,
-      33
-    ],
-    "expected": [
-      "生成"
-    ]
-  },
-  "Collect_ForceTeleporCircleClick2.2": {
-    "next": [
-      "Collect_ForceTeleporCircleClick3"
-    ],
-    "post_delay": 5000,
-    "target": [
-      1012,
-      648,
-      0,
-      0
-    ],
-    "doc": "找传送门图标点一下"
-  },
-  "Collect_ForceTeleporCircleClick3": {
-    "action": "Click",
-    "post_delay": 5000,
-    "target": [
-      1080,
-      665,
-      0,
-      0
-    ],
-    "doc": "点击Pin1快捷技能栏恢复正常"
-  },
   "Collect_MapLift": {
     "recognition": "TemplateMatch",
     "action": "Click",
@@ -1639,24 +1542,6 @@
     "post_delay": 800,
     "green_mask": true,
     "doc": "详细地图内左图标，目的移动到最左"
-  },
-  "test01": {
-    "action": "Click",
-    "target": [
-      120,
-      35,
-      0,
-      0
-    ]
-  },
-  "test02": {
-    "action": "Click",
-    "target": [
-      120,
-      700,
-      0,
-      0
-    ]
   },
   "Collect_QuickCart_Start": {
     "next": [

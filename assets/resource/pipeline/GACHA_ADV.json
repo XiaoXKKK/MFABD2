@@ -179,7 +179,8 @@
       "[JumpBack]GachaADV_Location2",
       "[JumpBack]GachaADV_Location3",
       "[JumpBack]GachaADV_Location4",
-      "[JumpBack]GachaADV_Location5"
+      "[JumpBack]GachaADV_Location5",
+      "[JumpBack]GachaADV_Slip"
     ]
   },
   "GachaADV_AREA1#_Post": {
@@ -287,7 +288,8 @@
       "[JumpBack]GachaADV_Location2",
       "[JumpBack]GachaADV_Location3",
       "[JumpBack]GachaADV_Location4",
-      "[JumpBack]GachaADV_Location5"
+      "[JumpBack]GachaADV_Location5",
+      "[JumpBack]GachaADV_Slip"
     ]
   },
   "GachaADV_AREA2#_Post": {
@@ -1208,23 +1210,76 @@
   },
   "GachaADV_Slip": {
     "recognition": "OCR",
-    "action": "Swipe",
     "next": [
-      "GachaADV_Location1"
+      "[JumpBack]GachaADV_Slip_WinElimi",
+      "GachaADV_Slip_Action"
     ],
     "on_error": [
       "GachaADV_FinGacha"
     ],
     "focus": "GA.滑动寻找卡池",
     "roi": [
-      1051,
-      149,
-      124,
-      50
+      226,
+      20,
+      272,
+      40
     ],
     "threshold": 0.8,
     "expected": [
-      "查看概率"
+      "抽抽乐"
+    ],
+    "doc": "下滑寻找免费抽卡"
+  },
+  "GachaADV_Slip_WinElimi": {
+    "recognition": "OCR",
+    "action": "Click",
+    "target": [
+      868,
+      161,
+      0,
+      0
+    ],
+    "expected": "帮助",
+    "roi": [
+      533,
+      109,
+      218,
+      163
+    ],
+    "post_delay": 1000
+  },
+  "GachaADV_Slip_Action": {
+    "recognition": "OCR",
+    "action": "Swipe",
+    "next": [
+      "GachaADV_Location1",
+      "GachaADV_Location2_NoPool_Clr",
+      "GachaADV_Location2_NoPool_Tmp",
+      "GachaADV_Location2",
+      "GachaADV_Location3_NoPool_Clr",
+      "GachaADV_Location3_NoPool_Tmp",
+      "GachaADV_Location3",
+      "GachaADV_Location4_NoPool_Clr",
+      "GachaADV_Location4_NoPool_Tmp",
+      "GachaADV_Location4",
+      "GachaADV_Location5_NoPool_Clr",
+      "GachaADV_Location5_NoPool_Tmp",
+      "GachaADV_Location5",
+      "GachaADV_Slip_Action"
+    ],
+    "on_error": [
+      "GachaADV_FinGacha"
+    ],
+    "focus": "GA.滑动寻找卡池",
+    "roi": [
+      226,
+      20,
+      272,
+      40
+    ],
+    "threshold": 0.8,
+    "expected": [
+      "抽抽乐"
     ],
     "begin": [
       210,
@@ -1240,7 +1295,7 @@
     ],
     "duration": 600,
     "end_hold": 1000,
-    "post_wait_freezes": 1000,
+    "post_delay": 1000,
     "doc": "下滑寻找免费抽卡"
   },
   "GachaADV_NoFindFreeAndInEnd": {
@@ -1426,7 +1481,8 @@
     "next": [
       "GachaADV_5XResuNew",
       "GachaADV_5X",
-      "GachaADV_GachaResultBack"
+      "GachaADV_GachaResultBack",
+      "GachaADV_5XBug_LightningBall"
     ],
     "focus": "GA.5☆角色！(✧◡✧)",
     "roi": [
@@ -1452,7 +1508,8 @@
     "next": [
       "GachaADV_5XResuNew",
       "GachaADV_5X2",
-      "GachaADV_GachaResultBack"
+      "GachaADV_GachaResultBack",
+      "GachaADV_5XBug_LightningBall"
     ],
     "focus": "GA.5☆UR武器！(✧◡✧)",
     "roi": [
@@ -1506,6 +1563,24 @@
       46,
       0,
       0
+    ]
+  },
+  "GachaADV_5XBug_LightningBall": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "Chaga_ProductNext.png"
+    ],
+    "action": "Click",
+    "next": [
+      "GachaADV_GachaResultBack",
+      "GachaADV_5XBug_LightningBall"
+    ],
+    "post_delay": 1000,
+    "roi": [
+      1103,
+      21,
+      123,
+      55
     ]
   },
   "GachaADV_GachaResultBack": {
