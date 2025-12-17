@@ -694,7 +694,7 @@
       "Collect_TargetMap2",
       "Collect_TargetMap3",
       "Collect_TargetMap4",
-      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_ClickBackOnSecureMap",
       "[JumpBack]Collect_TeleporNotFind"
     ],
@@ -737,7 +737,7 @@
       "Collect_TargetMap4",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_Architecture_Underlying_Logic_Protection",
-      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
       "[JumpBack]Collect_TeleporNotFind"
     ],
@@ -786,7 +786,7 @@
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI",
       "Collect_Architecture_Underlying_Logic_Protection",
-      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
       "[JumpBack]Collect_TeleporNotFind"
     ],
@@ -840,7 +840,7 @@
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI",
       "Collect_Architecture_Underlying_Logic_Protection",
-      "[JumpBack]Collect_ClickTeleporCircleMap",
+      "[JumpBack]Collect_ClickTeleporCircleIco",
       "[JumpBack]Collect_Protection_ReturnToAreaMap",
       "[JumpBack]Collect_TeleporNotFind"
     ],
@@ -1009,7 +1009,9 @@
   "Collect_Architecture_Underlying_Logic_Protection": {
     "recognition": "OCR",
     "focus": "CM-P.[WRN]状态机底层逻辑防护被触发",
-    "next": ["Collect_QuickCart_HomePageHub2"],
+    "next": [
+      "Collect_QuickCart_HomePageHub2"
+    ],
     "roi": [
       408,
       622,
@@ -1087,7 +1089,7 @@
     "action": "Click",
     "next": [
       "Collect_QuickCart_TargetMapEnd_End",
-      "Collect_ClickTeleporCircleMap",
+      "Collect_ClickTeleporCircleIco",
       "Collect_TeleporNotFind"
     ],
     "post_delay": 1000,
@@ -1211,13 +1213,13 @@
     ],
     "doc": "点击PVE本子2"
   },
-  "Collect_ClickTeleporCircleMap": {
+  "Collect_ClickTeleporCircleIco": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
       "Collect_ClickTelepor_ButNotActive",
       "Collect_Skill_Start",
-      "Collect_ClickTeleporCircleMap"
+      "Collect_ClickTeleporCircleIco"
     ],
     "post_delay": 5000,
     "focus": "CB.区域地图.tp1.找到传送阵图标",
