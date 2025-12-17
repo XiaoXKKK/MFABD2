@@ -175,8 +175,8 @@
     "action": "Swipe",
     "next": [
       "Gacha_FindFreeGacha",
-      "Gacha_FindEquRedDot",
       "Gacha_NoFindFreeAndInEnd",
+      "Gacha_FindEquRedDot",
       "Gacha_FindEquRedDot_PBC",
       "Gacha_Slip"
     ],
@@ -196,7 +196,7 @@
     ],
     "begin": [
       210,
-      300,
+      450,
       0,
       0
     ],
@@ -206,8 +206,8 @@
       0,
       0
     ],
-    "duration": 700,
-    "end_hold": 1000,
+    "duration": 500,
+    "end_hold": 500,
     "post_wait_freezes": 1000,
     "doc": "下滑寻找免费抽卡"
   },
@@ -245,26 +245,28 @@
       "Gacha_FindFreeGacha"
     ],
     "on_error": [
-      "Gacha_Slip"
+      "Gacha_Slip",
+      "GachaADV_Start"
     ],
     "roi": [
-      75,
-      100,
-      300,
-      580
+      183,
+      120,
+      180,
+      426
     ],
     "template": [
       "FreeGacha.png"
     ],
     "post_wait_freezes": 1000,
     "threshold": 0.9,
+    "timeout": 5000,
     "target_offset": [
       -50,
       3,
       0,
       0
     ],
-    "doc": "点击,存在免费抽的卡池,每日首次进入卡池pv动画开始"
+    "doc": "点击,存在免费抽的卡池,每日首次进入卡池pv动画开始 | GachaADV_Start 临时插入救急"
   },
   "Gacha_FindFreeGacha_GotoADV": {
     "focus": "GM.[WRN]卡池内存在特殊红点-调用抽卡V2",
