@@ -5,7 +5,7 @@
 
 import re
 from typing import Optional, List
-from version_rules import filter_valid_versions, sort_versions, is_valid_formal_version, is_valid_beta_version, is_valid_ci_version
+from version_rules import filter_valid_versions, sort_versions, is_valid_formal_version, is_valid_beta_version, is_valid_alpha_version, is_valid_ci_version
 
 def get_all_tags() -> List[str]:
     """获取所有Git标签"""
@@ -71,7 +71,7 @@ def find_previous_formal_release(current_tag: str) -> Optional[str]:
     # 使用版本号比较而不是字符串比较
     def parse_simple_version(tag):
         """简单版本解析用于比较"""
-        base_tag = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', tag)
+        base_tag = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-alpha\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', tag)
         numbers = base_tag[1:].split('.')
         return tuple(int(num) for num in numbers)
     
@@ -129,8 +129,8 @@ def calculate_compare_base(current_tag: str) -> str:
             print("策略: 正式版 -> 没有更早的正式版，对比初始提交")
             return "HEAD~100"  # 回退一些提交
     
-    # 策略2: 如果是公测版或开发版
-    elif is_valid_beta_version(current_tag) or is_valid_ci_version(current_tag):
+    # 策略2: 如果是公测版、内测版或开发版
+    elif is_valid_beta_version(current_tag) or is_valid_alpha_version(current_tag) or is_valid_ci_version(current_tag):
         if is_main:
             # 主分支公测版/开发版：对比最新的正式版
             latest_formal = find_latest_formal_release()
@@ -143,7 +143,7 @@ def calculate_compare_base(current_tag: str) -> str:
                 print(f"策略: 主分支{version_type}版 -> 没有正式版，对比初始提交")
                 return "HEAD~100"
         else:
-            # 开发分支公测版/开发版：使用安全的对比策略
+            # 开发分支公测版/内测版/开发版：使用安全的对比策略
             version_type = current_tag.split('-')[1]
             print(f"策略: 开发分支{version_type}版 -> 使用安全对比策略")
             return find_safe_compare_base()
