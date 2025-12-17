@@ -375,7 +375,8 @@
             149
         ],
         "next": [
-            "[Anchor]PractiseBargaining_Per"
+            "[Anchor]PractiseBargaining_Per",
+            "Arbitrage_Select_QC1"
         ]
     },
     "Arbitrage_Select_QC1": {
@@ -392,7 +393,10 @@
         "action": "Click",
         "post_wait_freezes": {
             "time": 500
-        }
+        },
+        "next": [
+            "Arbitrage_Select_QC1_Clr"
+        ]
     },
     "Arbitrage_Select_QC1_Clr": {
         "recognition": "ColorMatch",
@@ -409,8 +413,689 @@
         ],
         "count": 100,
         "next": [
-            "[JumpBack]Chapter1Shop"
+            "[JumpBack]Chapter1Shop",
+            "Arbitrage_Select_QC2"
         ]
+    },
+    "Arbitrage_Select_QC2": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "苍蓝魔女"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC2_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC2_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC2",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter2Shop",
+            "Arbitrage_Select_QC3"
+        ]
+    },
+    "Arbitrage_Select_QC3": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "迷雾神射手"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC3_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC3_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC3",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter3Shop",
+            "Arbitrage_Select_QC4"
+        ]
+    },
+    "Arbitrage_Select_QC4": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "眼镜与猫"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC4_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC4_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC4",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter4Shop",
+            "Arbitrage_Select_QC5"
+        ]
+    },
+    "Arbitrage_Select_QC5": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "沙漠之花"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC5_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC5_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC5",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter5Shop",
+            "Arbitrage_Select_QC6"
+        ]
+    },
+    "Arbitrage_Select_QC6": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "异教塔"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC6_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC6_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC6",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter6Shop",
+            "Arbitrage_Select_QC7"
+        ]
+    },
+    "Arbitrage_Select_QC7": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "愤怒天使"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC7_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC7_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC7",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter7Shop",
+            "Arbitrage_Select_QC8"
+        ]
+    },
+    "Arbitrage_Select_QC8": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "血之狂想曲"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC8_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC8_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC8",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter8Shop",
+            "Arbitrage_Select_QC9",
+            "[JumpBack]Arbitrage_Select_Swip"
+        ]
+    },
+    "Arbitrage_Select_QC9": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "铁假面"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC9_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC9_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC9",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "Arbitrage_Select_QC10"
+        ]
+    },
+    "Arbitrage_Select_QC10": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "霍尔蒙克斯"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC10_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC10_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC10",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter10Shop",
+            "Arbitrage_Select_QC11"
+        ]
+    },
+    "Arbitrage_Select_QC11": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "虚假游戏"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC11_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC11_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC11",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter11Shop",
+            "Arbitrage_Select_QC12"
+        ]
+    },
+    "Arbitrage_Select_QC12": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "黑羽毛"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC12_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC12_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC12",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter12Shop",
+            "Arbitrage_Select_QC13"
+        ]
+    },
+    "Arbitrage_Select_QC13": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "雪之歌"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC13_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC13_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC13",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter13Shop",
+            "Arbitrage_Select_QC14"
+        ]
+    },
+    "Arbitrage_Select_QC14": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "神圣审判"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC14_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC14_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC14",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter14Shop",
+            "Arbitrage_Select_QC15"
+        ]
+    },
+    "Arbitrage_Select_QC15": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "复仇的誓言"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC15_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC15_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC15",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter15Shop",
+            "Arbitrage_Select_QC16",
+            "[JumpBack]Arbitrage_Select_Swip"
+        ]
+    },
+    "Arbitrage_Select_QC16": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "国同盟"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC16_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC16_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC16",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter16Shop",
+            "Arbitrage_Select_QC17",
+            "[JumpBack]Arbitrage_Select_Swip"
+        ]
+    },
+    "Arbitrage_Select_QC17": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "试炼之路"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC17_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC17_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC17",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter17Shop",
+            "Arbitrage_Select_QC18"
+        ]
+    },
+    "Arbitrage_Select_QC18": {
+        "recognition": "OCR",
+        "roi": [
+            236,
+            90,
+            142,
+            655
+        ],
+        "expected": [
+            "救赎"
+        ],
+        "action": "Click",
+        "post_wait_freezes": {
+            "time": 500
+        },
+        "next": [
+            "Arbitrage_Select_QC18_Clr"
+        ]
+    },
+    "Arbitrage_Select_QC18_Clr": {
+        "recognition": "ColorMatch",
+        "roi": "Arbitrage_Select_QC18",
+        "lower": [
+            218,
+            218,
+            218
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "count": 100,
+        "next": [
+            "[JumpBack]Chapter18Shop",
+            "[JumpBack]Arbitrage_Merchant_Close_Ck",
+            "[JumpBack]Global_BackPageHub_Once",
+            "Global_ToSandBox"
+        ]
+    },
+    "Arbitrage_Select_Swip": {
+        "recognition": "OCR",
+        "expected": [
+            "购买",
+            "出售"
+        ],
+        "roi": [
+            110,
+            92,
+            51,
+            149
+        ],
+        "action": "Swipe",
+        "begin": [
+            285,
+            660,
+            1,
+            1
+        ],
+        "end": [
+            285,
+            135,
+            1,
+            1
+        ],
+        "duration": 600,
+        "end_hold": 1000,
+        "post_wait_freezes": 1000,
+        "focus": "滑动商店卡带表"
     },
     "Arbitrage_Merchant_BuyMsg": {
         "action": "Click",
@@ -462,6 +1147,39 @@
         ],
         "expected": [
             "购买"
+        ],
+        "post_delay": 1000,
+        "next": [
+            "Arbitrage_Merchant_BuyMsg_Button_IsDone"
+        ]
+    },
+    "Arbitrage_Merchant_BuyMsg_Button_IsDone": {
+        "action": "Click",
+        "pre_delay": 500,
+        "recognition": "OCR",
+        "roi": [
+            884,
+            486,
+            81,
+            48
+        ],
+        "expected": [
+            "购买"
+        ],
+        "inverse": true
+    },
+    "Arbitrage_Merchant_Close_Ck": {
+        "action": "Click",
+        "pre_delay": 500,
+        "recognition": "OCR",
+        "roi": [
+            667,
+            402,
+            81,
+            66
+        ],
+        "expected": [
+            "关闭商店"
         ]
     }
 }

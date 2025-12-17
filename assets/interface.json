@@ -9,8 +9,7 @@
 		{
 			"name": "官服",
 			"path": [
-				"{PROJECT_DIR}/resource",
-				"{PROJECT_DIR}/resource/Shop"
+				"{PROJECT_DIR}/resource"
 			]
 		}
 	],
@@ -167,7 +166,7 @@
 		},
 		{
 			"name": "[开发中]跑商",
-			"entry": "MerchantStart"
+			"entry": "Arbitrage_Start"
 		}
 	],
 	"option": {
