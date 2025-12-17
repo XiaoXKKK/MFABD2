@@ -694,6 +694,7 @@
       "Collect_TargetMap2",
       "Collect_TargetMap3",
       "Collect_TargetMap4",
+      "[JumpBack]Collect_TargetMap_Special_ClickTpCircleIco",
       "[JumpBack]Collect_ClickTeleporCircleMap",
       "[JumpBack]Collect_ClickBackOnSecureMap",
       "[JumpBack]Collect_TeleporNotFind"
@@ -711,6 +712,7 @@
       "拉勒凯镇",
       "罗戴夫镇",
       "科库托斯圣域",
+      "学校1楼",
       "安全"
     ],
     "replace": [
@@ -735,6 +737,7 @@
       "Collect_TargetMap2_Special_Right",
       "Collect_TargetMap3",
       "Collect_TargetMap4",
+      "[JumpBack]Collect_TargetMap_Special_ClickTpCircleIco",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_Architecture_Underlying_Logic_Protection",
       "[JumpBack]Collect_ClickTeleporCircleMap",
@@ -758,6 +761,7 @@
       "童话镇旅馆",
       "儿童房",
       "官邸地",
+      "学校2楼",
       "战斗I",
       "战斗 I",
       "战斗\\s*[1IⅠ!！](?!I)(?!Ⅰ)(?!！)(?!!)",
@@ -783,6 +787,7 @@
     "recognition": "OCR",
     "next": [
       "Collect_TargetMap4",
+      "[JumpBack]Collect_TargetMap_Special_ClickTpCircleIco",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI",
       "Collect_Architecture_Underlying_Logic_Protection",
@@ -811,6 +816,7 @@
       "剑之神殿右侧回廊",
       "童话镇旅馆",
       "第一记忆空间",
+      "学校3楼",
       "战斗II",
       "战斗Ⅱ",
       "战斗 II",
@@ -837,6 +843,7 @@
   "Collect_TargetMap4": {
     "recognition": "OCR",
     "next": [
+      "[JumpBack]Collect_TargetMap_Special_ClickTpCircleIco",
       "Collect_QuickCart_TargetMapEnd",
       "Collect_QuickCart_FastUI",
       "Collect_Architecture_Underlying_Logic_Protection",
@@ -857,7 +864,8 @@
     ],
     "expected": [
       "商场1楼",
-      "妖怪镇"
+      "妖怪镇",
+      "学校地下"
     ],
     "doc": "详细地图确定位置3"
   },
@@ -996,7 +1004,8 @@
       "雷瓦汀基地救护站",
       "拉勒凯旅馆",
       "罗戴夫旅馆",
-      "安全"
+      "安全",
+      "^禁闭室"
     ],
     "target": [
       120,
@@ -1009,7 +1018,9 @@
   "Collect_Architecture_Underlying_Logic_Protection": {
     "recognition": "OCR",
     "focus": "CM-P.[WRN]状态机底层逻辑防护被触发",
-    "next": ["Collect_QuickCart_HomePageHub2"],
+    "next": [
+      "Collect_QuickCart_HomePageHub2"
+    ],
     "roi": [
       408,
       622,
@@ -1043,10 +1054,30 @@
     ],
     "doc": "维护点C06.切图状态机如果OCR识别出错,可能导致脚本停留在图1,但实际已执行到图2,最后过量切图到旅店后面,会循环卡住。定性为状态机思维框架底层bug，难修危害大。此节点作为额外守护，放入next中。直接结束卡带内流程，最多断臂卡带内剩下资源，但不会全部卡死。"
   },
+  "Collect_TargetMap_Special_ClickTpCircleIco": {
+    "focus": "CB.特殊选中触发",
+    "doc": "此节点置于'TargetMapEnd'之前，对需要吸取的安全节点做单独适配，否则会提前结束吸取。起因：杰登之门卡带有3张安全图。",
+    "next": [
+      "Collect_ClickTeleporCircleMap"
+    ],
+    "recognition": "OCR",
+    "roi": [
+      408,
+      622,
+      466,
+      47
+    ],
+    "expected": [
+      "学校1楼",
+      "学校2楼",
+      "学校3楼"
+    ]
+  },
   "Collect_Protection_ReturnToAreaMap": {
     "recognition": "TemplateMatch",
     "next": [
-      "Collect_FindTeleporCircle0.9"
+      "Collect_FindTeleporCircle0.9",
+      "Collect_ClickTelepor_ButNotActive"
     ],
     "focus": "CM-P.[WRN]状态机守护被触发-切图环节-恢复到区域地图界面",
     "roi": [
