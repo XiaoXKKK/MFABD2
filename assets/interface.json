@@ -1258,22 +1258,11 @@
 				{
 					"name": "Yes",
 					"pipeline_override": {
-						"Activities_HomePageHub1": {
-							"next": [
-								"Activities_Call_Mail_Start",
-								"Activities_InIndex",
-								"Activities_BackMapPage",
-								"Activities_HomePageHub",
-								"Activities_HomePageHub1"
-							]
-						},
 						"Activities_HomePageHub": {
 							"next": [
 								"Activities_Call_Mail_Start",
 								"Activities_InIndex",
-								"Activities_BackMapPage",
-								"Activities_HomePageHub",
-								"Activities_HomePageHub1"
+								"Global_ToSandBox"
 							]
 						}
 					}
