@@ -20,7 +20,7 @@ def is_valid_formal_version(tag: str) -> bool:
     return True
 
 def is_valid_beta_version(tag: str) -> bool:
-    """判断是否为有效的内测版 - 严格模式"""
+    """判断是否为有效的公测版 - 严格模式"""
     # 必须符合: v数字.数字.数字-beta.6位日期.7位以上哈希
     pattern = r'^v\d+\.\d+\.\d+-beta\.\d{6}\.[a-f0-9]{7,}$'
     return bool(re.match(pattern, tag))
@@ -42,7 +42,7 @@ def filter_valid_versions(tags: List[str]) -> Dict[str, List[str]]:
     """严格过滤有效的版本"""
     result = {
         'formal': [],    # 正式版
-        'beta': [],      # 内测版  
+        'beta': [],      # 公测版  
         'ci': [],        # 开发版
         'invalid': [],   # 无效版本
         'nested': []     # 嵌套错误版本
@@ -69,7 +69,7 @@ def filter_valid_versions(tags: List[str]) -> Dict[str, List[str]]:
 def sort_versions(versions: List[str]) -> List[str]:
     """按版本号排序（从新到旧）"""
     def version_key(tag):
-        # 提取版本号部分进行排序（支持内测版/开发版）
+        # 提取版本号部分进行排序（支持公测版/开发版）
         try:
             base_tag = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', tag)
             numbers = base_tag[1:].split('.')  # 去掉'v'，按.分割
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     # 测试代码
     test_tags = [
         "v2.3.6",                           # 有效正式版
-        "v2.3.6-beta.251111.c7b2aa3",       # 有效内测版  
+        "v2.3.6-beta.251111.c7b2aa3",       # 有效公测版  
         "v2.3.6-ci.251111.abc1234",         # 有效开发版
         "v2.4.0-beta",                      # 无效：缺少日期和哈希
         "v0.1000.1",                        # 无效：v0.x.x

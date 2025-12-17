@@ -32,7 +32,7 @@ body:
       options:
         - (请选择一个版本类型)
         - 正式版 (Stable | 无特殊前缀)
-        - 内测版 (Beta) 
+        - 公测版 (Beta) 
         - 开发版 (Ci)
     validations:
       required: true
