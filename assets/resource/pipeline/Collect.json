@@ -1058,7 +1058,7 @@
     "focus": "CB.特殊选中触发",
     "doc": "此节点置于'TargetMapEnd'之前，对需要吸取的安全节点做单独适配，否则会提前结束吸取。起因：杰登之门卡带有3张安全图。",
     "next": [
-      "Collect_ClickTeleporCircleMap"
+      "Collect_ClickTeleporCircleIco"
     ],
     "recognition": "OCR",
     "roi": [
