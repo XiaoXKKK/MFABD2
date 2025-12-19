@@ -176,8 +176,8 @@
     "next": [
       "Gacha_FindFreeGacha",
       "Gacha_NoFindFreeAndInEnd",
-      "Gacha_FindEquRedDot",
       "Gacha_FindEquRedDot_PBC",
+      "Gacha_FindEquRedDot",
       "Gacha_Slip"
     ],
     "on_error": [
@@ -219,9 +219,9 @@
     "focus": "GA.卡池列表见底",
     "roi": [
       183,
-      160,
-      176,
-      347
+      198,
+      180,
+      335
     ],
     "template": [
       "Gachalistend.png"
@@ -257,6 +257,7 @@
     "template": [
       "FreeGacha.png"
     ],
+    "order_by": "Vertical",
     "post_wait_freezes": 1000,
     "threshold": 0.9,
     "timeout": 5000,
@@ -715,6 +716,7 @@
   "Gacha_FindEquRedDot": {
     "recognition": "TemplateMatch",
     "action": "Click",
+    "post_delay": 2000,
     "next": [
       "Gacha_FindFreeGacha",
       "Gacha_Slip",
