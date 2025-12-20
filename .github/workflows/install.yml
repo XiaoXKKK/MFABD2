@@ -35,6 +35,7 @@ on:
 jobs:
   meta:
     runs-on: ubuntu-latest
+    if: "github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/') || !contains(github.event.head_commit.message, '[deploy-sync]')"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -55,7 +56,7 @@ jobs:
             tag="${GITHUB_REF#refs/tags/}"
             version_type="release"
           else
-            # 获取最新的正式版本标签（只匹配纯粹的正式版，不包含-beta或-ci）
+            # 获取最新的正式版本标签
             base_tag=$(git tag -l "v*" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
             
             # 如果没有找到纯版本号标签，使用默认值
@@ -69,13 +70,15 @@ jobs:
            # 判断版本类型
             # 优先判断 Alpha
             if ([ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ github.event.inputs.deploy_alpha }}" = "true" ]) || echo "$commit_message" | tail -n1 | grep -q "\[deploy-alpha\]"; then
-               # 内测版：在基础版本上增加补丁版本号 (策略同 Beta)
-              incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
+               # 内测版：在基础版本上增加 2 个补丁版本号 (Base + 2)
+               # 修改点：将 $3+1 改为 $3+2
+              incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+2}')
               tag="${incremented_tag}-alpha.${date_suffix}.${commit_short}"
               version_type="alpha"
             
             # 原有的 Beta 判断
             elif ([ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ github.event.inputs.deploy_beta }}" = "true" ]) || echo "$commit_message" | tail -n1 | grep -q "\[deploy-beta\]"; then
+              # 公测版：在基础版本上增加 1 个补丁版本号 (Base + 1)
               incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
               tag="${incremented_tag}-beta.${date_suffix}.${commit_short}"
               version_type="beta"
