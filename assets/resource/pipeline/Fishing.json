@@ -1,0 +1,80 @@
+{
+    "test0": {
+        "action": "Click",
+        "target": [
+            569,
+            354,
+            15,
+            4
+        ]
+    },
+    "test01": {
+        "recognition": "OCR",
+        "expected": "開始",
+        "roi": [
+            544,
+            345,
+            64,
+            26
+        ],
+        "action": "LongPress",
+        "duration": 200,
+        "target": [
+            569,
+            354,
+            15,
+            4
+        ]
+    },
+    "test1": {
+        "recognition": "ColorMatch",
+        "roi": [
+            470,
+            593,
+            408,
+            40
+        ],
+        "method": 4,
+        "upper": [
+            255,
+            241,
+            169
+        ],
+        "lower": [
+            253,
+            225,
+            82
+        ],
+        "next": "test20",
+        "rate_limit": 100
+    },
+    "test20": {
+        "recognition": "ColorMatch",
+        "roi": "test1",
+        "upper": [
+            255,
+            255,
+            255
+        ],
+        "lower": [
+            245,
+            245,
+            245
+        ],
+        "count": 10,
+        "action": "Click",
+        "pre_delay": 0,
+        "post_delay": 300,
+        "rate_limit": 100,
+        "target": [
+            1126,
+            558,
+            31,
+            27
+        ],
+        "next": [
+            "test20",
+            "test1"
+        ]
+    }
+}
