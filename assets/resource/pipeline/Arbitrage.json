@@ -142,10 +142,12 @@
             "Arbitrage_Sandplay_SeeMerchant",
             "[JumpBack]Collect_FindTeleporCircle0.9",
             "[JumpBack]Collect_FindTeleporCircle",
-            "[JumpBack]Collect_ForceTeleporCircle"
+            "[JumpBack]Collect_ForceTeleporCircle",
+            "Collect_OperationsMain_ToAreaMap"
         ],
         "post_delay": 1000,
         "focus": "箱庭模块启动",
+        "anchor": "Arbitrage5",
         "roi": [
             1122,
             646,
@@ -186,6 +188,7 @@
         ],
         "action": "Click",
         "focus": "点击小地图导航按钮",
+        "pre_delay": 500,
         "next": [
             "Arbitrage_NviGuide_Merchant_Ocr",
             "Arbitrage_NviGuide_Butt"
@@ -203,6 +206,7 @@
             300
         ],
         "action": "Click",
+        "post_delay": 800,
         "focus": "点击商店",
         "next": [
             "Arbitrage_NviGuide_CKMsgBox_Ocr",
@@ -218,9 +222,10 @@
             690,
             436,
             93,
-            32
+            135
         ],
         "action": "Click",
+        "post_delay": 1000,
         "next": [
             "[JumpBack]Arbitrage_NviGuide_Onfoot_Loop",
             "Arbitrage_Merchant_Ico",
