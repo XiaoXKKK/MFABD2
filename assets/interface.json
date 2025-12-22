@@ -10,8 +10,8 @@
 			"win32": {
 				"class_regex": "UnityWndClass",
 				"screencap": "FramePool",
-				"mouse": "PostMessage",
-				"keyboard": "PostMessage"
+				"mouse": "PostMessageWithCursorPos",
+				"keyboard": "PostMessageWithCursorPos"
 			},
 			"display_raw": true
 		}
@@ -177,7 +177,8 @@
 		},
 		{
 			"name": "[测试殊]PC钓鱼",
-			"entry": "test0"
+			"entry": "Fishing_NiceBoat",
+			"doc": "PC客户端，注意切换脚本控制器。要求：不能最小化、窗口化1080x720。暂时得手动切到钓鱼船上再开始运行"
 		}
 	],
 	"option": {
