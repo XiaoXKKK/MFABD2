@@ -186,6 +186,7 @@
         ],
         "action": "Click",
         "focus": "点击小地图导航按钮",
+        "pre_delay": 500,
         "next": [
             "Arbitrage_NviGuide_Merchant_Ocr",
             "Arbitrage_NviGuide_Butt"
@@ -203,6 +204,7 @@
             300
         ],
         "action": "Click",
+        "post_delay": 800,
         "focus": "点击商店",
         "next": [
             "Arbitrage_NviGuide_CKMsgBox_Ocr",
@@ -221,6 +223,7 @@
             32
         ],
         "action": "Click",
+        "post_delay": 500,
         "next": [
             "[JumpBack]Arbitrage_NviGuide_Onfoot_Loop",
             "Arbitrage_Merchant_Ico",
