@@ -1218,6 +1218,7 @@
     "action": "Click",
     "next": [
       "Collect_ClickTelepor_ButNotActive",
+      "[Anchor]Arbitrage5",
       "Collect_Skill_Start",
       "Collect_ClickTeleporCircleIco"
     ],
