@@ -53,6 +53,9 @@
         ],
         "next": [
             "Fishing_OnSide"
+        ],
+        "on_error": [
+            "err_32"
         ]
     },
     "Fishing_OnSide": {
@@ -75,9 +78,12 @@
             11,
             239
         ],
-        "post_delay": 500,
+        "post_delay": 1000,
         "next": [
             "Fishing_Cast_down"
+        ],
+        "on_error": [
+            "err_32"
         ]
     },
     "Fishing_Cast_down": {
@@ -86,7 +92,7 @@
         "next": [
             "Fishing_Cast_Up"
         ],
-        "rate_limit": 50
+        "rate_limit": 100
     },
     "Fishing_Cast_Up": {
         "recognition": "ColorMatch",
@@ -113,7 +119,10 @@
         "next": [
             "Fishing_Bite"
         ],
-        "rate_limit": 500
+        "rate_limit": 500,
+        "on_error": [
+            "err_32"
+        ]
     },
     "Fishing_Bite": {
         "doc": "咬钩了",
@@ -145,12 +154,17 @@
         "timeout": 30000,
         "next": [
             "[JumpBack]Fishing_TugOfWar_A1_Yow",
-            // "[JumpBack]Fishing_TugOfWar_A1_Blu",
+            "[JumpBack]Fishing_TugOfWar_A1_Blu",
             "[JumpBack]Fishing_TugOfWar_A2_Yow",
-            // "[JumpBack]Fishing_TugOfWar_A2_Blu",
-            "Fishing_Success_Received_OCr"
+            "[JumpBack]Fishing_TugOfWar_A2_Blu",
+            "Fishing_Success_Received_OCr",
+            "Fishing_OnSide",
+            "Fishing_NeedToSide"
         ],
-        "rate_limit": 50
+        "rate_limit": 80,
+        "on_error": [
+            "err_32"
+        ]
     },
     "Fishing_TugOfWar_A1_Yow": {
         "roi": [
@@ -175,8 +189,8 @@
         "next": [
             "Fishing_TugOfWar_Hand_1Y"
         ],
-        "rate_limit": 30,
-        "timeout": 800
+        "rate_limit": 80,
+        "timeout": 500
     },
     "Fishing_TugOfWar_A1_Blu": {
         "recognition": "ColorMatch",
@@ -201,8 +215,8 @@
         "next": [
             "Fishing_TugOfWar_Hand_1B"
         ],
-        "rate_limit": 50,
-        "timeout": 800
+        "rate_limit": 80,
+        "timeout": 500
     },
     "Fishing_TugOfWar_A2_Yow": {
         "recognition": "ColorMatch",
@@ -227,8 +241,8 @@
         "next": [
             "Fishing_TugOfWar_Hand_2Y"
         ],
-        "rate_limit": 30,
-        "timeout": 800
+        "rate_limit": 80,
+        "timeout": 500
     },
     "Fishing_TugOfWar_A2_Blu": {
         "recognition": "ColorMatch",
@@ -253,8 +267,8 @@
         "next": [
             "Fishing_TugOfWar_Hand_2B"
         ],
-        "rate_limit": 50,
-        "timeout": 800
+        "rate_limit": 80,
+        "timeout": 500
     },
     "Fishing_TugOfWar_Hand_1Y": {
         "recognition": "ColorMatch",
@@ -278,7 +292,10 @@
             116
         ],
         "pre_delay": 25,
-        "post_delay": 180
+        "post_delay": 180,
+        "next": [
+            "Fishing_Null"
+        ]
     },
     "Fishing_TugOfWar_Hand_1B": {
         "recognition": "ColorMatch",
@@ -302,7 +319,10 @@
             116
         ],
         "pre_delay": 15,
-        "post_delay": 200
+        "post_delay": 200,
+        "next": [
+            "Fishing_Null"
+        ]
     },
     "Fishing_TugOfWar_Hand_2Y": {
         "recognition": "ColorMatch",
@@ -326,7 +346,10 @@
             116
         ],
         "pre_delay": 15,
-        "post_delay": 180
+        "post_delay": 180,
+        "next": [
+            "Fishing_Null"
+        ]
     },
     "Fishing_TugOfWar_Hand_2B": {
         "recognition": "ColorMatch",
@@ -350,7 +373,10 @@
             116
         ],
         "pre_delay": 15,
-        "post_delay": 200
+        "post_delay": 200,
+        "next": [
+            "Fishing_Null"
+        ]
     },
     "Fishing_Success_Received_OCr": {
         "recognition": "OCR",
@@ -372,11 +398,12 @@
             116
         ],
         "pre_delay": 800,
-        "post_delay": 1000,
+        "post_delay": 2000,
         "next": [
             "Fishing_NeedToSide",
             "Fishing_NiceBoat"
-        ]
+        ],
+        "rate_limit": 2000
     },
     "Fishing_TugOfWar_A1": {
         "roi": [
@@ -392,6 +419,14 @@
             624,
             198,
             11
+        ]
+    },
+    "Fishing_Null": {},
+    "err_32": {
+        "action": "KeyUp",
+        "key": 32,
+        "next": [
+            "Fishing_NiceBoat"
         ]
     }
 }
