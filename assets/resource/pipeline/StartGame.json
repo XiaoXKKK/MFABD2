@@ -388,6 +388,10 @@
     "recognition": "TemplateMatch",
     "anchor": "StartGame_Setup_Change",
     "next": [
+      "[JumpBack]StartGame_PVPSet",
+      "[JumpBack]StartGame_Special",
+      "[JumpBack]StartGame_NewChar",
+      "[JumpBack]StartGame_SeasonSet",
       "Setup_Entry4",
       "Setup_Entry2",
       "StartGame_MainMsgBox_Remove",
