@@ -446,6 +446,12 @@
   "Weekly_LastNight_TouchPVEBook": {
     "recognition": "TemplateMatch",
     "action": "Click",
+    "target_offset": [
+      -20,
+      25,
+      0,
+      0
+    ],
     "next": [
       "Weekly_LastNight_FinBackMapPage",
       "Weekly_LastNight_TouchPVEBook"

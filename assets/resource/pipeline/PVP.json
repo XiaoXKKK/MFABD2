@@ -308,9 +308,12 @@
   "PVP_JustUseFreeOK": {
     "recognition": "ColorMatch",
     "next": [
-      "PVP_AutoBattleMAX"
+      "PVP_Multiplier_Verify"
     ],
     "timeout": 5000,
+    "on_error": [
+      "PVP_Multiplier_Adjust_Gomenu"
+    ],
     "inverse": false,
     "enabled": true,
     "focus": "PM.PVP.免费AP确认",
@@ -437,7 +440,7 @@
   },
   "PVP_AutoBattleMAX_CK": {
     "next": [
-      "PVP_Multiplier_Verify"
+      "PVP_AutoBattleStart"
     ],
     "recognition": "ColorMatch",
     "roi": [
@@ -477,11 +480,7 @@
       ]
     ],
     "next": [
-      "PVP_AutoBattleStart"
-    ],
-    "timeout": 3000,
-    "on_error": [
-      "PVP_Multiplier_Adjust_Gomenu"
+      "PVP_AutoBattleMAX"
     ]
   },
   "PVP_Multiplier_Adjust_Gomenu": {
@@ -492,7 +491,7 @@
       0,
       0
     ],
-    "focus": "PM.倍率检查不通过,调整旁路启用",
+    "focus": "PM.[WRN]倍率检查不通过,调整旁路启用",
     "next": [
       "PVP_Multiplier_Adjust_Set"
     ],
@@ -515,7 +514,8 @@
       0
     ],
     "next": [
-      "PVP_Multiplier_Adjust_Enter"
+      "PVP_Multiplier_Adjust_Enter",
+      "PVP_Multiplier_Adjust_Set"
     ],
     "post_delay": 500,
     "doc": "默认10倍"
@@ -523,7 +523,7 @@
   "PVP_Multiplier_Adjust_Enter": {
     "next": [
       "PVP_Multiplier_Adjust_Enter",
-      "PVP_AutoBattleStart"
+      "PVP_AutoBattleMAX"
     ],
     "recognition": "OCR",
     "expected": "确认",
@@ -544,6 +544,7 @@
       "PVP_AutoBattleStart"
     ],
     "post_delay": 10000,
+    "timeout": 30000,
     "focus": "PM.PVP.PVP战斗开始",
     "roi": [
       614,
@@ -554,7 +555,7 @@
     "expected": [
       "战斗开始"
     ],
-    "doc": "点击战斗开始"
+    "doc": "点击战斗开始 | 考虑动画时间以及防止网络卡顿"
   },
   "PVP_AutoBattle2": {
     "recognition": "OCR",
@@ -742,6 +743,12 @@
   "PVP_TouchPVEBook": {
     "recognition": "TemplateMatch",
     "action": "Click",
+    "target_offset": [
+      -20,
+      25,
+      0,
+      0
+    ],
     "next": [
       "PVP_FinBackMapPage"
     ],

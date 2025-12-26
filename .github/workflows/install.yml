@@ -21,7 +21,7 @@ on:
     inputs:
       deploy_beta:
         type: boolean
-        description: '发布内测版'
+        description: '发布公测版'
         default: false  # 默认不勾选，避免误触
       ci_as_stable:
         type: boolean
@@ -64,12 +64,12 @@ jobs:
             
             # 判断版本类型
             if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ github.event.inputs.deploy_beta }}" = "true" ]; then
-              # 内测版：在基础版本上增加补丁版本号
+              # 公测版：在基础版本上增加补丁版本号
               incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
               tag="${incremented_tag}-beta.${date_suffix}.${commit_short}"
               version_type="beta"
             elif echo "$commit_message" | tail -n1 | grep -q "\[deploy-beta\]"; then
-              # 内测版：在基础版本上增加补丁版本号
+              # 公测版：在基础版本上增加补丁版本号
               incremented_tag=$(echo "$base_tag" | awk -F. '{printf "%s.%s.%s", $1, $2, $3+1}')
               tag="${incremented_tag}-beta.${date_suffix}.${commit_short}"
               version_type="beta"
@@ -360,7 +360,7 @@ jobs:
             👤 提交者: ${{ github.actor }}
             🌿 分支: ${{ github.ref_name }}
             🏷️ 版本: ${{ needs.meta.outputs.tag }}
-            📦 类型: ${{ contains(needs.meta.outputs.tag, '-beta') && '内测版' || (contains(needs.meta.outputs.tag, '-ci') && '开发版' || '正式版') }}
+            📦 类型: ${{ contains(needs.meta.outputs.tag, '-beta') && '公测版' || (contains(needs.meta.outputs.tag, '-ci') && '开发版' || '正式版') }}
             🆔 提交哈希: ${{ steps.commit-info.outputs.short_sha }}
             ⏱️ 提交时间: ${{ steps.commit-info.outputs.time }}
             📝 摘要: ${{ steps.commit-info.outputs.subject }}

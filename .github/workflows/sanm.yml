@@ -68,7 +68,7 @@ jobs:
             👤 提交者: ${{ github.actor }}
             🌿 分支: ${{ github.ref_name }}
             🏷️ 版本: ${{ inputs.tag }}
-            📦 类型: ${{ contains(inputs.tag, '-beta') && '内测版' || (contains(inputs.tag, '-ci') && '开发版' || '正式版') }}
+            📦 类型: ${{ contains(inputs.tag, '-beta') && '公测版' || (contains(inputs.tag, '-ci') && '开发版' || '正式版') }}
             🆔 提交哈希: ${{ steps.commit-info.outputs.short_sha }}
             ⏱️ 提交时间: ${{ steps.commit-info.outputs.time }}
             📝 摘要: ${{ steps.commit-info.outputs.subject }}

@@ -38,7 +38,8 @@ jobs:
           tag: ${{ inputs.tag }}
           filename: "MFABD2-*-win-x86_64.zip"
           pick_files: '["resource", "interface.json"]'
-          exclude_files: '["resource/model/ocr/**"]'
+          # 截止3.1.0，MFAA有时对热更新，错误地进行全量更新操作，删除ocr并从希望热更新包寻找替代。暂时将ocr模型打包到热更新包中，避免用户反复重下全量包。
+          # exclude_files: '["resource/model/ocr/**"]'
 
           mirrorchyan_rid: MFABD2
 
