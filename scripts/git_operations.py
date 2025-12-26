@@ -22,6 +22,7 @@ def get_all_tags() -> list:
     except Exception as e:
         print(f"获取Git标签失败: {e}")
         return []
+
 def run_git_command(args: List[str]) -> str:
     """运行Git命令并返回输出（修复编码问题）"""
     try:
@@ -35,10 +36,12 @@ def run_git_command(args: List[str]) -> str:
         )
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
-        print(f"Git命令失败: {' '.join(args)}")
-        print(f"错误码: {e.returncode}")
-        if e.stderr:
-            print(f"错误信息: {e.stderr}")
+        # 仅在非验证类命令失败时打印详细日志，避免 rev-parse 刷屏
+        if "rev-parse" not in args:
+            print(f"Git命令失败: {' '.join(args)}")
+            print(f"错误码: {e.returncode}")
+            if e.stderr:
+                print(f"错误信息: {e.stderr}")
         return ""
 
 def get_commit_date(tag: str) -> Optional[str]:
@@ -133,7 +136,7 @@ def get_commit_list(from_ref: str, to_ref: str) -> List[Dict]:
     # 然后为每个提交获取详细信息
     detailed_commits = []
     for i, simple_commit in enumerate(simple_commits):
-        print(f"获取提交详情 {i+1}/{len(simple_commits)}: {simple_commit['hash'][:8]}")
+        # print(f"获取提交详情 {i+1}/{len(simple_commits)}: {simple_commit['hash'][:8]}") # 注释掉避免刷屏
         detailed_commit = get_detailed_commit_info(simple_commit['hash'])
         detailed_commits.append(detailed_commit)
     
@@ -169,25 +172,28 @@ def test_git_operations_simple():
         print("  - 标签顺序特殊")
         print("  - 可以尝试其他标签范围")
 
-def get_all_tags() -> list:
-    """获取所有Git标签"""
-    try:
-        result = subprocess.run(
-            ["git", "tag", "-l", "v*"],
-            capture_output=True, 
-            text=True,
-            check=True
-        )
-        tags = [tag for tag in result.stdout.strip().split('\n') if tag]
-        return tags
-    except Exception as e:
-        print(f"获取Git标签失败: {e}")
-        return []
+# 注意：这里原文件有两个 get_all_tags，我把重复的去掉了
 
 def ensure_reference_exists(ref: str) -> bool:
     """确保Git引用存在"""
     result = run_git_command(["rev-parse", "--verify", ref])
     return bool(result)
+
+def resolve_branch_reference(ref: str) -> str:
+    """
+    【新增】智能解析分支引用
+    优先查找本地分支，如果不存在则查找远程分支（适配CI环境）
+    """
+    if ensure_reference_exists(ref):
+        return ref
+    
+    # 尝试查找远程分支
+    remote_ref = f"origin/{ref}"
+    if ensure_reference_exists(remote_ref):
+        print(f"本地分支 '{ref}' 不存在，使用远程分支 '{remote_ref}'")
+        return remote_ref
+        
+    return ref  # 如果都不存在，返回原值让后续报错
 
 def safe_get_commit_list(from_ref: str, to_ref: str) -> List[Dict]:
     """安全的提交列表获取（处理引用不存在的情况）"""
@@ -259,20 +265,25 @@ def get_merge_commits(from_ref: str, to_ref: str) -> List[Dict]:
                 })
     return commits
 
-def get_released_branches_from_main(ref: str = "main", limit: int = 200) -> set:
+def get_released_branches_from_main(ref: str = "main", limit: int = 2000) -> set:
     """
     【修改】扫描指定引用(ref)的合并记录，提取已发布的分支名
+    修改点: 
+    1. 使用 resolve_branch_reference 自动处理 CI 环境分支名
+    2. limit 默认值改为 2000，防止漏掉久远的合并
     """
+    # 智能解析引用 (main -> origin/main)
+    target_ref = resolve_branch_reference(ref)
+    
     log_output = run_git_command([
         "log",
-        ref,
+        target_ref,
         "-n", str(limit),
         "--oneline",
         "--merges"
     ])
     
     released = set()
-    import re
     pattern_new = r"Merge:'([^']+)'\|"
     pattern_old = r"Merge branch '([^']+)'"
     
@@ -289,6 +300,7 @@ def get_released_branches_from_main(ref: str = "main", limit: int = 200) -> set:
 
 
 if __name__ == "__main__":
+    # print("=== Git操作模块测试 ===") # 保持原样
     test_git_operations_simple()
     test_specific_range()
     test_safe_operations()
