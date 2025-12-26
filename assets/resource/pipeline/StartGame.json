@@ -21,7 +21,7 @@
       "StartGame_TouchStart",
       "StartGame_Logo"
     ],
-    "post_delay": 10000,
+    "post_delay": 8000,
     "focus": "NEO",
     "roi": [
       530,
@@ -31,7 +31,8 @@
     ],
     "expected": [
       "NEO"
-    ]
+    ],
+    "timeout": 60000
   },
   "StartGame_LoadingPage": {
     "recognition": "OCR",
@@ -45,7 +46,7 @@
       "StartGame_Loading",
       "StartGame_LoadingPage"
     ],
-    "post_delay": 10000,
+    "post_delay": 5000,
     "pre_wait_freezes": 3000,
     "focus": "SM.main",
     "roi": [
@@ -59,7 +60,8 @@
       "BROWN",
       "無職生",
       "異世界"
-    ]
+    ],
+    "timeout": 120000
   },
   "StartGame_Update": {
     "recognition": "OCR",
@@ -249,7 +251,7 @@
       "StartGame_LoadingPage",
       "StartGame_Loading"
     ],
-    "post_delay": 8000,
+    "post_delay": 5000,
     "focus": "SM.ORC游戏启动中",
     "roi": [
       820,
@@ -260,7 +262,8 @@
     "expected": [
       "游戏启动中"
     ],
-    "doc": "游戏启动中"
+    "doc": "游戏启动中",
+    "timeout": 120000
   },
   "StartGame_PayFailed": {
     "recognition": "OCR",
@@ -310,7 +313,7 @@
       "[JumpBack]StartGame_BackMapPage"
     ],
     "pre_delay": 5000,
-    "post_delay": 20000,
+    "post_delay": 10000,
     "post_wait_freezes": 2000,
     "focus": "SM.TO Touch",
     "roi": [
@@ -328,7 +331,8 @@
       100,
       100
     ],
-    "doc": "点击进入"
+    "doc": "点击进入",
+    "timeout": 120000
   },
   "StartGame_NewChar": {
     "recognition": "OCR",
