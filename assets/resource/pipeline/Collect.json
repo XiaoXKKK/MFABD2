@@ -1297,6 +1297,7 @@
   "Collect_ClickTelepor_TargetClass_PurpleProcess": {
     "recognition": "TemplateMatch",
     "next": [
+      "[Anchor]Arbitrage5",
       "Collect_Skill_Start",
       "Collect_ClickTelepor_TargetClass_PurpleProcess"
     ],
@@ -1317,6 +1318,7 @@
   "Collect_ClickTelepor_TargetClass_White": {
     "recognition": "TemplateMatch",
     "next": [
+      "[Anchor]Arbitrage5",
       "Collect_Skill_Start",
       "Collect_ClickTelepor_TargetClass_White"
     ],
