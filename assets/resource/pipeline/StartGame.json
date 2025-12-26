@@ -16,7 +16,7 @@
   "StartGame_Logo": {
     "recognition": "OCR",
     "next": [
-      "[Jumpback]StartGame_PayFailed",
+      "[JumpBack]StartGame_PayFailed",
       "StartGame_LoadingPage",
       "StartGame_TouchStart",
       "StartGame_Logo"
@@ -38,7 +38,7 @@
     "next": [
       "StartGame_Update",
       "StartGame_UpdateData",
-      "[Jumpback]StartGame_PayFailed",
+      "[JumpBack]StartGame_PayFailed",
       "StartGame_Error_API",
       "StartGame_Error_AM",
       "StartGame_TouchStart",
@@ -217,8 +217,8 @@
   "StartGame_UpdateDataing": {
     "recognition": "OCR",
     "next": [
-      "[Jumpback]StartGame_UpdateDataing",
-      "[Jumpback]StartGame_PayFailed",
+      "[JumpBack]StartGame_UpdateDataing",
+      "[JumpBack]StartGame_PayFailed",
       "StartGame_TouchStart"
     ],
     "on_error": [
@@ -243,7 +243,7 @@
     "next": [
       "StartGame_Update",
       "StartGame_UpdateData",
-      "[Jumpback]StartGame_PayFailed",
+      "[JumpBack]StartGame_PayFailed",
       "StartGame_LinkDown",
       "StartGame_TouchStart",
       "StartGame_LoadingPage",
@@ -298,12 +298,12 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "[Jumpback]StartGame_PayFailed",
+      "[JumpBack]StartGame_PayFailed",
       "StartGame_TouchStart",
-      "[Jumpback]StartGame_PVPSet",
-      "[Jumpback]StartGame_Special",
-      "[Jumpback]StartGame_NewChar",
-      "[Jumpback]StartGame_SeasonSet",
+      "[JumpBack]StartGame_PVPSet",
+      "[JumpBack]StartGame_Special",
+      "[JumpBack]StartGame_NewChar",
+      "[JumpBack]StartGame_SeasonSet",
       "StartGame_SandPlayPage",
       "StartGame_MainMsgBox_Remove",
       "[JumpBack]PVP_PerOperationsMain_Error",
@@ -382,9 +382,12 @@
   },
   "StartGame_SandPlayPage": {
     "recognition": "TemplateMatch",
+    "anchor": "StartGame_Setup_Change",
     "next": [
+      "Setup_Entry4",
+      "Setup_Entry2",
       "StartGame_MainMsgBox_Remove",
-      "[Jumpback]Global_OnceHomeButton",
+      "[JumpBack]Global_OnceHomeButton",
       "[JumpBack]StartGame_BackMapPage"
     ],
     "post_delay": 2000,
@@ -417,8 +420,10 @@
   "StartGame_MainMsgBox_Remove": {
     "recognition": "OCR",
     "action": "Click",
+    "anchor": "StartGame_Setup_Change",
     "next": [
-      "[Jumpback]StartGame_BackMapPage2",
+      "[JumpBack]StartGame_BackMapPage2",
+      "Setup_Entry2",
       "StartGame_BackMapPageOG"
     ],
     "post_delay": 1000,
@@ -456,6 +461,9 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
+      "[JumpBack]StartGame_GoldenColosseum",
+      "[JumpBack]StartGame_GlupyDiner",
+      "[JumpBack]StartGame_FantasiaSouare",
       "StartGame_FinBackMapPage",
       "[JumpBack]StartGame_BackMapPage"
     ],
@@ -481,8 +489,10 @@
   "StartGame_FinBackMapPage": {
     "recognition": "TemplateMatch",
     "next": [
+      "Setup_Entry1",
       "StartGame_PerPetTask"
     ],
+    "anchor": "StartGame_Setup_Change",
     "focus": "SM.返回箱庭成功",
     "roi": [
       1047,
@@ -630,6 +640,55 @@
     ],
     "expected": [
       "确认"
+    ]
+  },
+  "StartGame_GoldenColosseum": {
+    "recognition": "OCR",
+    "roi": [
+      99,
+      613,
+      90,
+      36
+    ],
+    "expected": [
+      "阵形设置"
+    ],
+    "focus": "[WRN]SM.意料外卡带-黄金竞技场",
+    "next": [
+      "Global_BackToPve2#"
+    ]
+  },
+  "StartGame_GlupyDiner": {
+    "recognition": "OCR",
+    "roi": [
+      91,
+      25,
+      144,
+      66
+    ],
+    "expected": [
+      "格鲁菲餐厅"
+    ],
+    "focus": "[WRN]SM.意料外卡带-格鲁菲餐厅",
+    "next": [
+      "Global_BackToPve2#"
+    ]
+  },
+  "StartGame_FantasiaSouare": {
+    "recognition": "OCR",
+    "roi": [
+      122,
+      643,
+      206,
+      43
+    ],
+    "expected": [
+      "聊天内容"
+    ],
+    "focus": "[WRN]SM.意料外卡带-梦幻广场",
+    "doc": "输入聊天内容（最多50字）",
+    "next": [
+      "Global_BackToPve2#"
     ]
   }
 }

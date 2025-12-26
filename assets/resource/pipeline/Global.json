@@ -238,7 +238,8 @@
     "Global_BackToPve2#": {
         "next": [
             "Global_BackToPve2#_ToCardMenu",
-            "[JumpBack]Global_OnceHomeButton"
+            "[JumpBack]Global_OnceHomeButton",
+            "[JumpBack]Global_ToHomePage"
         ],
         "focus": "G.复位卡带开始"
     },

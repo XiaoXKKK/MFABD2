@@ -845,7 +845,6 @@
   "RewardsORG_Busin_FinBackMapPage": {
     "recognition": "TemplateMatch",
     "next": [
-      "[Anchor]Setup_Recard",
       "RewardsORG_Busin_BackHomePage"
     ],
     "focus": "PM.RewardsORG复位完成，结束~",

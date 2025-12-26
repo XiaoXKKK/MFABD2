@@ -1,9 +1,12 @@
 {
     "Setup_Str": {
         "next": [
-            "Setup_ToPve2#_Pre",
-            "[JumpBack]Global_OnceHomeButton"
-        ]
+            "[JumpBack]Setup_ToPve2#_Switch",
+            "[JumpBack]Setup_Main_Switch",
+            "[JumpBack]Setup_Equip_Switch",
+            "[JumpBack]Setup_SetSkill_Switch"
+        ],
+        "doc": "流程开发说明：_Str为总触发器=强制运行所有。| _Entry为选择性入口=按需 | 节点_Switch为开关，运行一次后续操作 | 可根据入口选择需要的操作开关~"
     },
     "Setup_Entry1": {
         "recognition": "TemplateMatch",
@@ -18,11 +21,13 @@
         ],
         "green_mask": true,
         "threshold": 0.6,
-        "focus": "方向键",
         "next": [
-            "Setup_ToPve2#_Pre",
-            "[JumpBack]Global_OnceHomeButton"
-        ]
+            "[JumpBack]Setup_ToPve2#_Switch",
+            "[JumpBack]Setup_Main_Switch",
+            "[JumpBack]Setup_Equip_Switch",
+            "[JumpBack]Setup_SetSkill_Switch"
+        ],
+        "focus": "SMSP.触发设置按需调整,原因:移动方式不应为方向键"
     },
     "Setup_Entry2": {
         "recognition": "ColorMatch",
@@ -45,9 +50,10 @@
         ],
         "count": 10,
         "next": [
-            "Setup_ToPve2#_Pre",
-            "[JumpBack]Global_OnceHomeButton"
+            "[JumpBack]Setup_ToPve2#_Switch",
+            "[JumpBack]Setup_Main_Switch"
         ],
+        "focus": "SMSP.触发设置按需调整,原因:菜单黄点未禁用",
         "doc": "背包或房子黄点"
     },
     "Setup_Entry3": {
@@ -71,49 +77,77 @@
         ],
         "count": 10,
         "next": [
-            "Setup_ToPve2#_Pre",
-            "[JumpBack]Global_OnceHomeButton"
+            "[JumpBack]Setup_ToPve2#_Switch",
+            "[JumpBack]Setup_Main_Switch"
         ],
+        "focus": "SMSP.触发设置按需调整,原因:菜单黄点未禁用",
         "doc": "主页消息通知黄点"
     },
-    "Setup_ToPve2#_Pre": {
-        "next": [
-            "Setup_ToPve2#"
-        ],
-        "recognition": "OCR",
-        "roi": [
-            98,
-            656,
-            66,
-            32
-        ],
-        "expected": [
-            "抽抽乐"
-        ]
-    },
-    "Setup_ToPve2#": {
-        "anchor": "Setup_Recard",
-        "next": [
-            "Setup_ToPve2#_Post",
-            "RewardsORG_Busin_BackHomePage2"
-        ]
-    },
-    "Setup_ToPve2#_Post": {
+    "Setup_Entry4": {
         "recognition": "TemplateMatch",
         "roi": [
-            1122,
-            646,
-            40,
-            38
+            1047,
+            516,
+            107,
+            110
+        ],
+        "template": [
+            "Run.png"
+        ],
+        "green_mask": true,
+        "next": [
+            "[JumpBack]Setup_ToPve2#_Switch",
+            "[JumpBack]Setup_Main_Switch"
+        ],
+        "doc": "进入页面为箱庭",
+        "focus": "SMSP.触发设置按需调整,原因:启动不应默认在箱庭",
+        "max_hit": 1
+    },
+    "Setup_ToPve2#_Switch": {
+        "next": [
+            "Global_BackToPve2#"
+        ],
+        "max_hit": 1
+    },
+    "Setup_Main_Switch": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            1108,
+            637,
+            65,
+            57
         ],
         "template": [
             "pin.png"
         ],
-        "doc": "识别右下图钉-章节主页",
         "next": [
-            "Setup_Main",
-            "[JumpBack]Setup_Main_Into",
-            "[JumpBack]Global_ToHomePage"
+            "Setup_Main_Into_Pre"
+        ],
+        "max_hit": 1
+    },
+    "Setup_Main_Into_Pre": {
+        "recognition": "TemplateMatch",
+        "action": "Click",
+        "next": [
+            "Setup_Main_Into",
+            "Setup_Main_Into_Pre"
+        ],
+        "post_delay": 3000,
+        "focus": "Setup.主设置修改开始",
+        "roi": [
+            1108,
+            637,
+            65,
+            57
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "target": [
+            1186,
+            46,
+            0,
+            0
         ]
     },
     "Setup_Main_Into": {
@@ -134,7 +168,11 @@
             15,
             14
         ],
-        "post_delay": 2000
+        "post_delay": 2000,
+        "next": [
+            "Setup_Main",
+            "Setup_Main_Into"
+        ]
     },
     "Setup_Main": {
         "recognition": "OCR",
@@ -611,16 +649,55 @@
         ],
         "count": 10,
         "next": [
-            "Setup_Equip",
-            "[JumpBack]Setup_Equip_Into",
-            "[JumpBack]Setup_Equip_Per",
-            "[JumpBack]Global_ToHomePage"
+            "[Anchor]StartGame_Setup_Change",
+            "Global_ToSandBox"
         ]
     },
     "Setup_Main_ClothingChange_Chg": {
         "action": "Click",
         "target": "Setup_Main_ClothingChange",
         "post_delay": 3000
+    },
+    "Setup_Equip_Switch": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            1108,
+            637,
+            65,
+            57
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "next": [
+            "Setup_Equip_Into_Pre"
+        ],
+        "max_hit": 1
+    },
+    "Setup_Equip_Into_Pre": {
+        "recognition": "TemplateMatch",
+        "action": "Click",
+        "next": [
+            "Setup_Equip_Into",
+            "Setup_Equip_Into_Pre"
+        ],
+        "post_delay": 3000,
+        "focus": "Setup.装备强化选项修改开始",
+        "roi": [
+            1108,
+            637,
+            65,
+            57
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "target": [
+            1186,
+            46,
+            0,
+            0
+        ]
     },
     "Setup_Equip_Into": {
         "recognition": "OCR",
@@ -640,7 +717,11 @@
             0,
             0
         ],
-        "post_delay": 2000
+        "post_delay": 2000,
+        "next": [
+            "Setup_Equip_Per",
+            "Setup_Equip_Into"
+        ]
     },
     "Setup_Equip_Per": {
         "recognition": "OCR",
@@ -655,11 +736,16 @@
         ],
         "focus": "背包",
         "action": "Click",
+        "post_delay": 2000,
         "target": [
             140,
             199,
             0,
             0
+        ],
+        "next": [
+            "Setup_Equip",
+            "Setup_Equip_Per"
         ]
     },
     "Setup_Equip": {
@@ -1010,9 +1096,24 @@
         "action": "Click",
         "post_delay": 1000,
         "next": [
-            "Setup_SetSkill_Per",
-            "[JumpBack]Global_ToSandBox"
+            "Global_ToSandBox"
         ]
+    },
+    "Setup_SetSkill_Switch": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            1108,
+            637,
+            65,
+            57
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "next": [
+            "Setup_SetSkill_Per"
+        ],
+        "max_hit": 1
     },
     "Setup_SetSkill_Per": {
         "recognition": "TemplateMatch",
@@ -1026,6 +1127,7 @@
             "pin.png"
         ],
         "doc": "准备安放技能",
+        "focus": "Setup.技能位置修改开始",
         "next": [
             "Setup_SetSkill_OpenSklMenu"
         ]

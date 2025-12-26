@@ -1276,22 +1276,46 @@
 			"doc": "自动设好本工具所需的前置设置。",
 			"cases": [
 				{
-					"name": "不要，别动！",
+					"name": "按需",
 					"pipeline_override": {}
+				},
+				{
+					"name": "不要，别动！",
+					"pipeline_override": {
+						"Setup_Entry1": {
+							"enabled": false
+						},
+						"Setup_Entry2": {
+							"enabled": false
+						},
+						"Setup_Entry3": {
+							"enabled": false
+						},
+						"Setup_Entry4": {
+							"enabled": false
+						}
+					}
 				},
 				{
 					"name": "强制启用",
 					"pipeline_override": {
 						"StartGame_FinBackMapPage": {
 							"next": [
-								"StartGame_PerPetTask",
-								"Setup_Str"
+								"[JumpBack]Setup_Str",
+								"StartGame_PerPetTask"
 							]
 						},
-						"StartGame_PerPetTask": {
-							"next": [
-								"Setup_Str"
-							]
+						"Setup_Entry1": {
+							"enabled": false
+						},
+						"Setup_Entry2": {
+							"enabled": false
+						},
+						"Setup_Entry3": {
+							"enabled": false
+						},
+						"Setup_Entry4": {
+							"enabled": false
 						}
 					}
 				}
