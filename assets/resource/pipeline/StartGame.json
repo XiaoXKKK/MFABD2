@@ -469,6 +469,10 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
+      "[JumpBack]StartGame_PVPSet",
+      "[JumpBack]StartGame_Special",
+      "[JumpBack]StartGame_NewChar",
+      "[JumpBack]StartGame_SeasonSet",
       "[JumpBack]StartGame_GoldenColosseum",
       "[JumpBack]StartGame_GlupyDiner",
       "[JumpBack]StartGame_FantasiaSouare",
