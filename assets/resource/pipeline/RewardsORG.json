@@ -1,106 +1,47 @@
 {
   "RewardsORG_HomePage": {
     "next": [
-      "RewardsORG_HomePageHub",
-      "RewardsORG_HomePageHub1",
-      "RewardsORG_HomePageHub2"
+      "[JumpBack]RewardsORG_Union_Hub",
+      "[JumpBack]RewardsORG_Busin_Hub",
+      "[JumpBack]RewardsORG_Square_Hub"
     ]
   },
-  "RewardsORG_HomePageHub": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
+  "RewardsORG_Union_Hub": {
+    "recognition": "OCR",
+    "next": [
+      "RewardsORG_Union_Hub_Post",
+      "[JumpBack]Global_ToHomePage"
+    ],
+    "focus": "GOM.公会签到组件",
+    "roi": [
+      98,
+      656,
+      66,
+      32
+    ],
+    "expected": [
+      "抽抽乐"
+    ],
+    "doc": "识别左下抽抽乐"
+  },
+  "RewardsORG_Union_Hub_Post": {
+    "recognition": "OCR",
     "next": [
       "RewardsORG_EnterUnion_img",
-      "RewardsORG_EnterUnion",
-      "RewardsORG_HomePageHub",
-      "RewardsORG_HomePageHub1",
-      "RewardsORG_HomePageHub2"
-    ],
-    "post_delay": 2000,
-    "focus": "G=0.页面预期内，普通启动",
-    "roi": [
-      1047,
-      516,
-      107,
-      110
-    ],
-    "template": [
-      "Run.png"
-    ],
-    "green_mask": true,
-    "target": [
-      1186,
-      46,
-      0,
-      0
-    ],
-    "doc": "找到run-点击返回主页"
-  },
-  "RewardsORG_HomePageHub1": {
-    "recognition": "TemplateMatch",
-    "next": [
-      "RewardsORG_EnterUnion",
-      "RewardsORG_EnterUnion_img",
-      "RewardsORG_HomePageHub",
-      "RewardsORG_HomePageHub1"
-    ],
-    "post_delay": 2000,
-    "focus": "G=0.页面预期内，普通启动。BM.箱庭地图pin已确认",
-    "roi": [
-      1108,
-      637,
-      65,
-      57
-    ],
-    "template": [
-      "pin.png"
-    ]
-  },
-  "RewardsORG_HomePageHub2": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
-      "RewardsORG_HomePageHub",
-      "RewardsORG_HomePageHub1",
-      "RewardsORG_HomePageHub2"
-    ],
-    "post_delay": 2000,
-    "focus": "G=1.页面非预期，点击返回按钮",
-    "roi": [
-      1,
-      1,
-      231,
-      124
-    ],
-    "template": [
-      "BackButGe.png",
-      "BackButGe2.png"
-    ],
-    "green_mask": true,
-    "doc": "其他页面，返回按钮"
-  },
-  "RewardsORG_BackHomePage": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
-    "next": [
       "RewardsORG_EnterUnion"
     ],
+    "focus": "GOM.公会签到组件",
     "roi": [
-      1122,
-      646,
-      40,
-      38
+      98,
+      656,
+      66,
+      32
     ],
-    "template": [
-      "pin.png"
+    "expected": [
+      "抽抽乐"
     ],
-    "target": [
-      1186,
-      46,
-      0,
-      0
-    ],
-    "doc": "找到图钉-点击返回主页-（废弃）"
+    "timeout": 5000,
+    "doc": "识别左下抽抽乐"
   },
   "RewardsORG_EnterUnion": {
     "recognition": "OCR",
@@ -194,10 +135,8 @@
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "RewardsORG_BusinReward",
-      "RewardsORG_BusinReward_img",
       "RewardsORG_UnionBack2",
-      "[JumpBack]Global_OnceHomeButton"
+      "Global_ToHomePage"
     ],
     "post_delay": 3000,
     "roi": [
@@ -216,6 +155,30 @@
       0
     ],
     "doc": "工会返回主页"
+  },
+  "RewardsORG_Busin_Hub": {
+    "next": [
+      "RewardsORG_Busin_Hub_Post",
+      "[JumpBack]Global_ToHomePage"
+    ]
+  },
+  "RewardsORG_Busin_Hub_Post": {
+    "recognition": "OCR",
+    "next": [
+      "RewardsORG_BusinReward_img",
+      "RewardsORG_BusinReward"
+    ],
+    "focus": "GOM.公会签到组件",
+    "roi": [
+      98,
+      656,
+      66,
+      32
+    ],
+    "expected": [
+      "抽抽乐"
+    ],
+    "doc": "识别左下抽抽乐"
   },
   "RewardsORG_BusinReward": {
     "recognition": "OCR",
@@ -404,7 +367,7 @@
     "next": [
       "RewardsORG_Busin_GiftGet",
       "RewardsORG_Busin_Quick_BackPVEPage_Str",
-      "RewardsORG_Busin_BackPVEPage"
+      "Global_BackToPve2#"
     ],
     "post_delay": 3000,
     "focus": "GBM.圣石发现",
@@ -430,7 +393,7 @@
     "recognition": "OCR",
     "next": [
       "RewardsORG_Busin_Quick_BackPVEPage_Str",
-      "RewardsORG_Busin_BackPVEPage"
+      "Global_BackToPve2#"
     ],
     "focus": "GBM.无圣石情况",
     "roi": [
@@ -443,164 +406,26 @@
       "常客"
     ]
   },
-  "RewardsORG_Busin_Back": {
-    "action": "Click",
-    "next": [
-      "RewardsORG_Busin_ChapterMenu"
-    ],
-    "post_delay": 5000,
-    "focus": "GOM.离开餐馆卡带",
-    "target": [
-      1180,
-      45,
-      0,
-      0
-    ],
-    "doc": "返回主页面，之后流程结束。(废弃，入口已删除。暂留存观察）"
-  },
-  "RewardsORG_Busin_ChapterMenu": {
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "RewardsORG_Busin_ToPvp"
-    ],
-    "post_delay": 3000,
-    "post_wait_freezes": 1000,
-    "focus": "GOM.主页面",
-    "roi": [
-      98,
-      656,
-      66,
-      32
-    ],
-    "expected": [
-      "抽抽乐"
-    ],
-    "target": [
-      1111,
-      650,
-      0,
-      0
-    ]
-  },
-  "RewardsORG_Busin_ToPvp": {
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "RewardsORG_Busin_BackHomePage"
-    ],
-    "post_delay": 6000,
-    "focus": "GOM.进入PVP卡带",
-    "roi": [
-      75,
-      315,
-      259,
-      202
-    ],
-    "expected": [
-      "PvP"
-    ],
-    "target_offset": [
-      -10,
-      -100,
-      0,
-      0
-    ]
-  },
-  "RewardsORG_Busin_BackHomePage": {
+  "RewardsORG_Busin_Quick_BackPVEPage_Str": {
     "recognition": "TemplateMatch",
-    "post_delay": 1000,
-    "focus": "GOM.卡带复位成功",
+    "action": "Click",
+    "next": [
+      "Global_BackToQC1_Menu",
+      "RewardsORG_Busin_Quick_BackPVEPage_Str"
+    ],
+    "post_delay": 2000,
+    "focus": "GO.快速卡带离开餐馆",
     "roi": [
-      1122,
-      646,
-      40,
-      38
+      74,
+      81,
+      285,
+      197
     ],
     "template": [
-      "pin.png"
+      "BusinQuickIcoGE.png"
     ],
-    "target": [
-      1186,
-      46,
-      0,
-      0
-    ],
-    "doc": "找到图钉-点击返回主页"
-  },
-  "RewardsORG_BackHomePage2": {
-    "action": "Click",
-    "next": [
-      "RewardsORG_FinRewardsORG"
-    ],
-    "post_delay": 3000,
-    "roi": [
-      215,
-      19,
-      122,
-      42
-    ],
-    "target": [
-      120,
-      35,
-      0,
-      0
-    ],
-    "doc": "点击领取全部返回"
-  },
-  "RewardsORG_FinRewardsORG": {
-    "recognition": "OCR",
-    "next": [
-      "RewardsORG_BackMapPage"
-    ],
-    "focus": "GOM.‘任务’返回主页面",
-    "roi": [
-      98,
-      656,
-      66,
-      32
-    ],
-    "expected": [
-      "抽抽乐"
-    ],
-    "doc": "识别左下抽抽乐"
-  },
-  "RewardsORG_BackMapPage": {
-    "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "RewardsORG_FinBackMapPage"
-    ],
-    "roi": [
-      98,
-      656,
-      66,
-      32
-    ],
-    "expected": [
-      "抽抽乐"
-    ],
-    "target": [
-      135,
-      40,
-      0,
-      0
-    ],
-    "doc": "识别左下抽抽乐-返回地图页"
-  },
-  "RewardsORG_FinBackMapPage": {
-    "recognition": "TemplateMatch",
-    "next": [],
-    "roi": [
-      1122,
-      646,
-      40,
-      38
-    ],
-    "template": [
-      "pin.png"
-    ],
-    "doc": "识别右下图钉-章节主页"
+    "green_mask": true,
+    "doc": "目前roi位置为餐馆"
   },
   "RewardsORG_ClickOnce": {
     "action": "Click",
@@ -612,77 +437,72 @@
       0
     ]
   },
-  "RewardsORG_Busin_BackPVEPage": {
-    "recognition": "TemplateMatch",
-    "action": "Click",
+  "RewardsORG_Square_Hub": {
     "next": [
-      "RewardsORG_Busin_BackHomePage2",
-      "RewardsORG_Busin_BackPVEPage",
-      "[JumpBack]Global_BackPageHub_Once"
-    ],
-    "post_delay": 2000,
-    "focus": "PM.开始离开RewardsORG卡带-传统",
+      "RewardsORG_Square_Hub_Post",
+      "[JumpBack]Global_ToSandBox"
+    ]
+  },
+  "RewardsORG_Square_Hub_Post": {
+    "recognition": "TemplateMatch",
     "roi": [
-      1132,
-      4,
-      122,
-      77
+      1108,
+      637,
+      65,
+      57
     ],
     "template": [
-      "MainHomeIceGE.png"
+      "pin.png"
     ],
-    "green_mask": true
+    "next": [
+      "RewardsORG_Square_Str"
+    ]
   },
-  "RewardsORG_Busin_Quick_BackPVEPage_Str": {
+  "RewardsORG_Square_Str": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "RewardsORG_Busin_Quick_BackPVEPage_Menu",
-      "RewardsORG_Busin_Quick_BackPVEPage_Str"
+      "RewardsORG_Square_Menu",
+      "RewardsORG_Square_Str"
     ],
     "post_delay": 2000,
-    "focus": "GBM.快速卡带离开餐馆",
+    "focus": "RM.快速卡带",
     "roi": [
-      74,
-      81,
-      285,
-      197
+      294,
+      562,
+      343,
+      158
     ],
     "template": [
       "BusinQuickIcoGE.png"
     ],
     "green_mask": true
   },
-  "RewardsORG_Busin_Quick_BackPVEPage_Menu": {
+  "RewardsORG_Square_Menu": {
     "recognition": "OCR",
     "action": "Click",
     "next": [
-      "RewardsORG_Busin_Quick_BackPVEPage_Menu_Cor",
-      "RewardsORG_Busin_Quick_BackPVEPage_Menu"
+      "RewardsORG_Square_Menu_Cor",
+      "RewardsORG_Square_Menu"
     ],
-    "focus": "GBM.快速卡带离开餐馆-菜单模式",
+    "focus": "GO.快速卡带-菜单模式",
     "roi": [
-      185,
-      530,
-      173,
-      51
+      542,
+      535,
+      149,
+      42
     ],
     "expected": [
-      "剧情游戏卡"
+      "玩法游戏卡"
     ]
   },
-  "RewardsORG_Busin_Quick_BackPVEPage_Menu_Cor": {
+  "RewardsORG_Square_Menu_Cor": {
     "recognition": "ColorMatch",
     "next": [
-      "RewardsORG_Busin_Quick_BackPVEPage_Pvemap"
+      "RewardsORG_Square_ToSquare"
     ],
-    "focus": "GBM.菜单模式-色核通过",
-    "roi": [
-      185,
-      530,
-      173,
-      51
-    ],
+    "focus": "GO.菜单模式-色核通过",
+    "roi": "RewardsORG_Square_Menu",
     "count": 200,
     "lower": [
       203,
@@ -695,22 +515,22 @@
       255
     ]
   },
-  "RewardsORG_Busin_Quick_BackPVEPage_Pvemap": {
+  "RewardsORG_Square_ToSquare": {
     "recognition": "TemplateMatch",
     "action": "Click",
     "next": [
-      "RewardsORG_Busin_BackHomePage",
-      "RewardsORG_Busin_Quick_BackPVEPage_Pvemap"
+      "RewardsORG_FantasiaSquare",
+      "RewardsORG_Square_ToSquare"
     ],
     "post_delay": 4000,
     "roi": [
-      51,
-      582,
-      873,
-      133
+      18,
+      588,
+      1227,
+      79
     ],
     "template": [
-      "KadaiGe.png"
+      "Qcard_Square.png"
     ],
     "green_mask": true,
     "target_offset": [
@@ -720,143 +540,83 @@
       0
     ]
   },
-  "RewardsORG_Busin_BackHomePage2": {
+  "RewardsORG_FantasiaSquare": {
     "recognition": "OCR",
-    "action": "Click",
-    "next": [
-      "RewardsORG_Busin_PVEBook_Menu",
-      "RewardsORG_Busin_BackHomePage2"
-    ],
     "roi": [
-      89,
-      655,
-      77,
-      37
+      122,
+      643,
+      206,
+      43
     ],
     "expected": [
-      "抽抽乐"
+      "聊天内容"
     ],
-    "target": [
-      1111,
-      650,
-      0,
-      0
-    ],
-    "doc": "识别左下抽抽乐-主页-点击选择章节"
-  },
-  "RewardsORG_Busin_PVEBook_Menu": {
-    "recognition": "OCR",
-    "expected": [
-      "游戏卡珍藏集"
-    ],
-    "roi": [
-      175,
-      8,
-      176,
-      62
-    ],
+    "focus": "ROM.梦幻广场",
+    "doc": "输入聊天内容（最多50字）",
     "next": [
-      "RewardsORG_Busin_TouchPVEBook",
-      "[JumpBack]RewardsORG_Busin_PVEBookSwipe_Lift",
-      "[JumpBack]RewardsORG_Busin_PVEBookSwipe"
+      "RewardsORG_DailyIco"
+    ],
+    "timeout": 5000,
+    "on_error": [
+      "Global_BackToQC1"
     ]
   },
-  "RewardsORG_Busin_PVEBookSwipe": {
-    "recognition": "OCR",
-    "action": "Swipe",
-    "roi": [
-      118,
-      505,
-      95,
-      42
-    ],
-    "expected": [
-      "活动游戏卡"
-    ],
-    "begin": [
-      30,
-      300,
-      0,
-      0
-    ],
-    "end": [
-      30,
-      700,
-      0,
-      0
-    ],
-    "doc": "识别活动游戏卡-上划"
-  },
-  "RewardsORG_Busin_PVEBookSwipe_Lift": {
-    "recognition": "OCR",
-    "action": "Swipe",
-    "duration": 500,
-    "end_hold": 800,
-    "post_delay": 1500,
-    "roi": [
-      111,
-      95,
-      105,
-      37
-    ],
-    "expected": [
-      "剧情游戏卡"
-    ],
-    "begin": [
-      150,
-      215,
-      0,
-      0
-    ],
-    "end": [
-      1264,
-      215,
-      0,
-      0
-    ],
-    "doc": "识别活动游戏卡-上划"
-  },
-  "RewardsORG_Busin_TouchPVEBook": {
+  "RewardsORG_DailyIco": {
     "recognition": "TemplateMatch",
+    "roi": [
+      968,
+      76,
+      56,
+      256
+    ],
+    "template": [
+      "Square_DailyIco.png"
+    ],
     "action": "Click",
     "target_offset": [
-      -20,
-      25,
+      3,
+      0,
       0,
       0
     ],
     "next": [
-      "RewardsORG_Busin_FinBackMapPage",
-      "RewardsORG_Busin_TouchPVEBook"
-    ],
-    "post_delay": 5000,
-    "focus": "PM.复位用卡带已找到",
-    "roi": [
-      385,
-      143,
-      117,
-      69
-    ],
-    "template": [
-      "pve2.png"
-    ],
-    "doc": "点击PVE本子2"
+      "RewardsORG_Pray",
+      "[JumpBack]RewardsORG_OnFoot_LoopFoot",
+      "RewardsORG_DailyIco"
+    ]
   },
-  "RewardsORG_Busin_FinBackMapPage": {
+  "RewardsORG_OnFoot_LoopFoot": {
     "recognition": "TemplateMatch",
-    "next": [
-      "RewardsORG_Busin_BackHomePage"
-    ],
-    "focus": "PM.RewardsORG复位完成，结束~",
-    "roi": [
-      1122,
-      646,
-      40,
-      38
-    ],
     "template": [
-      "pin.png"
+      "Square_misstion_Nvi.png"
     ],
-    "doc": "识别右下图钉-章节主页"
+    "roi": [
+      1168,
+      106,
+      69,
+      247
+    ],
+    "action": "DoNothing",
+    "post_delay": 5000,
+    "focus": "ROM.导航中...",
+    "timeout": 2000
+  },
+  "RewardsORG_Pray": {
+    "recognition": "OCR",
+    "roi": [
+      545,
+      75,
+      201,
+      91
+    ],
+    "expected": [
+      "向女神像许愿"
+    ],
+    "action": "Click",
+    "post_delay": 2000,
+    "next": [
+      "RewardsORG_Pray",
+      "Global_BackToQC1"
+    ]
   }
 }
