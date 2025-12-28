@@ -303,12 +303,12 @@
     "next": [
       "[JumpBack]StartGame_PayFailed",
       "StartGame_TouchStart",
+      "StartGame_MainMsgBox_Remove",
       "[JumpBack]StartGame_PVPSet",
       "[JumpBack]StartGame_Special",
       "[JumpBack]StartGame_NewChar",
       "[JumpBack]StartGame_SeasonSet",
       "StartGame_SandPlayPage",
-      "StartGame_MainMsgBox_Remove",
       "[JumpBack]PVP_PerOperationsMain_Error",
       "[JumpBack]StartGame_BackMapPage"
     ],
@@ -608,10 +608,16 @@
       "奖励已发放至"
     ],
     "target": [
-      790,
-      618,
-      0,
-      0
+      39,
+      444,
+      30,
+      21
+    ],
+    "roi": [
+      304,
+      164,
+      948,
+      542
     ]
   },
   "StartGame_LinkDown": {
