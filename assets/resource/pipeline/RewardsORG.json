@@ -7,22 +7,11 @@
     ]
   },
   "RewardsORG_Union_Hub": {
-    "recognition": "OCR",
     "next": [
       "RewardsORG_Union_Hub_Post",
       "[JumpBack]Global_ToHomePage"
     ],
-    "focus": "GOM.公会签到组件",
-    "roi": [
-      98,
-      656,
-      66,
-      32
-    ],
-    "expected": [
-      "抽抽乐"
-    ],
-    "doc": "识别左下抽抽乐"
+    "max_hit": 1
   },
   "RewardsORG_Union_Hub_Post": {
     "recognition": "OCR",
@@ -160,7 +149,8 @@
     "next": [
       "RewardsORG_Busin_Hub_Post",
       "[JumpBack]Global_ToHomePage"
-    ]
+    ],
+    "max_hit": 1
   },
   "RewardsORG_Busin_Hub_Post": {
     "recognition": "OCR",
@@ -168,7 +158,7 @@
       "RewardsORG_BusinReward_img",
       "RewardsORG_BusinReward"
     ],
-    "focus": "GOM.公会签到组件",
+    "focus": "GOM.餐馆日结组件",
     "roi": [
       98,
       656,
@@ -441,7 +431,8 @@
     "next": [
       "RewardsORG_Square_Hub_Post",
       "[JumpBack]Global_ToSandBox"
-    ]
+    ],
+    "max_hit": 1
   },
   "RewardsORG_Square_Hub_Post": {
     "recognition": "TemplateMatch",
@@ -454,6 +445,7 @@
     "template": [
       "pin.png"
     ],
+    "focus": "GOM.广场打卡组件",
     "next": [
       "RewardsORG_Square_Str"
     ]
