@@ -378,12 +378,12 @@
         ],
         "doc": "识别右下图钉-章节主页"
     },
-    "Global_BackToQC1_Str": {
+    "Global_BackToQC1": {
         "recognition": "TemplateMatch",
         "action": "Click",
         "next": [
             "Global_BackToQC1_Menu",
-            "Global_BackToQC1_Str"
+            "Global_BackToQC1"
         ],
         "post_delay": 2000,
         "focus": "GO.快速卡带-复位到QC1",
