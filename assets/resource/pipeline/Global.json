@@ -234,5 +234,113 @@
         ],
         "green_mask": true,
         "doc": "找到run-点击返回主页"
+    },
+    "Global_BackToQC1_Str": {
+        "recognition": "TemplateMatch",
+        "action": "Click",
+        "next": [
+            "Global_BackToQC1_Menu",
+            "Global_BackToQC1_Str"
+        ],
+        "post_delay": 2000,
+        "focus": "GO.快速卡带-复位到QC1",
+        "roi": [
+            294,
+            562,
+            343,
+            158
+        ],
+        "template": [
+            "BusinQuickIcoGE.png"
+        ],
+        "green_mask": true
+    },
+    "Global_BackToQC1_Menu": {
+        "recognition": "OCR",
+        "action": "Click",
+        "next": [
+            "Global_BackToQC1_Menu_Cor",
+            "Global_BackToQC1_Menu"
+        ],
+        "focus": "GO.快速卡带离开-菜单模式",
+        "roi": [
+            185,
+            530,
+            173,
+            51
+        ],
+        "expected": [
+            "剧情游戏卡"
+        ]
+    },
+    "Global_BackToQC1_Menu_Cor": {
+        "recognition": "ColorMatch",
+        "next": [
+            "Global_BackToQC1_Pvemap"
+        ],
+        "focus": "GO.菜单模式-色核通过",
+        "roi": [
+            185,
+            530,
+            173,
+            51
+        ],
+        "count": 200,
+        "lower": [
+            203,
+            203,
+            202
+        ],
+        "upper": [
+            255,
+            255,
+            255
+        ]
+    },
+    "Global_BackToQC1_Pvemap": {
+        "recognition": "TemplateMatch",
+        "action": "Click",
+        "next": [
+            "Global_BackToQC1_Fin",
+            "Global_BackToQC1_Pvemap"
+        ],
+        "post_delay": 4000,
+        "roi": [
+            51,
+            582,
+            873,
+            133
+        ],
+        "template": [
+            "KadaiGe.png"
+        ],
+        "green_mask": true,
+        "target_offset": [
+            -35,
+            25,
+            0,
+            0
+        ]
+    },
+    "Global_BackToQC1_Fin": {
+        "recognition": "TemplateMatch",
+        "post_delay": 1000,
+        "focus": "GO.卡带复位成功",
+        "roi": [
+            1122,
+            646,
+            40,
+            38
+        ],
+        "template": [
+            "pin.png"
+        ],
+        "target": [
+            1186,
+            46,
+            0,
+            0
+        ],
+        "doc": "找到图钉-点击返回主页"
     }
 }
