@@ -1142,54 +1142,6 @@
     ],
     "doc": "中断发现点数超过200但用户决定保留的情况"
   },
-  "GachaADV_HaveNotAnyRed": {
-    "focus": "GAB.[INT]卡池内存无红点",
-    "recognition": "TemplateMatch",
-    "template": [
-      "GACHA_Free.ReservedRights_Red_GE.png"
-    ],
-    "green_mask": true,
-    "roi": [
-      635,
-      434,
-      539,
-      221
-    ],
-    "threshold": 0.75,
-    "inverse": true,
-    "next": [
-      "GachaADV_SpecialCountButton"
-    ],
-    "doc": "中断发现点数超过200但用户决定保留的情况"
-  },
-  "GachaADV_SpecialCountButton": {
-    "recognition": "TemplateMatch",
-    "template": [
-      "GACHA_IntOut.png"
-    ],
-    "roi": [
-      720,
-      382,
-      183,
-      72
-    ],
-    "action": "Click",
-    "post_delay": 1000,
-    "next": [
-      "GachaADV_SpecialCountButton_Out",
-      "GachaADV_SpecialCountButton"
-    ]
-  },
-  "GachaADV_SpecialCountButton_Out": {
-    "recognition": "OCR",
-    "expected": "帮助",
-    "roi": [
-      533,
-      109,
-      218,
-      163
-    ]
-  },
   "GachaADV_Slip": {
     "recognition": "OCR",
     "next": [
