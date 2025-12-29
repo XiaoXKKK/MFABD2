@@ -4,7 +4,8 @@
       "[JumpBack]RewardsORG_Union_Hub",
       "[JumpBack]RewardsORG_Busin_Hub",
       "[JumpBack]RewardsORG_Square_Hub"
-    ]
+    ],
+    "timeout": 2000
   },
   "RewardsORG_Union_Hub": {
     "next": [
@@ -137,6 +138,7 @@
     "expected": [
       "公会"
     ],
+    "timeout": 5000,
     "target": [
       120,
       35,
@@ -184,8 +186,8 @@
     "roi": [
       85,
       228,
-      98,
-      34
+      91,
+      29
     ],
     "expected": [
       "经营管理"
@@ -204,13 +206,14 @@
     "post_delay": 1000,
     "focus": "GOM.餐馆结算(IMG)-主界面",
     "roi": [
-      85,
-      228,
+      87,
+      174,
       98,
-      34
+      81
     ],
     "template": [
-      "MainBotmBusinGE.png"
+      "MainBotmBusinGE.png",
+      "MainBotmBusin_F_GE.png"
     ],
     "doc": "识别点击餐馆图像"
   },
@@ -546,6 +549,7 @@
     "focus": "ROM.梦幻广场",
     "doc": "输入聊天内容（最多50字）",
     "next": [
+      "RewardsORG_Pray",
       "RewardsORG_DailyIco"
     ],
     "timeout": 5000,
