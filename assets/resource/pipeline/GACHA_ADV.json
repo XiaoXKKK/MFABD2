@@ -81,9 +81,9 @@
     "recognition": "OCR",
     "focus": "GA.进入抽抽乐页面",
     "roi": [
-      912,
+      1046,
       416,
-      267,
+      133,
       97
     ],
     "expected": [
@@ -358,9 +358,9 @@
     "green_mask": true,
     "roi": [
       835,
-      415,
+      521,
       349,
-      239
+      133
     ],
     "next": [
       "GachaADV_Location1_90LotPost",
@@ -501,9 +501,9 @@
     "green_mask": true,
     "roi": [
       835,
-      415,
+      521,
       349,
-      239
+      133
     ],
     "next": [
       "GachaADV_Location2_90LotPost",
@@ -638,9 +638,9 @@
     "green_mask": true,
     "roi": [
       835,
-      415,
+      521,
       349,
-      239
+      133
     ],
     "next": [
       "GachaADV_Location3_90LotPost",
@@ -771,9 +771,9 @@
     "green_mask": true,
     "roi": [
       835,
-      415,
+      521,
       349,
-      239
+      133
     ],
     "next": [
       "GachaADV_Location4_90LotPost",
@@ -900,9 +900,9 @@
     "green_mask": true,
     "roi": [
       835,
-      415,
+      521,
       349,
-      239
+      133
     ],
     "next": [
       "GachaADV_Location5_90LotPost",
