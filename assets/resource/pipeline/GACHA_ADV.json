@@ -345,6 +345,7 @@
     "post_delay": 500,
     "next": [
       "GachaADV_Location1_Ck",
+      "GachaADV_Special_ReservedRights_1",
       "GachaADV_Location1",
       "[JumpBack]GachaADV_SkipPV"
     ]
@@ -464,6 +465,7 @@
     "post_delay": 500,
     "next": [
       "GachaADV_Location2_Ck",
+      "GachaADV_Special_ReservedRights_2",
       "GachaADV_Location2",
       "[JumpBack]GachaADV_SkipPV"
     ]
@@ -579,6 +581,7 @@
     "post_delay": 500,
     "next": [
       "GachaADV_Location3_Ck",
+      "GachaADV_Special_ReservedRights_3",
       "GachaADV_Location3",
       "[JumpBack]GachaADV_SkipPV"
     ]
@@ -691,6 +694,7 @@
     "post_delay": 500,
     "next": [
       "GachaADV_Location4_Ck",
+      "GachaADV_Special_ReservedRights_4",
       "GachaADV_Location4",
       "[JumpBack]GachaADV_SkipPV"
     ]
@@ -800,6 +804,7 @@
     "post_delay": 500,
     "next": [
       "GachaADV_Location5_Ck",
+      "GachaADV_Special_ReservedRights_5",
       "GachaADV_Location5",
       "[JumpBack]GachaADV_SkipPV"
     ]
@@ -1042,7 +1047,7 @@
       "Global_ToHomePage"
     ]
   },
-  "GachaADV_Special_ReservedRights": {
+  "GachaADV_Special_ReservedRights_1": {
     "focus": "GAB.[INT]卡池内存在特殊红点",
     "recognition": "TemplateMatch",
     "template": [
@@ -1057,7 +1062,83 @@
     ],
     "threshold": 0.7,
     "next": [
-      "GachaADV_SpecialCountButton"
+      "GachaADV_Location2_Pre"
+    ],
+    "doc": "中断发现点数超过200但用户决定保留的情况"
+  },
+  "GachaADV_Special_ReservedRights_2": {
+    "focus": "GAB.[INT]卡池内存在特殊红点",
+    "recognition": "TemplateMatch",
+    "template": [
+      "GACHA_Special.ReservedRights_Red_GE.png"
+    ],
+    "green_mask": true,
+    "roi": [
+      721,
+      210,
+      462,
+      297
+    ],
+    "threshold": 0.7,
+    "next": [
+      "GachaADV_Location3_Pre"
+    ],
+    "doc": "中断发现点数超过200但用户决定保留的情况"
+  },
+  "GachaADV_Special_ReservedRights_3": {
+    "focus": "GAB.[INT]卡池内存在特殊红点",
+    "recognition": "TemplateMatch",
+    "template": [
+      "GACHA_Special.ReservedRights_Red_GE.png"
+    ],
+    "green_mask": true,
+    "roi": [
+      721,
+      210,
+      462,
+      297
+    ],
+    "threshold": 0.7,
+    "next": [
+      "GachaADV_Location4_Pre"
+    ],
+    "doc": "中断发现点数超过200但用户决定保留的情况"
+  },
+  "GachaADV_Special_ReservedRights_4": {
+    "focus": "GAB.[INT]卡池内存在特殊红点",
+    "recognition": "TemplateMatch",
+    "template": [
+      "GACHA_Special.ReservedRights_Red_GE.png"
+    ],
+    "green_mask": true,
+    "roi": [
+      721,
+      210,
+      462,
+      297
+    ],
+    "threshold": 0.7,
+    "next": [
+      "GachaADV_Location5_Pre"
+    ],
+    "doc": "中断发现点数超过200但用户决定保留的情况"
+  },
+  "GachaADV_Special_ReservedRights_5": {
+    "focus": "GAB.[INT]卡池内存在特殊红点",
+    "recognition": "TemplateMatch",
+    "template": [
+      "GACHA_Special.ReservedRights_Red_GE.png"
+    ],
+    "green_mask": true,
+    "roi": [
+      721,
+      210,
+      462,
+      297
+    ],
+    "threshold": 0.7,
+    "next": [
+      "GachaADV_LocationEnd_Pre"
     ],
     "doc": "中断发现点数超过200但用户决定保留的情况"
   },
