@@ -380,10 +380,8 @@
       "查看概率"
     ],
     "next": [
-      "GachaADV_Location2_Pre",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_Location2_Pre"
     ],
     "timeout": 3000,
     "on_error": [
@@ -403,47 +401,25 @@
       "付费抽目标卡池"
     ],
     "next": [
-      "GachaADV_Location2_Pre",
       "[JumpBack]GachaADV_PaidDiamond_90LotFind_Tp1",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_Location2_Pre"
     ]
   },
   "GachaADV_Location2_Pre": {
-    "recognition": "OCR",
-    "action": "Click",
-    "target": [
-      868,
-      161,
-      0,
-      0
-    ],
-    "expected": "帮助",
-    "roi": [
-      533,
-      109,
-      218,
-      163
-    ],
-    "post_delay": 500,
     "next": [
-      "GachaADV_Location2_Pre",
       "GachaADV_Location2_NoPool_Clr",
       "GachaADV_Location2_NoPool_Tmp",
       "GachaADV_Location2"
     ],
     "timeout": 3000,
     "on_error": [
-      "GachaADV_Location3_Pre",
       "GachaADV_Location3_NoPool_Clr",
       "GachaADV_Location3_NoPool_Tmp",
       "GachaADV_Location3",
-      "GachaADV_Location4_Pre",
       "GachaADV_Location4_NoPool_Clr",
       "GachaADV_Location4_NoPool_Tmp",
       "GachaADV_Location4",
-      "GachaADV_Location5_Pre",
       "GachaADV_Location5_NoPool_Clr",
       "GachaADV_Location5_NoPool_Tmp",
       "GachaADV_Location5",
@@ -523,10 +499,8 @@
       "查看概率"
     ],
     "next": [
-      "GachaADV_Location3_Pre",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_Location3_Pre"
     ],
     "timeout": 3000,
     "on_error": [
@@ -546,42 +520,22 @@
       "付费抽目标卡池"
     ],
     "next": [
-      "GachaADV_Location3_Pre",
       "[JumpBack]GachaADV_PaidDiamond_90LotFind_Tp1",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_Location3_Pre"
     ]
   },
   "GachaADV_Location3_Pre": {
-    "recognition": "OCR",
-    "action": "Click",
-    "target": [
-      868,
-      161,
-      0,
-      0
-    ],
-    "expected": "帮助",
-    "roi": [
-      533,
-      109,
-      218,
-      163
-    ],
     "next": [
-      "GachaADV_Location3_Pre",
       "GachaADV_Location3_NoPool_Clr",
       "GachaADV_Location3_NoPool_Tmp",
       "GachaADV_Location3"
     ],
     "timeout": 3000,
     "on_error": [
-      "GachaADV_Location4_Pre",
       "GachaADV_Location4_NoPool_Clr",
       "GachaADV_Location4_NoPool_Tmp",
       "GachaADV_Location4",
-      "GachaADV_Location5_Pre",
       "GachaADV_Location5_NoPool_Clr",
       "GachaADV_Location5_NoPool_Tmp",
       "GachaADV_Location5",
@@ -660,10 +614,8 @@
       "查看概率"
     ],
     "next": [
-      "GachaADV_Location4_Pre",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_Location4_Pre"
     ],
     "timeout": 3000,
     "on_error": [
@@ -683,38 +635,19 @@
       "付费抽目标卡池"
     ],
     "next": [
-      "GachaADV_Location4_Pre",
       "[JumpBack]GachaADV_PaidDiamond_90LotFind_Tp1",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_Location4_Pre"
     ]
   },
   "GachaADV_Location4_Pre": {
-    "recognition": "OCR",
-    "action": "Click",
-    "target": [
-      868,
-      161,
-      0,
-      0
-    ],
-    "expected": "帮助",
-    "roi": [
-      533,
-      109,
-      218,
-      163
-    ],
     "next": [
-      "GachaADV_Location4_Pre",
       "GachaADV_Location4_NoPool_Clr",
       "GachaADV_Location4_NoPool_Tmp",
       "GachaADV_Location4"
     ],
     "timeout": 3000,
     "on_error": [
-      "GachaADV_Location5_Pre",
       "GachaADV_Location5_NoPool_Clr",
       "GachaADV_Location5_NoPool_Tmp",
       "GachaADV_Location5",
@@ -793,11 +726,9 @@
       "付费抽目标卡池"
     ],
     "next": [
-      "GachaADV_Location5_Pre",
       "[JumpBack]GachaADV_PaidDiamond_90LotFind_Tp1",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_Location5_Pre"
     ]
   },
   "GachaADV_Location4_Post": {
@@ -813,10 +744,8 @@
       "查看概率"
     ],
     "next": [
-      "GachaADV_Location5_Pre",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_Location5_Pre"
     ],
     "timeout": 3000,
     "on_error": [
@@ -824,23 +753,7 @@
     ]
   },
   "GachaADV_Location5_Pre": {
-    "recognition": "OCR",
-    "action": "Click",
-    "target": [
-      868,
-      161,
-      0,
-      0
-    ],
-    "expected": "帮助",
-    "roi": [
-      533,
-      109,
-      218,
-      163
-    ],
     "next": [
-      "GachaADV_Location5_Pre",
       "GachaADV_Location5_NoPool_Clr",
       "GachaADV_Location5_NoPool_Tmp",
       "GachaADV_Location5"
@@ -922,11 +835,9 @@
       "付费抽目标卡池"
     ],
     "next": [
-      "GachaADV_LocationEnd_Pre",
       "[JumpBack]GachaADV_PaidDiamond_90LotFind_Tp1",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_LocationEnd_Pre"
     ]
   },
   "GachaADV_Location5_Post": {
@@ -942,21 +853,11 @@
       "查看概率"
     ],
     "next": [
-      "GachaADV_LocationEnd_Pre",
       "[JumpBack]GachaADV_TouchFreeGacha",
-      "[JumpBack]GachaADV_Special_ReservedRights",
-      "[JumpBack]GachaADV_HaveNotAnyRed"
+      "GachaADV_LocationEnd_Pre"
     ]
   },
   "GachaADV_LocationEnd_Pre": {
-    "recognition": "OCR",
-    "expected": "帮助",
-    "roi": [
-      533,
-      109,
-      218,
-      163
-    ],
     "next": [
       "GachaADV_Slip"
     ]
