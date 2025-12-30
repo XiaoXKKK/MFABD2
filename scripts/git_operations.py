@@ -7,6 +7,7 @@ import subprocess
 import re
 from typing import List, Dict, Optional
 from version_rules import filter_valid_versions, sort_versions
+import time
 
 def get_all_tags() -> list:
     """获取所有Git标签"""
@@ -240,15 +241,22 @@ def test_safe_operations():
     print(f"安全操作提交数量: {len(commits)}")
 
 
+def get_commit_timestamp(ref: str) -> int:
+    """获取提交的Committer Unix时间戳"""
+    ts = run_git_command(["log", "-1", "--format=%ct", ref])
+    return int(ts) if ts and ts.strip().isdigit() else 0
+
+# 【修改函数】获取合并提交列表 (增加时间戳返回)
 def get_merge_commits(from_ref: str, to_ref: str) -> List[Dict]:
     """
-    【新增】专门获取合并提交列表，用于生成 Beta 功能预览
+    获取合并提交列表，包含时间戳
     """
-    # 使用 --merges 只看合并，--topo-order 保证父子顺序
+    # 使用自定义格式输出: hash | timestamp | subject
+    # %ct 是提交人的Unix时间戳
     log_output = run_git_command([
         "log", 
         f"{from_ref}..{to_ref}",
-        "--oneline",
+        "--format=%h|%ct|%s",
         "--merges",
         "--topo-order"
     ])
@@ -256,22 +264,22 @@ def get_merge_commits(from_ref: str, to_ref: str) -> List[Dict]:
     commits = []
     for line in log_output.split('\n'):
         if line.strip():
-            # 解析: "hash 提交信息"
-            parts = line.split(' ', 1)
-            if len(parts) == 2:
+            parts = line.split('|', 2)
+            if len(parts) == 3:
                 commits.append({
                     'hash': parts[0],
-                    'subject': parts[1]
+                    'timestamp': int(parts[1]),
+                    'subject': parts[2]
                 })
     return commits
 
+# 【修改函数】包含之前的正则终极修复
 def get_released_branches_from_main(ref: str = "main", limit: int = 2000) -> set:
     """
-    【修改】扫描指定引用(ref)的合并记录，提取已发布的分支名
+    扫描指定引用(ref)的合并记录，提取已发布的分支名
     修复：全面覆盖 GitHub PR、同仓库合并、中文客户端及自定义格式
     """
     target_ref = resolve_branch_reference(ref)
-    
     print(f"正在扫描 {target_ref} 的已发布分支...")
     
     log_output = run_git_command([
@@ -284,71 +292,44 @@ def get_released_branches_from_main(ref: str = "main", limit: int = 2000) -> set
     
     released = set()
     
-    # === 正则表达式定义 ===
-    
-    # 1. 自定义格式 (最优先)
-    # 覆盖: Merge:'feat/fishing' (#123) | ...
-    # 覆盖: Merge:'alpha/3.1shop'
+    # 1. 自定义格式 (Merge:'xxx')
     pattern_custom = r"Merge:'([^']+)'"
-    
-    # 2. 标准 Git 格式 (支持引号，支持中英文)
-    # 覆盖: Merge branch 'fix/Battle_notgoShoulie'
-    # 覆盖: 合并分支 'fix/Battle_notgoShoulie'
+    # 2. 标准/中文 Git 格式 (带引号)
     pattern_git_quoted = r"(?:Merge branch|合并分支)\s*'([^']+)'"
-    
-    # 3. GitHub PR 格式 (最关键的修复)
-    # 覆盖: Merge pull request #44 from sunyink/fix/Battle... (跨仓库)
-    # 覆盖: Merge pull request #44 from fix/Battle... (同仓库)
-    # 策略：捕获 'from' 后面的一整串非空字符
+    # 3. GitHub PR 格式 (提取 from 后面部分)
     pattern_pr = r"Merge pull request #[0-9]+ from (\S+)"
-    
-    # 4. 无引号 Git 格式 (兜底)
-    # 覆盖: 合并分支 fix/Battle_notgoShoulie
+    # 4. 无引号格式 (兜底)
     pattern_git_plain = r"(?:Merge branch|合并分支)\s+(\S+)"
 
-    # === 扫描匹配 ===
     for line in log_output.split('\n'):
-        # 1. 尝试自定义格式
+        # 依次尝试匹配
         match = re.search(pattern_custom, line)
         if match:
             released.add(match.group(1))
             continue
             
-        # 2. 尝试标准引号格式
         match = re.search(pattern_git_quoted, line)
         if match:
             released.add(match.group(1))
             continue
             
-        # 3. 尝试 PR 格式 (智能处理 owner 前缀)
         match = re.search(pattern_pr, line)
         if match:
-            full_ref = match.group(1) # 例如: sunyink/fix/foo 或 fix/foo
-            
-            # 策略：宁可错杀三千，不可放过一个。
-            # 无法确定 fix/foo 到底是 "fix用户下的foo分支" 还是 "fix类型的foo分支"
-            # 所以我们将 "完整串" 和 "去头串" 都加入黑名单
+            full_ref = match.group(1)
             released.add(full_ref)
-            
-            if '/' in full_ref:
-                # 尝试移除第一段 (假设是用户名 sunyink/)
-                # 这样即使它是 sunyink/fix/foo，我们也能把 fix/foo 加入黑名单
+            if '/' in full_ref: # 尝试剥离用户名 fix/branch
                 parts = full_ref.split('/', 1)
-                if len(parts) > 1:
-                    released.add(parts[1])
+                if len(parts) > 1: released.add(parts[1])
             continue
 
-        # 4. 最后尝试无引号格式
         match = re.search(pattern_git_plain, line)
         if match:
             candidate = match.group(1)
-            # 简单过滤介词，避免匹配到 'into'
             if candidate.lower() not in ['into', 'from']:
                 released.add(candidate)
             
     print(f"共发现 {len(released)} 个已发布分支")
     return released
-
 
 if __name__ == "__main__":
     # print("=== Git操作模块测试 ===") # 保持原样
