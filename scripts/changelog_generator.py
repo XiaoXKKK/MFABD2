@@ -243,6 +243,25 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
     if not commits:
         return f"# 更新日志\n\n## {current_tag}\n\n*无显著变更*\n"
     
+    # 目的：过滤掉标题完全相同的提交（保留最新的那一个）
+    unique_commits = []
+    seen_subjects = set()
+    
+    # 此时 commits 列表通常是按时间倒序（最新的在前），所以保留第一次遇到的即可
+    for commit in commits:
+        # 去除首尾空格，并不区分大小写（可选）来判断重复
+        subject = commit['subject'].strip()
+        
+        if subject not in seen_subjects:
+            seen_subjects.add(subject)
+            unique_commits.append(commit)
+        else:
+            # 在控制台打印被过滤的提交，方便调试
+            print(f"过滤重复提交: {subject} ({commit['hash'][:7]})")
+            
+    # 将去重后的列表赋值回 commits
+    commits = unique_commits
+    
     grouped_commits = group_commits_by_type(commits)
     
     # 构建变更日志
