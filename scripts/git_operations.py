@@ -268,12 +268,11 @@ def get_merge_commits(from_ref: str, to_ref: str) -> List[Dict]:
 def get_released_branches_from_main(ref: str = "main", limit: int = 2000) -> set:
     """
     【修改】扫描指定引用(ref)的合并记录，提取已发布的分支名
-    修改点: 
-    1. 使用 resolve_branch_reference 自动处理 CI 环境分支名
-    2. limit 默认值改为 2000，防止漏掉久远的合并
     """
-    # 智能解析引用 (main -> origin/main)
+    # 智能解析引用
     target_ref = resolve_branch_reference(ref)
+    
+    print(f"正在扫描 {target_ref} 的已发布分支...")
     
     log_output = run_git_command([
         "log",
@@ -284,18 +283,44 @@ def get_released_branches_from_main(ref: str = "main", limit: int = 2000) -> set
     ])
     
     released = set()
-    pattern_new = r"Merge:'([^']+)'\|"
-    pattern_old = r"Merge branch '([^']+)'"
     
+    # === 正则表达式定义 ===
+    
+    # 1. 【核心修复】自定义格式 (宽松版)
+    # 只提取 Merge:'...' 里的内容，不再关心后面是否紧跟 | 或 (#123)
+    # 覆盖案例：Merge:'hotfix/LockMfaVer' (#44) | ...
+    # 覆盖案例：Merge:'alpha/3.1shop'
+    pattern_custom = r"Merge:'([^']+)'"
+    
+    # 2. 标准 Git 格式
+    # 覆盖案例：Merge branch 'fix/Battle_notgoShoulie'
+    pattern_git = r"Merge branch '([^']+)'"
+    
+    # 3. 【新增】GitHub PR 默认格式
+    # 覆盖案例：Merge pull request #123 from sunyink/fix/Battle_notgoShoulie
+    # 逻辑：提取 from 之后、斜杠之后的部分
+    pattern_pr = r"Merge pull request #[0-9]+ from [^/]+/(\S+)"
+
+    # === 扫描匹配 ===
     for line in log_output.split('\n'):
-        match = re.search(pattern_new, line)
+        # 优先匹配自定义格式
+        match = re.search(pattern_custom, line)
         if match:
             released.add(match.group(1))
             continue
-        match = re.search(pattern_old, line)
+            
+        # 其次匹配标准 Git 格式
+        match = re.search(pattern_git, line)
+        if match:
+            released.add(match.group(1))
+            continue
+            
+        # 最后尝试匹配 GitHub PR 格式
+        match = re.search(pattern_pr, line)
         if match:
             released.add(match.group(1))
             
+    print(f"共发现 {len(released)} 个已发布分支")
     return released
 
 
