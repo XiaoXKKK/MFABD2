@@ -112,6 +112,7 @@
   * [ ] 爬塔刷层数
   * [ ] 末日之书刷分数
   * [ ] （半自动指：手动调到页面后无限循环刷。**常闭，一次只能开一种**）
+  * [ ] 地图跑商 `注1`
 
 * [X] 活动图
   * [X] 关卡扫荡
@@ -130,6 +131,7 @@
 - [MFAAvalonia](https://github.com/SweetSmellFox/MFAAvalonia) 基于Avalonia的MAAFramework通用GUI项目
 - [MFATools](https://github.com/SweetSmellFox/MFATools) 开发工具
 - [maa-support-extension](https://github.com/neko-para/maa-support-extension) VSCode扩展
+- [SHA](SHA地址)跑商功能初始一整套完整代码，系**京墨**佬倾情提供，感谢他的付出与支持`←注1`
 ### 规范
 > 如果要参与开发，可以参考文档。必须先本地测试通过再合并，请使用非快速合并-no-ff参数。
 

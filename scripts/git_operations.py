@@ -7,6 +7,7 @@ import subprocess
 import re
 from typing import List, Dict, Optional
 from version_rules import filter_valid_versions, sort_versions
+import time
 
 def get_all_tags() -> list:
     """获取所有Git标签"""
@@ -22,6 +23,7 @@ def get_all_tags() -> list:
     except Exception as e:
         print(f"获取Git标签失败: {e}")
         return []
+
 def run_git_command(args: List[str]) -> str:
     """运行Git命令并返回输出（修复编码问题）"""
     try:
@@ -35,10 +37,12 @@ def run_git_command(args: List[str]) -> str:
         )
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
-        print(f"Git命令失败: {' '.join(args)}")
-        print(f"错误码: {e.returncode}")
-        if e.stderr:
-            print(f"错误信息: {e.stderr}")
+        # 仅在非验证类命令失败时打印详细日志，避免 rev-parse 刷屏
+        if "rev-parse" not in args:
+            print(f"Git命令失败: {' '.join(args)}")
+            print(f"错误码: {e.returncode}")
+            if e.stderr:
+                print(f"错误信息: {e.stderr}")
         return ""
 
 def get_commit_date(tag: str) -> Optional[str]:
@@ -133,7 +137,7 @@ def get_commit_list(from_ref: str, to_ref: str) -> List[Dict]:
     # 然后为每个提交获取详细信息
     detailed_commits = []
     for i, simple_commit in enumerate(simple_commits):
-        print(f"获取提交详情 {i+1}/{len(simple_commits)}: {simple_commit['hash'][:8]}")
+        # print(f"获取提交详情 {i+1}/{len(simple_commits)}: {simple_commit['hash'][:8]}") # 注释掉避免刷屏
         detailed_commit = get_detailed_commit_info(simple_commit['hash'])
         detailed_commits.append(detailed_commit)
     
@@ -169,25 +173,28 @@ def test_git_operations_simple():
         print("  - 标签顺序特殊")
         print("  - 可以尝试其他标签范围")
 
-def get_all_tags() -> list:
-    """获取所有Git标签"""
-    try:
-        result = subprocess.run(
-            ["git", "tag", "-l", "v*"],
-            capture_output=True, 
-            text=True,
-            check=True
-        )
-        tags = [tag for tag in result.stdout.strip().split('\n') if tag]
-        return tags
-    except Exception as e:
-        print(f"获取Git标签失败: {e}")
-        return []
+# 注意：这里原文件有两个 get_all_tags，我把重复的去掉了
 
 def ensure_reference_exists(ref: str) -> bool:
     """确保Git引用存在"""
     result = run_git_command(["rev-parse", "--verify", ref])
     return bool(result)
+
+def resolve_branch_reference(ref: str) -> str:
+    """
+    【新增】智能解析分支引用
+    优先查找本地分支，如果不存在则查找远程分支（适配CI环境）
+    """
+    if ensure_reference_exists(ref):
+        return ref
+    
+    # 尝试查找远程分支
+    remote_ref = f"origin/{ref}"
+    if ensure_reference_exists(remote_ref):
+        print(f"本地分支 '{ref}' 不存在，使用远程分支 '{remote_ref}'")
+        return remote_ref
+        
+    return ref  # 如果都不存在，返回原值让后续报错
 
 def safe_get_commit_list(from_ref: str, to_ref: str) -> List[Dict]:
     """安全的提交列表获取（处理引用不存在的情况）"""
@@ -234,15 +241,22 @@ def test_safe_operations():
     print(f"安全操作提交数量: {len(commits)}")
 
 
+def get_commit_timestamp(ref: str) -> int:
+    """获取提交的Committer Unix时间戳"""
+    ts = run_git_command(["log", "-1", "--format=%ct", ref])
+    return int(ts) if ts and ts.strip().isdigit() else 0
+
+# 【修改函数】获取合并提交列表 (增加时间戳返回)
 def get_merge_commits(from_ref: str, to_ref: str) -> List[Dict]:
     """
-    【新增】专门获取合并提交列表，用于生成 Beta 功能预览
+    获取合并提交列表，包含时间戳
     """
-    # 使用 --merges 只看合并，--topo-order 保证父子顺序
+    # 使用自定义格式输出: hash | timestamp | subject
+    # %ct 是提交人的Unix时间戳
     log_output = run_git_command([
         "log", 
         f"{from_ref}..{to_ref}",
-        "--oneline",
+        "--format=%h|%ct|%s",
         "--merges",
         "--topo-order"
     ])
@@ -250,45 +264,75 @@ def get_merge_commits(from_ref: str, to_ref: str) -> List[Dict]:
     commits = []
     for line in log_output.split('\n'):
         if line.strip():
-            # 解析: "hash 提交信息"
-            parts = line.split(' ', 1)
-            if len(parts) == 2:
+            parts = line.split('|', 2)
+            if len(parts) == 3:
                 commits.append({
                     'hash': parts[0],
-                    'subject': parts[1]
+                    'timestamp': int(parts[1]),
+                    'subject': parts[2]
                 })
     return commits
 
-def get_released_branches_from_main(ref: str = "main", limit: int = 200) -> set:
+# 【修改函数】包含之前的正则终极修复
+def get_released_branches_from_main(ref: str = "main", limit: int = 2000) -> set:
     """
-    【修改】扫描指定引用(ref)的合并记录，提取已发布的分支名
+    扫描指定引用(ref)的合并记录，提取已发布的分支名
+    修复：全面覆盖 GitHub PR、同仓库合并、中文客户端及自定义格式
     """
+    target_ref = resolve_branch_reference(ref)
+    print(f"正在扫描 {target_ref} 的已发布分支...")
+    
     log_output = run_git_command([
         "log",
-        ref,
+        target_ref,
         "-n", str(limit),
         "--oneline",
         "--merges"
     ])
     
     released = set()
-    import re
-    pattern_new = r"Merge:'([^']+)'\|"
-    pattern_old = r"Merge branch '([^']+)'"
     
+    # 1. 自定义格式 (Merge:'xxx')
+    pattern_custom = r"Merge:'([^']+)'"
+    # 2. 标准/中文 Git 格式 (带引号)
+    pattern_git_quoted = r"(?:Merge branch|合并分支)\s*'([^']+)'"
+    # 3. GitHub PR 格式 (提取 from 后面部分)
+    pattern_pr = r"Merge pull request #[0-9]+ from (\S+)"
+    # 4. 无引号格式 (兜底)
+    pattern_git_plain = r"(?:Merge branch|合并分支)\s+(\S+)"
+
     for line in log_output.split('\n'):
-        match = re.search(pattern_new, line)
+        # 依次尝试匹配
+        match = re.search(pattern_custom, line)
         if match:
             released.add(match.group(1))
             continue
-        match = re.search(pattern_old, line)
+            
+        match = re.search(pattern_git_quoted, line)
         if match:
             released.add(match.group(1))
+            continue
             
+        match = re.search(pattern_pr, line)
+        if match:
+            full_ref = match.group(1)
+            released.add(full_ref)
+            if '/' in full_ref: # 尝试剥离用户名 fix/branch
+                parts = full_ref.split('/', 1)
+                if len(parts) > 1: released.add(parts[1])
+            continue
+
+        match = re.search(pattern_git_plain, line)
+        if match:
+            candidate = match.group(1)
+            if candidate.lower() not in ['into', 'from']:
+                released.add(candidate)
+            
+    print(f"共发现 {len(released)} 个已发布分支")
     return released
 
-
 if __name__ == "__main__":
+    # print("=== Git操作模块测试 ===") # 保持原样
     test_git_operations_simple()
     test_specific_range()
     test_safe_operations()
