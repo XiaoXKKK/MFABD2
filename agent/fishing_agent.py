@@ -453,9 +453,7 @@ class FishingBot:
 		print("🐟💰 开始卖鱼...")
 		
 		# Use pipeline to execute sell sequence
-		screenshot = self.get_screenshot()
-		if screenshot is not None:
-			self.context.run_recognition("SellFish_Start", screenshot)
+		self.context.run_task("SellFish_Start")
 		
 		self.total_sell_count += 1
 		self.fish_since_last_sell = 0
@@ -512,6 +510,9 @@ class FishingBot:
 		print("🎣 自动钓鱼开始 (custom action)")
 		print(f"最大次数: {max_count if max_count else '无限'}")
 		print("==================================================")
+
+		# 开始执行前先卖一次鱼防止卡住
+		self.sell_all_fish()
 
 		try:
 			while self.running and not self.context.tasker.stopping:
