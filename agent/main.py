@@ -22,9 +22,12 @@ if deps_path.exists():
 # 现在可以安全导入依赖了
 from maa.agent.agent_server import AgentServer
 from maa.toolkit import Toolkit
+
 # 如果你有自定义动作/识别，在这里导入 (参照 B 项目)
 # import my_action 
 # import my_reco
+import fishing_agent
+
 
 def main():
     # 设置 stdout 为 utf-8 (防止中文乱码)
