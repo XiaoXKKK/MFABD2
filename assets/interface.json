@@ -173,8 +173,11 @@
             "doc": "**半自动操作：日常关闭。**使用时注意启动页面。\n\n（未来计划...）作为小工具在其他页面打开，∞拖延。 "
         },
         {
-            "name": "[测试]自动钓鱼（未做导航，需手动走到可钓鱼点）",
-            "entry": "Fishing_Start"
+            "name": "[测试]自动钓鱼",
+            "entry": "Fishing_BusinReward",
+            "option": [
+                "钓鱼地点"
+            ]
         }
     ],
     "option": {
@@ -1300,6 +1303,40 @@
                         "Practise_Start": {
                             "next": [
                                 "Practise_Skill_Bargaining"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "钓鱼地点": {
+            "cases": [
+                {
+                    "name": "烟波湖",
+                    "pipeline_override": {
+                        "Fishing_MapNavigate": {
+                            "next": [
+                                "Fishing_EnterFishingSpot_Lake"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "浅岸",
+                    "pipeline_override": {
+                        "Fishing_MapNavigate": {
+                            "next": [
+                                "Fishing_EnterFishingSpot_Shallow"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "寒霜海峡",
+                    "pipeline_override": {
+                        "Fishing_MapNavigate": {
+                            "next": [
+                                "Fishing_EnterFishingSpot_Frost"
                             ]
                         }
                     }

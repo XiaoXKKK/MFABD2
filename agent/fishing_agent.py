@@ -26,8 +26,6 @@ from maa.custom_action import CustomAction
 
 
 # ==================== 基础配置 ====================
-BASE_WIDTH = 1920
-BASE_HEIGHT = 1080
 
 # 游标移动速度（像素/帧）
 CURSOR_SPEED_PX_PER_FRAME = 4.2
@@ -37,22 +35,17 @@ BLUE_ZONE_SHRINK_PX_PER_FRAME = 0.83
 @dataclass
 class TimingCfg:
 	wait_fish_interval: float = 0.08
-	cast_hold_duration: int = 100  # ms
 	after_cast: float = 0.2
 	after_catch: float = 3.0
-	minigame_timeout: float = 15.0
 	input_delay: float = 0.055  # controller is fast; keep small buffer
-	sell_click_interval: float = 2.0
-	click_cooldown: float = 1.0
 
 
 @dataclass
 class CoordCfg:
 	cast_rod: Tuple[int, int] = (1130, 570)
 	screen_center: Tuple[int, int] = (640, 360)
-	progress_bar_y: int = 613
-	progress_bar_left: int = 479
-	progress_bar_right: int = 863
+	progress_bar_left: int = 484
+	progress_bar_right: int = 858
 	minigame_area: Tuple[int, int, int, int] = (335,505,600,154)
 
 
@@ -61,14 +54,12 @@ class FishingBot:
 		self,
 		context: Context,
 		sell_interval: int = 30,
-		only_yellow: bool = False,
 		timing: TimingCfg | None = None,
 		coords: CoordCfg | None = None,
 	):
 		self.context = context
 		self.controller = context.tasker.controller
 		self.sell_interval = sell_interval
-		self.only_yellow = only_yellow
 		self.timing = timing or TimingCfg()
 		self.coords = coords or CoordCfg()
 
@@ -539,11 +530,9 @@ class FishingAction(CustomAction):
 		
 		max_count = int(param.get("max_count", 1))
 		sell_interval = int(param.get("sell_interval", 30))
-		only_yellow = bool(param.get("only_yellow", True))
 
 		bot = FishingBot(
 			context=context,
-			sell_interval=sell_interval,
-			only_yellow=only_yellow,
+			sell_interval=sell_interval
 		)
 		return bot.run(max_count=max_count)
