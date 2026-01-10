@@ -19,6 +19,7 @@ from configure import configure_ocr_model
 working_dir = Path(__file__).parent
 install_path = working_dir / Path("install")
 version = len(sys.argv) > 1 and sys.argv[1] or "v0.0.1"
+target_os = len(sys.argv) > 2 and sys.argv[2] or "win"
 
 def install_deps():
     if not (working_dir / "deps" / "bin").exists():
@@ -166,16 +167,53 @@ def install_chores():
     shutil.copy2(working_dir / "LICENSE-APACHE", install_path)
     shutil.copy2(working_dir / "LICENSE-MIT", install_path)
 
-def install_agent():
-    shutil.copytree(
-        working_dir / "agent",
-        install_path / "agent",
-        dirs_exist_ok=True,
-    )
+def install_agent(target_os):
+    print("正在安装 Agent...")
+    print(f"Installing agent for {target_os}...")
+    # 1. 复制 agent 文件夹
+    agent_src = working_dir / "agent"
+    agent_dst = install_path / "agent"
+    if agent_src.exists():
+        shutil.copytree(agent_src, agent_dst, dirs_exist_ok=True)
+    else:
+        print("警告: 未找到 agent 源码目录，请确认代码结构！")
+
+    # 2. 修改 interface.json 注入 Agent 配置
+    interface_json_path = install_path / "interface.json"
+    
+    try:
+        with open(interface_json_path, "r", encoding="utf-8") as f:
+            interface = jsonc.load(f)
+
+        # 确保 agent 字段存在
+        if "agent" not in interface:
+            interface["agent"] = {}
+
+        # 配置 Python 解释器路径 (区分系统)
+        # {PROJECT_DIR} 会被 MaaFramework 自动替换为 install 目录的绝对路径
+        if any(target_os.startswith(p) for p in ["win", "windows"]):
+            # Windows 下通常使用嵌入式 Python
+            interface["agent"]["child_exec"] = r"{PROJECT_DIR}/python/python.exe"
+        elif any(target_os.startswith(p) for p in ["macos", "darwin", "osx"]):
+            interface["agent"]["child_exec"] = r"{PROJECT_DIR}/python/bin/python3"
+        else:
+            # Linux/Android 通常直接调用系统 python3
+            interface["agent"]["child_exec"] = "python3"
+
+        # 配置启动参数
+        # -u 禁用缓冲，让日志实时输出
+        interface["agent"]["child_args"] = ["-u", r"{PROJECT_DIR}/agent/main.py"]
+
+        with open(interface_json_path, "w", encoding="utf-8") as f:
+            jsonc.dump(interface, f, ensure_ascii=False, indent=4)
+        print("✅ interface.json Agent 配置已更新")
+
+    except Exception as e:
+        print(f"❌ 更新 interface.json 失败: {e}")
 
 if __name__ == "__main__":
     install_deps()
     install_resource()
     install_chores()
-    install_agent()
+    install_agent(target_os)
     print(f"Install to {install_path} successfully.")
