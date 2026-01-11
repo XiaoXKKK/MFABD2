@@ -70,9 +70,10 @@
  > <img alt="LOGO" src="https://github.com/sunyink/MFABD2/blob/main/ReadMe/3.png"  width="400px"/>
 
 ---
-### Mac系统使用指引
+<details>
+  <summary>Mac系统使用指引</summary>
   经反馈Mac可以使用，配置过程复杂些。可以参考[M9A文档站](https://1999.fan/zh_cn/manual/newbie.html)，因为是同样的框架，软件部署部分是相通的。
-
+</details>
 
 ## 功能一览
 
