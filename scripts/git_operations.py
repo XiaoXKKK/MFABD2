@@ -273,14 +273,15 @@ def get_merge_commits(from_ref: str, to_ref: str) -> List[Dict]:
                 })
     return commits
 
-# 【修改函数】包含之前的正则终极修复
 def get_released_branches_from_main(ref: str = "main", limit: int = 2000) -> set:
     """
-    扫描指定引用(ref)的合并记录，提取已发布的分支名
-    修复：全面覆盖 GitHub PR、同仓库合并、中文客户端及自定义格式
+    【修改】扫描指定引用(ref)的合并记录，提取已发布的分支名
+    修改点: 
+    1. 使用 resolve_branch_reference 自动处理 CI 环境分支名
+    2. limit 默认值改为 2000，防止漏掉久远的合并
     """
+    # 智能解析引用 (main -> origin/main)
     target_ref = resolve_branch_reference(ref)
-    print(f"正在扫描 {target_ref} 的已发布分支...")
     
     log_output = run_git_command([
         "log",
@@ -291,6 +292,8 @@ def get_released_branches_from_main(ref: str = "main", limit: int = 2000) -> set
     ])
     
     released = set()
+    pattern_new = r"Merge:'([^']+)'\|"
+    pattern_old = r"Merge branch '([^']+)'"
     
     # 1. 自定义格式 (Merge:'xxx')
     pattern_custom = r"Merge:'([^']+)'"

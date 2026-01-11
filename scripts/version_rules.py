@@ -19,6 +19,12 @@ def is_valid_formal_version(tag: str) -> bool:
         
     return True
 
+def is_valid_alpha_version(tag: str) -> bool:
+    """判断是否为有效的内测版 - 严格模式"""
+    # 必须符合: v数字.数字.数字-alpha.6位日期.7位以上哈希
+    pattern = r'^v\d+\.\d+\.\d+-alpha\.\d{6}\.[a-f0-9]{7,}$'
+    return bool(re.match(pattern, tag))
+
 def is_valid_beta_version(tag: str) -> bool:
     """判断是否为有效的公测版 - 严格模式"""
     # 必须符合: v数字.数字.数字-beta.6位日期.7位以上哈希
@@ -36,13 +42,15 @@ def is_nested_version(tag: str) -> bool:
     # 检测包含多个-beta或-ci的嵌套版本
     beta_count = tag.count('-beta')
     ci_count = tag.count('-ci')
-    return (beta_count + ci_count) > 1
+    alpha_count = tag.count('-alpha')
+    return (beta_count + ci_count + alpha_count) > 1
 
 def filter_valid_versions(tags: List[str]) -> Dict[str, List[str]]:
     """严格过滤有效的版本"""
     result = {
         'formal': [],    # 正式版
         'beta': [],      # 公测版  
+        'alpha': [],     # 内测版 
         'ci': [],        # 开发版
         'invalid': [],   # 无效版本
         'nested': []     # 嵌套错误版本
@@ -59,6 +67,8 @@ def filter_valid_versions(tags: List[str]) -> Dict[str, List[str]]:
             result['formal'].append(tag)
         elif is_valid_beta_version(tag):
             result['beta'].append(tag)
+        elif is_valid_alpha_version(tag):
+            result['alpha'].append(tag)
         elif is_valid_ci_version(tag):
             result['ci'].append(tag)
         else:
@@ -71,7 +81,7 @@ def sort_versions(versions: List[str]) -> List[str]:
     def version_key(tag):
         # 提取版本号部分进行排序（支持公测版/开发版）
         try:
-            base_tag = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', tag)
+            base_tag = re.sub(r'(-beta\.\d+\.[a-f0-9]+|-alpha\.\d+\.[a-f0-9]+|-ci\.\d+\.[a-f0-9]+)$', '', tag)
             numbers = base_tag[1:].split('.')  # 去掉'v'，按.分割
             return [int(num) for num in numbers]
         except Exception as e:
