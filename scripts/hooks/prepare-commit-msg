@@ -47,7 +47,7 @@ fi
 # ====================现有输入保护区域===================
 # 如果提交信息已经有来源 (例如 VSCode 输入框、git commit -m、git commit --amend)
 # 则直接退出，绝对不要覆盖用户已经写好的内容！
-if [ -n "$COMMIT_SOURCE" ]; then
+if [ "$COMMIT_SOURCE" = "message" ] || [ "$COMMIT_SOURCE" = "commit" ]; then
     exit 0
 fi
 
