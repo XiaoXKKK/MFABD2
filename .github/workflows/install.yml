@@ -185,10 +185,37 @@ jobs:
           ARCHIVE_FILE_PATH="${{ fromJson(steps.download_mfa.outputs.downloaded_files)[0] }}"
           rm -f "${ARCHIVE_FILE_PATH}"
 
+      - name: Setup Embed Python (Windows)
+        if: matrix.os == 'win'
+        shell: bash
+        run: |
+          # 1. 下载 Python 3.10 嵌入式版本
+          curl -L -o python_embed.zip https://www.python.org/ftp/python/3.10.11/python-3.10.11-embed-amd64.zip
+          
+          # 2. 解压
+          mkdir -p install/python
+          7z x python_embed.zip -oinstall/python
+          
+          # 3. 开启 site 支持 (改用 Python 命令，防止 macOS/Linux 的 sed 冲突)
+          python3 -c "import pathlib; p = pathlib.Path('install/python/python310._pth'); p.write_text(p.read_text().replace('#import site', 'import site'))"
+          echo "=== Debug: Content of requirements.txt ==="
+          cat requirements.txt
+          echo "=========================================="
+
+          # 4. 重点：下载【Windows 平台】的依赖包 (加上 --platform 选项)
+          # 如果不加下面这些参数，你在 Mac 跑 CI 就会下载到 Mac 版的库，导致用户在 Win 用不了
+          python3 -m pip install \
+            --platform win_amd64 \
+            --python-version 3.10 \
+            --only-binary=:all: \
+            --no-cache-dir \
+            numpy==1.26.4 \
+            -r requirements.txt \
+            --target install/python/Lib/site-packages
       - name: Install
         shell: bash
         run: |
-          python ./install.py ${{ needs.meta.outputs.tag }}
+          python ./install.py ${{ needs.meta.outputs.tag }} ${{ matrix.os }}
 
           if [[ "${{ matrix.os }}" != "android" ]]; then
             if [ -d "MFA" ]; then
