@@ -11,6 +11,11 @@ on:
 jobs:
   mirrorchyan:
     runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [win, macos, linux]
+        arch: [aarch64, x86_64]
     steps:
       - id: uploading
         uses: MirrorChyan/uploading-action@v1
@@ -25,8 +30,8 @@ jobs:
           repo: MFABD2
           upload_token: ${{ secrets.MirrorChyanUploadToken }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          os: win
-          arch: x86_64
+          os: ${{ matrix.os }}
+          arch: ${{ matrix.arch }}
 
   mirrorchyan_res:
     runs-on: macos-latest
