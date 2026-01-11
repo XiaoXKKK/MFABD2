@@ -18,7 +18,10 @@
 			"name": "[全局]启动游戏",
 			"entry": "StartGame_Start",
 			"check": true,
-			"doc": "**启动游戏**：\n\n自动启动游戏，包含更新、支付失败等一些异常框点击，领取`主界面`奖励、`宠物派遣`。\n\n**注意：网络环境需提前解决。**\n\n【**首次运行前，务必至少查看**`使用帮助`**卡片！**】"
+			"doc": "**启动游戏**：\n\n自动启动游戏，包含更新、支付失败等一些异常框点击，领取`主界面`奖励、`宠物派遣`。\n\n**注意：网络环境需提前解决。**\n\n【**首次运行前，务必至少查看**`使用帮助`**卡片！**】\n\n**前置助手:**自动设定一次本工具所需的前置设置，包括主设置、装备管理选项、快捷技能三个部分。建议初次接触本工具、游戏清数据重下，运行一次‘强制’，后切为‘按需’。",
+			"option": [
+				"前置助手"
+			]
 		},
 		{
 			"name": "[执行]快速狩猎扫荡",
@@ -145,8 +148,20 @@
 			"doc": "**领取邮件：**`主界面`下，`邮件`图标内的奖励。包括一般、商品。\n\n没有新邮件红点是不会进入邮件页面的。"
 		},
 		{
+			"name": "[开发中]商店套利",
+			"entry": "Arbitrage_Start",
+			"doc": "**商店套利：**流传‘跑商’中的‘商’，我定义为商店套利。\n\n未来完整流程包括：购买高利润料理食材、购买高利润其他食材、料理制作、料理择价出售、高利润材料择价出售"
+		},
+		{
 			"name": "[全局]结束游戏",
 			"entry": "Close_HomePage"
+		},
+		{
+			"name": "[手动]生活技能刷级",
+			"entry": "Practise_Start",
+			"option": [
+				"选择要刷取的技能"
+			]
 		},
 		{
 			"name": "[特殊]半自动操作（常闭！单开！）",
@@ -1264,6 +1279,73 @@
 								"Activities_InIndex",
 								"Global_ToSandBox"
 							]
+						}
+					}
+				}
+			]
+		},
+		"选择要刷取的技能": {
+			"cases": [
+				{
+					"name": "不刷",
+					"pipeline_override": {}
+				},
+				{
+					"name": "砍价",
+					"pipeline_override": {
+						"Practise_Start": {
+							"next": [
+								"Practise_Skill_Bargaining"
+							]
+						}
+					}
+				}
+			]
+		},
+		"前置助手": {
+			"doc": "自动设好本工具所需的前置设置。",
+			"cases": [
+				{
+					"name": "按需",
+					"pipeline_override": {}
+				},
+				{
+					"name": "不要，别动！",
+					"pipeline_override": {
+						"Setup_Entry1": {
+							"enabled": false
+						},
+						"Setup_Entry2": {
+							"enabled": false
+						},
+						"Setup_Entry3": {
+							"enabled": false
+						},
+						"Setup_Entry4": {
+							"enabled": false
+						}
+					}
+				},
+				{
+					"name": "强制启用",
+					"pipeline_override": {
+						"StartGame_FinBackMapPage": {
+							"next": [
+								"[JumpBack]Setup_Str",
+								"StartGame_PerPetTask"
+							]
+						},
+						"Setup_Entry1": {
+							"enabled": false
+						},
+						"Setup_Entry2": {
+							"enabled": false
+						},
+						"Setup_Entry3": {
+							"enabled": false
+						},
+						"Setup_Entry4": {
+							"enabled": false
 						}
 					}
 				}
