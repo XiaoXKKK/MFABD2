@@ -3,20 +3,27 @@
 COMMIT_MSG_FILE=$1
 COMMIT_SOURCE=$2
 
+# ==================== ✅ 1. 保护区域 (置顶) ====================
+# 如果提交信息已经有来源 (例如 VSCode 输入框、git commit -m、git commit --amend) 
+# 则直接退出，绝对不要覆盖用户或编辑器已经准备好的内容！ 
+if [ -n "$COMMIT_SOURCE" ]; then
+    exit 0
+fi
+
 # ==================== ✨ 合并提交拦截区域 (第一优先级) ✨ ====================
-# 如果是 merge 操作，或者文件中包含默认的 Merge branch 信息
-if [ "$COMMIT_SOURCE" = "merge" ] || grep -q "^Merge branch" "$COMMIT_MSG_FILE"; then
-    # 读取原始信息
+# 如果是 merge 操作，或者文件中包含默认的 Merge branch 信息 
+if grep -q "^Merge branch" "$COMMIT_MSG_FILE"; then
+    # 读取原始信息 [cite: 2]
     ORIGINAL_MSG=$(cat "$COMMIT_MSG_FILE")
-    # 尝试提取分支名 (提取单引号内的内容 或 Merge branch 后的第一个词)
+    # 尝试提取分支名 [cite: 2]
     BRANCH_NAME=$(echo "$ORIGINAL_MSG" | sed -n "s/^Merge branch '\([^']*\)'.*/\1/p")
-    if [ -z "$BRANCH_NAME" ]; then
+    if [ -z "$BRANCH_NAME" ]; then [cite: 2, 3]
         BRANCH_NAME=$(echo "$ORIGINAL_MSG" | sed -n "s/^Merge branch \([^ ]*\).*/\1/p")
     fi
-    # 清理 origin/ 前缀
+    # 清理 origin/ 前缀 [cite: 3]
     BRANCH_NAME=${BRANCH_NAME#origin/}
 
-    # 写入新模板
+    # 写入新模板 [cite: 3, 4]
     cat > "$COMMIT_MSG_FILE" << EOF
 Merge:'$BRANCH_NAME'| 请在此输入功能描述(必填)
 
@@ -42,7 +49,7 @@ fi
 # ====================现有输入保护区域===================
 # 如果提交信息已经有来源 (例如 VSCode 输入框、git commit -m、git commit --amend)
 # 则直接退出，绝对不要覆盖用户已经写好的内容！
-if [ -n "$COMMIT_SOURCE" ]; then
+if [ "$COMMIT_SOURCE" = "message" ] || [ "$COMMIT_SOURCE" = "commit" ]; then
     exit 0
 fi
 
