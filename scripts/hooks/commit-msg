@@ -9,8 +9,7 @@ MSG_CONTENT=$(cat "$COMMIT_MSG_FILE")
 
 if echo "$MSG_CONTENT" | grep -q "请在此输入功能描述(必填)"; then
     echo "❌ 提交失败！"
-    echo "💡 原因是：你使用了自动生成的合并模版，但没有修改描述。"
-    echo "👉 请把 '请在此输入功能描述(必填)' 删掉，换成你自己的话。"
+    echo "💡 提示：你忘记修改合并描述了。请把那行“请在此输入...”替换成实际的改动说明。"
     exit 1
 fi
 
