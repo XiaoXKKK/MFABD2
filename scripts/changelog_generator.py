@@ -13,7 +13,7 @@ from version_rules import filter_valid_versions, sort_versions
 from history_manager import HistoryManager
 from version_analyzer import analyze_version_highlights
 from config import HISTORY_CONFIG, OUTPUT_CONFIG
-from git_operations import get_commit_list, get_merge_commits, get_released_branches_from_main, safe_get_commit_list, ensure_reference_exists
+from git_operations import get_commit_list, get_merge_commits, get_released_branches_from_main, safe_get_commit_list, ensure_reference_exists, get_commit_timestamp
 
 def group_commits_by_type(commits: List[Dict]) -> Dict[str, List[Dict]]:
     """按提交类型分组（简化版本，后续可以改进）"""
@@ -163,15 +163,20 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
         print(f"Beta预览: 引用 {target_ref} 不存在，自动回退到 HEAD")
         target_ref = "HEAD"
         
+    # 在获取 merges 之前，先获取基准版本的时间戳
+    base_ts = get_commit_timestamp(compare_base)
+    print(f"时间过滤基准: {compare_base} (TS: {base_ts})")
+    
     # 获取区间内的合并提交
     merges = get_merge_commits(compare_base, target_ref)
     if not merges:
         return ""
         
     # 获取 Main 分支已发布的功能黑名单
-    # 如果是公测版/CI版 -> 过滤基准是 "main" (隐藏已正式发布的功能)
+    # 如果是公测版/内测版/CI版 -> 过滤基准是 "main" (隐藏已正式发布的功能)
     # 如果是正式版     -> 过滤基准是 compare_base (隐藏上个版本以前的功能)
-    is_beta_or_ci = '-beta' in current_tag or '-ci' in current_tag
+    # 修改点：加入 -alpha 判断
+    is_beta_or_ci = '-beta' in current_tag or '-ci' in current_tag or '-alpha' in current_tag
     
     if is_beta_or_ci:
         filter_ref = "main"
@@ -188,6 +193,12 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
     IGNORE_PREFIXES = ['main', 'master', 'develop', 'release']
 
     for commit in merges:
+        # 【新增】时间过滤逻辑
+        # 如果该合并发生的时间 早于 正式版发布时间，说明它是“陈年旧账”，直接跳过
+        if base_ts > 0 and commit['timestamp'] < base_ts:
+            # print(f"跳过旧合并: {commit['subject']} (早于基准)")
+            continue
+        
         branch, desc = parse_merge_subject(commit['subject'])
         
         if branch:
@@ -208,6 +219,7 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
         
     lines = []
     
+    # 修改点：只要是 beta/ci/alpha 都使用这套文案，不做动态替换
     if is_beta_or_ci:
         # 🧪 公测版/开发版文案
         lines.append("### 🧬 正在测试的功能 (Beta Preview)")
@@ -232,6 +244,25 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
     
     if not commits:
         return f"# 更新日志\n\n## {current_tag}\n\n*无显著变更*\n"
+    
+    # 目的：过滤掉标题完全相同的提交（保留最新的那一个）
+    unique_commits = []
+    seen_subjects = set()
+    
+    # 此时 commits 列表通常是按时间倒序（最新的在前），所以保留第一次遇到的即可
+    for commit in commits:
+        # 去除首尾空格，并不区分大小写（可选）来判断重复
+        subject = commit['subject'].strip()
+        
+        if subject not in seen_subjects:
+            seen_subjects.add(subject)
+            unique_commits.append(commit)
+        else:
+            # 在控制台打印被过滤的提交，方便调试
+            print(f"过滤重复提交: {subject} ({commit['hash'][:7]})")
+            
+    # 将去重后的列表赋值回 commits
+    commits = unique_commits
     
     grouped_commits = group_commits_by_type(commits)
     
@@ -284,6 +315,8 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
     # 动态获取版本类型
     if '-beta' in current_tag:
         version_type = "公测版"
+    elif '-alpha' in current_tag: # 修改点：新增内测版
+        version_type = "内测版"
     elif '-ci' in current_tag:
         version_type = "开发版"
     else:

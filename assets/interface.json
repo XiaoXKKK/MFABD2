@@ -18,7 +18,10 @@
 			"name": "[全局]启动游戏",
 			"entry": "StartGame_Start",
 			"check": true,
-			"doc": "**启动游戏**：\n\n自动启动游戏，包含更新、支付失败等一些异常框点击，领取`主界面`奖励、`宠物派遣`。\n\n**注意：网络环境需提前解决。**\n\n【**首次运行前，务必至少查看**`使用帮助`**卡片！**】"
+			"doc": "**启动游戏**：\n\n自动启动游戏，包含更新、支付失败等一些异常框点击，领取`主界面`奖励、`宠物派遣`。\n\n**注意：网络环境需提前解决。**\n\n【**首次运行前，务必至少查看**`使用帮助`**卡片！**】",
+			"option": [
+				"前置助手"
+			]
 		},
 		{
 			"name": "[执行]快速狩猎扫荡",
@@ -115,7 +118,7 @@
 			"option": [
 				"公会奖励"
 			],
-			"doc": "**日常奖励：**依次领取`公会每日签到`、`餐馆-格鲁费之星`、`广场-神像许愿抽奖`。进入`餐馆`领取每日`常客圣石`，切出卡带到`主线2`。\n\n**无公会建议关闭公会奖励开关。**"
+			"doc": "**日常奖励：**依次领取`公会每日签到`、`餐馆-格鲁费之星`、`广场-神像许愿抽奖`。进入`餐馆`领取每日`常客圣石`，切出卡带到`主线2`。\n\n**无公会请关闭公会奖励开关。**"
 		},
 		{
 			"name": "[领取]任务页(每日/每周)",
@@ -1283,6 +1286,55 @@
 							"next": [
 								"Practise_Skill_Bargaining"
 							]
+						}
+					}
+				}
+			]
+		},
+		"前置助手": {
+			"doc": "自动设好本工具所需的前置设置。",
+			"cases": [
+				{
+					"name": "按需",
+					"pipeline_override": {}
+				},
+				{
+					"name": "不要，别动！",
+					"pipeline_override": {
+						"Setup_Entry1": {
+							"enabled": false
+						},
+						"Setup_Entry2": {
+							"enabled": false
+						},
+						"Setup_Entry3": {
+							"enabled": false
+						},
+						"Setup_Entry4": {
+							"enabled": false
+						}
+					}
+				},
+				{
+					"name": "强制启用",
+					"pipeline_override": {
+						"StartGame_FinBackMapPage": {
+							"next": [
+								"[JumpBack]Setup_Str",
+								"StartGame_PerPetTask"
+							]
+						},
+						"Setup_Entry1": {
+							"enabled": false
+						},
+						"Setup_Entry2": {
+							"enabled": false
+						},
+						"Setup_Entry3": {
+							"enabled": false
+						},
+						"Setup_Entry4": {
+							"enabled": false
 						}
 					}
 				}
