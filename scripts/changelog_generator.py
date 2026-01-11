@@ -173,9 +173,10 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
         return ""
         
     # 获取 Main 分支已发布的功能黑名单
-    # 如果是公测版/CI版 -> 过滤基准是 "main" (隐藏已正式发布的功能)
+    # 如果是公测版/内测版/CI版 -> 过滤基准是 "main" (隐藏已正式发布的功能)
     # 如果是正式版     -> 过滤基准是 compare_base (隐藏上个版本以前的功能)
-    is_beta_or_ci = '-beta' in current_tag or '-ci' in current_tag
+    # 修改点：加入 -alpha 判断
+    is_beta_or_ci = '-beta' in current_tag or '-ci' in current_tag or '-alpha' in current_tag
     
     if is_beta_or_ci:
         filter_ref = "main"
@@ -218,6 +219,7 @@ def get_beta_preview_content(compare_base: str, current_tag: str) -> str:
         
     lines = []
     
+    # 修改点：只要是 beta/ci/alpha 都使用这套文案，不做动态替换
     if is_beta_or_ci:
         # 🧪 公测版/开发版文案
         lines.append("### 🧬 正在测试的功能 (Beta Preview)")
@@ -313,6 +315,8 @@ def generate_changelog_content(commits: List[Dict], current_tag: str, compare_ba
     # 动态获取版本类型
     if '-beta' in current_tag:
         version_type = "公测版"
+    elif '-alpha' in current_tag: # 修改点：新增内测版
+        version_type = "内测版"
     elif '-ci' in current_tag:
         version_type = "开发版"
     else:
